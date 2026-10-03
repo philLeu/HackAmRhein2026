@@ -1,5 +1,6 @@
 {
   "source_note": "Notebook rules from Rhein_water_first_try.ipynb; verification and limitations in docs/sources/rhine.md. Draft/load rules and 5 cm margin are research assumptions.",
+  "demo_low_water_delay_hours": 12,
   "draft_offset_cm": 246,
   "margin_cm": 5,
   "high_thresholds": [
