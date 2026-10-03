@@ -426,7 +426,7 @@ def render_comparison(
     inspectable, with selection disabled until recomputed by the caller.
     """
     signature = (request, environment, plans, compared_request, compared_environment)
-    theme = apply_theme(theme_path)
+    theme = apply_theme(theme_path, show_logo=False)
     if st.session_state.get(f"{key}-signature") != signature:
         st.session_state[f"{key}-selected"] = None
         st.session_state.pop(f"{key}-inspect", None)

@@ -31,6 +31,14 @@ arrows, so colour is not needed to understand a route. Timelines use
 
 ## Components and language
 
+The shared page header displays the supplied PulseShift logo from
+`assets/branding/pulseshift.png`. Preserve its transparency and proportions.
+Use the light `branding.background` plate to keep the dark wordmark readable
+on the control-room theme; `branding.width` and `branding.padding` govern size.
+The image has an accessible company-logo label. V2-8 should continue calling
+`apply_theme` at the page header to retain this branding. Nested components
+use `show_logo=False` when applying the theme again.
+
 Use a title and short introductory sentence, followed by a visible synthetic-data
 notice, scenario selection, a four-step material-flow sketch for every
 option and the comparison table. Explain sample pickup timing in words: “Original
