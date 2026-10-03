@@ -24,6 +24,7 @@ from treatment_planner.ui.formatting import format_timestamp
 from treatment_planner.ui.presentation import apply_theme
 from treatment_planner.ui.route_inputs import render_route_inputs as render_route_inputs
 from treatment_planner.ui.timeline import timeline_chart
+from treatment_planner.ui.weather_advisories import render_weather_recheck_warnings
 
 THEME_PATH = Path(__file__).resolve().parents[3] / "config" / "theme.toml"
 
@@ -558,6 +559,8 @@ def render_comparison(
         key=f"{key}-inspect",
     )
     plan = plans[inspected]
+    if current:
+        render_weather_recheck_warnings(plan, environment.weather)
     if st.button(
         "Select this confirmed plan",
         disabled=not current or not _selectable(plan),
