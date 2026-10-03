@@ -2,7 +2,7 @@
 
 > Built at [HackAmRhein 2026](https://hackamrhein.dev) with Codex. First time in this repository? The setup guide is [HACKAMRHEIN.md](HACKAMRHEIN.md).
 
-A manufacturing-control prototype for a production coordinator managing one individual treatment. The integrated demo generates alternative schedules with the planning engine, editable route inputs and explicit plan selection. It runs offline with synthetic walkthroughs or saved provider evidence.
+A manufacturing-control prototype for a production coordinator managing one individual treatment. PulseShift compares checked plans, recommends alternatives for a chosen goal, and requires explicit confirmation. It opens with live environmental evidence and offers a fixed, offline demo.
 
 ## The problem
 
@@ -32,11 +32,11 @@ python3.12 -m venv .venv
 .venv/bin/python -m streamlit run app.py --server.address 127.0.0.1
 ```
 
-Open http://localhost:8501. In **Synthetic walkthrough**, choose Baseline, Low water, Hot return, Snow or Missing weather. Inspect an alternative, check its reasons and margins, then select a confirmed plan. Full and treatment-period timelines include preparations and deadline markers. Route edits automatically recompute alternatives and clear selection.
+Open http://localhost:8501. **Live** is selected first. It fetches Rhine and MeteoSwiss evidence and shows source gaps without substituting simulated data. Manual route snow and car availability start unknown; enter current checks before relying on a plan. **Refresh live evidence** gets a new provider snapshot and advances the evaluation clock while keeping the treatment order and pickup inputs.
 
-Choose **Saved provider replay** to inspect the archived Rhine and MeteoSwiss captures offline. The historical evaluation clock and adjustable freshness inspection controls are shown on screen. Provider issues remain visible; hourly mean temperature is never substituted for maximum temperature. Source attribution and synthetic assumptions appear in both modes.
+Switch to **Demo** for an offline walkthrough with a fixed 01.11.2026 clock. The three route buttons edit simulated Rhine level, outbound conditions and return conditions independently. A low Rhine level illustrates a 12-hour delivery delay; snow or heat can change eligible courier modes. Choose a planning goal, inspect the recommendation and routes, and explicitly confirm a plan. Input or goal changes clear confirmation; **Reset demo** restores all fixture inputs. The sidebar opens the Plan, Routes & conditions, and Sources & assumptions chapters. Detailed alternatives and timelines stay available on demand.
 
-Above the plan comparison, click **Basel Rhine conditions** to expand the historical and predicted chart. The summary uses the notebook's classes and shows the worst future median class in the selected window. **Rhine chart evidence** defaults to saved forecast replay; choose **Live Rhine conditions** to fetch public observations and the BAFU forecast. This evidence has its own labelled clock and does not alter the synthetic planning delays. The chart shows uncertainty bands, restriction zones and near-threshold texture. Forecast dates beyond coverage remain unknown.
+On **Sources & assumptions**, expand **Basel Rhine conditions** for the historical replay chart or request the chart's separately labelled live evidence. That chart does not set a planning delay.
 
 ### Checks
 
@@ -56,7 +56,7 @@ See [docs/SOURCES.md](docs/SOURCES.md).
 
 ## Limits
 
-Treatment timings, transport durations, availability and disruption effects are demo assumptions. The synthetic walkthrough explicitly assumes renewed route checks at dispatch for unedited synthetic entries. Edited manual entries retain their evidence limits. Saved-provider replay uses a historical clock, requires renewed future route checks and preserves missing/stale/outside-horizon data. Freshness controls are for inspection; no operational policy is claimed. Weather issues across candidate journey envelopes conservatively affect bicycle alternatives. The finite alternative set is unranked and is not exhaustive optimisation. There is no live weather integration or automatic network fallback. The prototype does not make clinical decisions, book transport or process patient records.
+Treatment timings, transport durations and the Rhine-level-to-delay effect are synthetic assumptions. Demo assumes renewed clear-route checks at dispatch. Live manual route checks, maximum temperature, freshness and forecast horizon may remain unknown, so some plans cannot be confirmed. Weather issues across candidate journey envelopes conservatively affect bicycle alternatives. Goal ranking covers the finite generated set, not exhaustive optimisation or a calibrated failure probability. The prototype does not make clinical decisions, book transport or process patient records.
 
 ## Team
 

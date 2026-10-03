@@ -5,12 +5,17 @@ from unittest.mock import patch
 
 from streamlit.testing.v1 import AppTest
 
+from treatment_planner.interfaces import EvidenceMode
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def screen():
     with patch("urllib.request.urlopen", side_effect=AssertionError("Offline mode used network")):
-        return AppTest.from_file(ROOT / "app.py").run(timeout=25)
+        app = AppTest.from_file(ROOT / "app.py")
+        app.session_state["v2-mode-value"] = EvidenceMode.DEMO
+        app.session_state["v2-navigation"] = "Sources & assumptions"
+        return app.run(timeout=25)
 
 
 def test_summary_chart_and_outside_horizon():

@@ -1,8 +1,12 @@
 """Display non-blocking trip-day reminders beside the inspected plan."""
 
+import re
+from datetime import date
+
 import streamlit as st
 
 from treatment_planner.interfaces import CandidatePlan, CourierLeg, WeatherReport
+from treatment_planner.ui.formatting import format_date
 from treatment_planner.weather_advisories import weather_recheck_warnings
 
 
@@ -31,4 +35,10 @@ def render_weather_recheck_warnings(plan: CandidatePlan, weather: WeatherReport)
             for warning in weather_recheck_warnings(
                 weather, event.interval, location=location, trip_label=label
             ):
-                st.warning(warning)
+                st.warning(
+                    re.sub(
+                        r"\b\d{4}-\d{2}-\d{2}\b",
+                        lambda match: format_date(date.fromisoformat(match.group())),
+                        warning,
+                    )
+                )
