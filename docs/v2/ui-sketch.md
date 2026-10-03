@@ -75,10 +75,29 @@ for the displayed journey interval; provider hourly means stay labelled as such.
 Do not represent a provider mean as a maximum. Car availability remains an
 independent route input and is not inferred from weather.
 
-## Decisions pending
+If a plan moves a journey, carry its simulated conditions to the new journey
+interval. Show “Demo conditions carried over from the previous trip time”
+beside the affected route, with the old and new intervals in expanded details.
+Retain the originally entered values and their simulated provenance; carrying
+Unknown values forward does not make them known. Carry-over does not establish
+live-provider coverage or renew a real/manual observation. Recompute hard
+checks for the new interval and invalidate previous confirmation. Reset clears
+carry-over notes; explicitly applying new conditions replaces that route's
+carry-over note. Keep each route's values independent.
 
-- Override validity: define explicit interval coverage after schedule changes.
-- Demo clock: choose fixture anchoring and whether advancing it is allowed.
+## Demo clock
+
+Use the existing baseline fixture: decision clock 01.11.2026 · 08:00 UTC and
+original injection target 08.11.2026 · 05:00 UTC. The demo clock stays fixed;
+page reruns, navigation and elapsed presentation time do not advance it.
+Reset restores these values. Entering Demo starts the baseline with no prior
+confirmation. Show the clock and “Simulated” prominently; actual provider
+retrieval timestamps remain actual timestamps, not the demo clock.
+
+In Live, use the actual planning time and provider evidence coverage. Refresh
+evidence explicitly without silently resetting the treatment inputs; material
+evidence changes invalidate confirmation. Navigation alone does not refresh
+evidence or advance a simulated clock.
 
 ## Review walkthrough
 
@@ -89,3 +108,17 @@ switch to Live and inspect provider failure. Expanded details remain optional.
 
 V2-0's comparison ownership transfers to V2-7 after adoption. V2-2 edits design
 documents only and does not change comparison.py, app.py or shared contracts.
+
+## Acceptance examples for V2-3 / V2-7
+
+| Action | Expected visible result |
+|---|---|
+| Open Live without adequate evidence | Missing/failed evidence is visible; no silently simulated recommendation. |
+| Enter Demo | Fixed baseline clock, default risk goal, original target and labelled synthetic inputs; no confirmation. |
+| Change only outbound snow | Return and ingredient inputs retain their values; recommendation recomputes and confirmation clears. |
+| Move a journey beyond its old demo interval | Simulated conditions carry over with a small note; details show old/new intervals. |
+| Change a Live journey beyond source coverage | Unknown evidence remains visible; the demo carry-over rule is not applied. |
+| Equal top goal scores | Co-winners are displayed; none is preselected; confirmation needs an explicit plan choice. |
+| Confirm then open Sources | Confirmation persists through navigation and supporting details remain optional. |
+| Reset Demo from Routes | Full baseline restored, confirmation and carry-over notes cleared; Routes chapter stays open. |
+| Switch Demo to Live | Demo overrides removed, confirmation cleared, live evidence/coverage shown. |
