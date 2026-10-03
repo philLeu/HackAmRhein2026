@@ -5,6 +5,11 @@ Every dataset, API, notable library and AI tool used, with licence. Feeds the so
 | What | Source / URL | Licence or permission | Used for |
 |---|---|---|---|
 | Codex (OpenAI) | chatgpt.com/codex | Tool, AI-assisted development | Coding assistant |
+| Streamlit | https://docs.streamlit.io/ | Apache-2.0 | Foundation screen and app interaction checks |
+| Altair | https://altair-viz.github.io/ | BSD-3-Clause | Timeline chart |
+| pytest | https://docs.pytest.org/ | MIT | Contract and app tests |
+| Ruff | https://docs.astral.sh/ruff/ | MIT | Formatting and lint checks |
+| setuptools / wheel | https://setuptools.pypa.io/ / https://wheel.readthedocs.io/ | MIT | Project packaging |
 | MeteoSwiss local forecasts (candidate; not integrated) | https://opendatadocs.meteoswiss.ch/e-forecast-data/e4-local-forecast-data | CC BY 4.0; acknowledge "Source: MeteoSwiss"; terms: https://opendatadocs.meteoswiss.ch/general/terms-of-use | Temperature and weather-type forecasts for courier journey checks; Basel point and snow-symbol mapping pending verification |
 | Rhine observations (candidate; not integrated) | https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2289 | Licence and programmatic retrieval still to verify | Basel Rheinhalle river-condition signal; does not establish navigability of the whole Rotterdam–Basel route |
 
