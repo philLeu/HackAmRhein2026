@@ -1,6 +1,6 @@
 # V2: guided treatment material-flow planning
 
-Status: Release direction agreed; ranking definitions and screen sketch need domain review before implementation.
+Status: Release direction and V2-1 recommendation rules agreed; screen sketch needs domain review before implementation.
 
 ## Outcome
 
@@ -12,7 +12,7 @@ Extend the existing Python/Streamlit application, planning engine and independen
 
 1. Open in Live mode with source timestamps, freshness and coverage available.
 2. Choose an optimisation goal: injection timing, ingredient delivery timing or lower disruption risk.
-3. See the recommended alternative, its main reason and timing. Preselection is distinct from confirmation. Other alternatives remain available on demand.
+3. See the recommended alternative, its main reason and timing. Preselect only a unique confirmed winner; equal winners remain tied without automatic selection. Preselection is distinct from confirmation. Other alternatives remain available on demand.
 4. Inspect three graphical route summaries with transport icons, direction arrows, status text and possible delay. Expand a route for detailed evidence, assumptions and constraint results.
 5. Confirm the selected plan. Changes to the goal, inputs or material evidence invalidate previous confirmation and recompute the recommendation.
 
@@ -39,15 +39,17 @@ Use a deterministic demo fixture and clock when Demo mode is active. Label all s
 
 Demo controls must feed the planning flow, rather than changing only chart decoration. Rhine-level-to-delay mapping remains a documented simulation assumption: a Basel station level does not prove whole-route navigability. Separate forecast snowfall from existing route snow; the demo may offer both, but their meaning must be explicit. Do not treat hourly mean temperature as a measured maximum.
 
-## Recommendation rules to agree in V2-1
+## Recommendation rules
 
-- Injection timing: proposed objective is minimum deviation from a user-entered target injection time. Agree whether early and late deviations have different penalties.
-- Delivery timing: proposed objective is earliest ingredient arrival at production. Confirm which delivery the goal refers to.
-- Lower disruption risk: proposed objective is an explainable score using deadline margins and evidence quality. It is not a calibrated failure probability.
-- Hard constraints always precede ranking. Recommend only confirmed alternatives; do not promote an unconfirmed plan because it scores well. When none is confirmed, explain why and show provisional alternatives on demand.
-- Agree score direction, tie-breaks, default goal and deterministic examples with expected winners. Explain the decisive trade-off in one sentence.
+The agreed objectives, default goal, hard-check precedence, tie handling and
+route-status meanings live in [recommendation-rules.md](recommendation-rules.md).
+Expected winners and score examples live in [scenarios.md](scenarios.md).
+Explain the decisive trade-off in one sentence. The risk score is not a
+calibrated failure probability.
 
-Route summaries use Normal, At risk, Blocked or Unknown. Agree how these map to existing constraint and evidence states. Display a supported delay estimate or "delay unknown"; do not turn uncertainty into zero delay. Keep the existing distinction between confirmed, infeasible and unconfirmed plans.
+Display a supported delay estimate or "delay unknown"; do not turn uncertainty
+into zero delay. Keep the existing distinction between confirmed, infeasible
+and unconfirmed plans.
 
 ## Release evidence
 
