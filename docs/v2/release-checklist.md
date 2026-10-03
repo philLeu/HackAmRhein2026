@@ -1,19 +1,33 @@
-# V2 release checks
+# V2 integration release checklist
 
-## Verified in the integration branch
+## Integrated behavior
 
-- Live is the default evidence mode. Source failures and coverage gaps remain visible; no simulated fallback is applied.
-- The three Demo route controls affect planning independently. A low simulated Rhine level adds the documented 12-hour delay; unknown level leaves ship plans unconfirmed. Snow and heat can block bicycle alternatives.
-- All generated candidates are ranked for the selected goal. Equal leaders require an explicit choice, and confirmation clears when the goal, inputs or evidence change.
-- The fixed Demo clock, Reset demo, sidebar navigation, optional detail and offline chart replay are covered by the end-to-end tests.
-- Run `.venv/Scripts/python.exe -m pytest -q`, Ruff format and lint checks, `bash scripts/doc-check.sh` and `bash scripts/hack-guard.sh --staged` before the PR.
+- Live evidence is the initial mode; refresh happens only after an explicit action.
+- Offline Demo mode uses the planning engine and has independent Rhine, outbound and return controls.
+- Each candidate exposes ingredient, outbound and return route summaries with evidence status and expandable detail.
+- Goal changes recompute the recommendation; unavailable or unconfirmed evidence cannot be presented as a checked route.
+- Material input changes invalidate confirmation; navigation alone does not.
+- Live failures and unsupported route coverage remain explicit; there is no replay or synthetic fallback.
+- Live weather uses both courier endpoints: modeled PulseShift production site (provider reference postcode 4056) and University Hospital Basel.
+- The coordinator enters road status per leg. Forecast snowfall blocks bicycles; cars are always available with one hour of preparation.
+- The Live overview shows endpoint forecast temperatures/weather symbols and a Basel gauge bar from 0 to 10 m. The ship delay applies the explicitly simplified uniform-Basel-level assumption and illustrative 0/12-hour rule.
+- Daily maximum forecasts at or above 28°C prompt a trip-day recheck and do not block bicycle eligibility.
+- Recommendation score ties prefer Rhine ship, then more bicycle legs; any remaining tie stays visible for explicit choice.
+- The PulseShift header logo and theme from the shared V2 branch remain in the integrated app.
 
-## Before the release PR into main
+## Verification
 
-- A teammate checks the Plan and Routes chapters on desktop and narrow screens, including keyboard access and written status next to each icon.
-- Review the V2 task PR, then merge it into `feat/v2-treatment-planner` only with explicit approval for that PR.
-- Run the full checks on the shared V2 branch and review the live-source and synthetic-model limits in [SOURCES.md](../SOURCES.md). Open the release PR only after these checks; merge that PR only with explicit approval.
+- `ruff format --check app.py src tests`
+- `ruff check app.py src tests`
+- `pytest -q`
+- `bash scripts/doc-check.sh --strict`
+- Automated AppTest covers the Live cards and road controls plus all three offline Demo chapters. Interactive visual review of the running app remains pending.
+- Have a teammate inspect Plan, Routes & conditions and Sources & assumptions on desktop and a narrow screen, including keyboard access and written status beside icons.
+- Review the integration PR into `feat/v2-treatment-planner`; merge it only after explicit approval. Then run the full checks on the shared V2 branch before preparing the later PR into `main`.
 
-## Model and source limits
+## Known limits
 
-Treatment clocks, process durations and the demo Rhine delay are illustrative. MeteoSwiss hourly means cannot establish a journey maximum, future manual route status needs renewal, and one Basel gauge does not establish Rhine route navigability. The risk score compares deadline margins; it is not a probability.
+- The team's uniform-Basel-level assumption is a planning simplification, not route-wide measurement or a provider ETA.
+- MeteoSwiss hourly mean and optional daily maximum are separate forecast statistics.
+- Demo disruption effects and transport durations are synthetic assumptions.
+- The finite candidate set is not an exhaustive optimizer and the app does not book transport or make clinical decisions.

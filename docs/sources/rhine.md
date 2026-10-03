@@ -136,21 +136,22 @@ ensemble bands, near-limit texture and a full-scale restriction reference.
 
 ## V2 live ingredient evidence and demo override
 
-V2 opens the ingredient evidence adapter in Live mode: it requests recent
-Rheinhalle observations from the Basel-Stadt dataset and the BAFU level
-forecast. The current reading must be no older than six hours and the forecast
-run no older than 24 hours; these are demo freshness limits, not operational
-recommendations. A missing value, stale source or future issue time remains
-explicit. Forecast coverage is checked against the requested ingredient
-journey interval. The adapter reports **outside forecast horizon** if the whole
-future interval is not covered; it never extends the final forecast point.
+V2 Live planning uses the latest nonfuture Rheinhalle gauge observation from
+the Basel-Stadt dataset. It must be no older than six hours; this is a demo
+freshness limit, not an operational recommendation. The BAFU forecast remains
+available in the station chart but does not determine the ingredient shipping
+delay in the Live planner.
 
 The observations are normally reported at five-minute intervals. FOEN says
 current hydrological values are unverified raw data and forecast values are
 model output; source attribution is recommended and use is free. The Basel
-dataset identifies station 2289 at Rheinhalle, near the Birs inflow. A fresh,
-covered station report still does not establish navigability for the
-Rotterdam–Basel route. [FOEN data FAQ](https://www.hydrodaten.admin.ch/en/questions),
+dataset identifies station 2289 at Rheinhalle, near the Birs inflow. A fresh
+station report still does not establish navigability for the Rotterdam–Basel
+route. The team's Live simplification assumes that the Basel water level is the
+same along the entire ship route. The planner converts the gauge height above
+its datum to centimetres, applies the existing notebook low-water threshold,
+and uses the illustrative zero- or 12-hour delay rule. This is a model output,
+not a provider ETA or route-wide measurement. [FOEN data FAQ](https://www.hydrodaten.admin.ch/en/questions),
 [Basel dataset](https://data.bs.ch/explore/dataset/100089/).
 
 The Demo control creates a typed `IngredientRouteOverride` with synthetic

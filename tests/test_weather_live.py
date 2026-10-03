@@ -28,7 +28,7 @@ def source():
         POINTS_URL: (EXAMPLE / "points.csv").read_bytes(),
         PARAMETERS_URL: (EXAMPLE / "parameters.csv").read_bytes(),
     }
-    for parameter in ("tre200h0", "jww003i0"):
+    for parameter in ("tre200h0", "jww003i0", "tre200px"):
         name = f"vnut12.lssw.202610030600.{parameter}.csv"
         url = f"{BASE_URL}/{name}"
         assets[name] = {"href": url}
@@ -61,15 +61,35 @@ def test_latest_complete_cycle_preserves_means_intervals_and_real_provenance(sou
     assert report.windows
     assert all(w.location == "sample" and w.interval == JOURNEY for w in report.windows)
     assert report.windows[0].hourly_mean_temperature_c == 18.5
-    assert report.windows[0].maximum_temperature_c is None
+    assert report.windows[0].maximum_temperature_c == 29.0
+    assert report.windows[0].weather_code == 1
     assert report.windows[0].snowfall is True  # 09:00 snow applies from 06:00.
     provenance = report.windows[0].provenance
     assert provenance.kind == EvidenceKind.FORECAST
     assert provenance.source_time == NOW.replace(minute=0)
     assert provenance.retrieved_at == NOW
     assert "Source: MeteoSwiss" in provenance.source and "4056" in provenance.source
-    assert any("hourly means" in issue for issue in report.issues)
+    assert not any("Daily maximum unavailable" in issue for issue in report.issues)
     assert not any("unused.csv" in url for url in calls)
+
+
+def test_live_cycle_without_optional_daily_maximum_keeps_core_weather(source):
+    payloads, _, fetch = source
+    item_url = f"{COLLECTION_URL}/items/20261003-ch"
+    item = json.loads(payloads[item_url])
+    item["assets"] = {
+        name: asset for name, asset in item["assets"].items() if ".tre200px.csv" not in name
+    }
+    payloads[item_url] = json.dumps(item).encode()
+
+    report = WeatherLiveProvider(timedelta(hours=2), clock=lambda: NOW, fetch=fetch).load(
+        "sample", JOURNEY
+    )
+
+    assert report.windows
+    assert report.windows[0].hourly_mean_temperature_c == 18.5
+    assert report.windows[0].maximum_temperature_c is None
+    assert any("Daily maximum temperature unavailable" in issue for issue in report.issues)
 
 
 def test_snapshot_is_shared_by_legs_and_refresh_is_explicit(source):
@@ -159,7 +179,7 @@ def test_changed_units_and_unofficial_assets_are_rejected(source):
         {
             "assets": {
                 f"vnut12.lssw.202610030600.{p}.csv": {"href": "https://other.example/forecast.csv"}
-                for p in ("tre200h0", "jww003i0")
+                for p in ("tre200h0", "jww003i0", "tre200px")
             }
         }
     ).encode()

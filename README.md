@@ -2,7 +2,7 @@
 
 > Built at [HackAmRhein 2026](https://hackamrhein.dev) with Codex. First time in this repository? The setup guide is [HACKAMRHEIN.md](HACKAMRHEIN.md).
 
-A manufacturing-control prototype for a production coordinator managing one individual treatment. PulseShift compares checked plans, recommends alternatives for a chosen goal, and requires explicit confirmation. It opens with live environmental evidence and offers a fixed, offline demo.
+A manufacturing-control prototype for a production coordinator managing one individual treatment. The integrated demo opens with live public evidence, compares alternatives with the planning engine, and requires an explicit plan confirmation. A separate offline demo mode provides three independent, clearly labelled synthetic disruption controls.
 
 ## The problem
 
@@ -32,11 +32,11 @@ python3.12 -m venv .venv
 .venv/bin/python -m streamlit run app.py --server.address 127.0.0.1
 ```
 
-Open http://localhost:8501. **Live** is selected first. It fetches Rhine and MeteoSwiss evidence and shows source gaps without substituting simulated data. Manual route snow and car availability start unknown; enter current checks before relying on a plan. **Refresh live evidence** gets a new provider snapshot and advances the evaluation clock while keeping the treatment order and pickup inputs.
+Open http://localhost:8501. The app opens in **Live** mode and loads public weather and Rhine station evidence. Select **Demo** to work offline with the fixed walkthrough. The three controls independently change Rhine conditions, outbound journey conditions, and return journey conditions. Choose a planning goal, inspect the recommended alternative and its route sketches, expand details when needed, then explicitly confirm a plan. Any material input change clears confirmation.
 
-Switch to **Demo** for an offline walkthrough with a fixed 01.11.2026 clock. The three route buttons edit simulated Rhine level, outbound conditions and return conditions independently. A low Rhine level illustrates a 12-hour delivery delay; snow or heat can change eligible courier modes. Choose a planning goal, inspect the recommendation and routes, and explicitly confirm a plan. Input or goal changes clear confirmation; **Reset demo** restores all fixture inputs. The sidebar opens the Plan, Routes & conditions, and Sources & assumptions chapters. Detailed alternatives and timelines stay available on demand.
+Use **Routes & conditions** to inspect the three routes and their evidence. In Live mode, enter whether each road is cleared. MeteoSwiss snowfall at the PulseShift production site or University Hospital Basel blocks bicycle travel; cars are always available and need one hour of preparation. **Sources & assumptions** explains source attribution, coverage and model limits. **Refresh live evidence** is an explicit action; switching pages does not silently request new data.
 
-On **Sources & assumptions**, expand **Basel Rhine conditions** for the historical replay chart or request the chart's separately labelled live evidence. That chart does not set a planning delay.
+The Live overview shows forecast temperature and a weather symbol at the PulseShift production site and University Hospital Basel, plus the Basel gauge on a 0–10 m scale. For the ship route, the planner assumes the Basel level applies along the whole Rhine route and uses the existing illustrative low-water rule to add zero or 12 hours. This is a model output, not a measured delivery time. A forecast at or above 28°C asks the coordinator to recheck the weather on the trip day; it does not block a bicycle. The optional **Basel station chart** remains supporting evidence.
 
 ### Checks
 
@@ -56,7 +56,7 @@ See [docs/SOURCES.md](docs/SOURCES.md).
 
 ## Limits
 
-Treatment timings, transport durations and the Rhine-level-to-delay effect are synthetic assumptions. Demo assumes renewed clear-route checks at dispatch. Live manual route checks, maximum temperature, freshness and forecast horizon may remain unknown, so some plans cannot be confirmed. Weather issues across candidate journey envelopes conservatively affect bicycle alternatives. Goal ranking covers the finite generated set, not exhaustive optimisation or a calibrated failure probability. The prototype does not make clinical decisions, book transport or process patient records.
+Treatment timings, transport durations and disruption effects are model assumptions. Public data covers stations and forecast periods, not the full shipping route or every transport route. Live mode does not fall back to synthetic or replay data. The finite alternative set is not exhaustive optimisation. The prototype does not make clinical decisions, book transport or process patient records. More detail is in [docs/SOURCES.md](docs/SOURCES.md).
 
 ## Team
 

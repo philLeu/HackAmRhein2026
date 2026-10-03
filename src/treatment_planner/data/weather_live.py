@@ -11,6 +11,7 @@ from urllib.request import Request, urlopen
 
 from treatment_planner.data.weather_csv import (
     LOCAL_TIMEZONE,
+    OPTIONAL_PARAMETERS,
     PARAMETERS,
     check_temperature_unit,
     iter_csv,
@@ -29,7 +30,7 @@ COLLECTION_URL = (
 )
 POINTS_URL = f"{BASE_URL}/ogd-local-forecasting_meta_point.csv"
 PARAMETERS_URL = f"{BASE_URL}/ogd-local-forecasting_meta_parameters.csv"
-MAXIMUM_UNAVAILABLE = "Maximum temperature unavailable: MeteoSwiss provides hourly means."
+MAXIMUM_UNAVAILABLE = "Daily maximum temperature unavailable in this MeteoSwiss forecast cycle."
 
 
 def _official_url(url: str) -> None:
@@ -108,7 +109,10 @@ class WeatherLiveProvider:
                 self.maximum_forecast_age,
                 evaluated_at=now,
             )
-            return WeatherReport(report.windows, report.issues + (MAXIMUM_UNAVAILABLE,))
+            issues = report.issues
+            if not any(window.maximum_temperature_c is not None for window in report.windows):
+                issues += (MAXIMUM_UNAVAILABLE,)
+            return WeatherReport(report.windows, issues)
         except (OSError, KeyError, TypeError, ValueError, AttributeError, csv.Error) as error:
             self._failure = f"Live weather unavailable: {error}. No simulated fallback was used."
             return WeatherReport((), (self._failure,))
@@ -130,13 +134,22 @@ class WeatherLiveProvider:
     def _retrieve(self):
         now = parse_iso_time(self.clock().isoformat())
         location = select_location(read_csv(self._read(POINTS_URL)), self.postal_code)
-        check_temperature_unit(read_csv(self._read(PARAMETERS_URL)))
+        parameter_metadata = read_csv(self._read(PARAMETERS_URL))
         item = self._latest_item(now)
         issued_at, urls = select_run(item["assets"])
+        check_temperature_unit(
+            parameter_metadata,
+            optional_parameters=OPTIONAL_PARAMETERS & urls.keys(),
+        )
         values = {
             parameter: measurements(iter_csv(self._read(urls[parameter])), location, parameter)
             for parameter in PARAMETERS
+            if parameter in urls
         }
+        for parameter in OPTIONAL_PARAMETERS & urls.keys():
+            values[parameter] = measurements(
+                iter_csv(self._read(urls[parameter])), location, parameter
+            )
         retrieved_at = parse_iso_time(self.clock().isoformat())
         if issued_at > retrieved_at:
             raise ValueError("Forecast issue time is in the future relative to retrieval.")

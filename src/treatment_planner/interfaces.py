@@ -140,6 +140,7 @@ class WeatherWindow:
     snowfall: bool | None
     provenance: Provenance
     hourly_mean_temperature_c: float | None = None
+    weather_code: int | None = None
 
 
 @dataclass(frozen=True)

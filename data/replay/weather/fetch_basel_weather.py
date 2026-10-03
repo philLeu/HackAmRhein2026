@@ -14,6 +14,7 @@ from urllib.request import Request, urlopen
 
 from weather_csv import (
     LOCAL_TIMEZONE,
+    OPTIONAL_PARAMETERS,
     PARAMETERS,
     SNOW_CODE_MAPPING,
     UTC,
@@ -69,9 +70,12 @@ def live_inputs(postal_code):
     """Capture both parameters from one forecast cycle plus location metadata."""
     raw = {f"{name}.csv": download(url) for name, url in METADATA_URLS.items()}
     location = select_location(read_csv(raw["points.csv"]), postal_code)
-    check_temperature_unit(read_csv(raw["parameters.csv"]))
     item, item_url = latest_item(datetime.now(UTC))
     issued_at, urls = select_run(item["assets"])
+    check_temperature_unit(
+        read_csv(raw["parameters.csv"]),
+        optional_parameters=OPTIONAL_PARAMETERS & urls.keys(),
+    )
     raw["stac-item.json"] = json.dumps(item, indent=2).encode("utf-8")
     for parameter, url in urls.items():
         raw[f"{parameter}.csv"] = download(url)
@@ -83,7 +87,11 @@ def example_inputs(postal_code):
     directory = Path(__file__).parent / "example-input"
     raw = {path.name: path.read_bytes() for path in sorted(directory.glob("*.csv"))}
     location = select_location(read_csv(raw["points.csv"]), postal_code)
-    check_temperature_unit(read_csv(raw["parameters.csv"]))
+    check_temperature_unit(
+        read_csv(raw["parameters.csv"]),
+        optional_parameters=OPTIONAL_PARAMETERS
+        & {name[:-4] for name in raw if name.endswith(".csv")},
+    )
     issued_at = datetime(2026, 10, 3, 6, tzinfo=UTC)
     return raw, location, issued_at, {"fixture": "example-input; synthetic, not MeteoSwiss data"}
 
@@ -95,6 +103,8 @@ def preview(rows, provenance):
         "temperature_valid_start_local": "Temperaturintervall ab (Schweizer Zeit)",
         "temperature_c": "Hourly mean temperature (°C)",
         "temperature_status": "Temperature status",
+        "maximum_temperature_c": "Daily maximum temperature (°C)",
+        "maximum_temperature_status": "Daily maximum status",
         "weather_valid_start_local": "Wetterintervall ab (Schweizer Zeit)",
         "weather_code": "Raw weather code",
         "weather_description_de": "Wetterbeschreibung (DE)",
@@ -103,7 +113,8 @@ def preview(rows, provenance):
     }
     heading = (
         "SYNTHETIC EXAMPLE — not a real forecast"
-        if provenance["synthetic"] else "Basel forecast capture"
+        if provenance["synthetic"]
+        else "Basel forecast capture"
     )
     table = "".join(
         "<tr>" + "".join(f"<td>{html.escape(str(row[key]))}</td>" for key in columns) + "</tr>"
@@ -117,22 +128,27 @@ def preview(rows, provenance):
         "<p>Snow status follows the documented MeteoSwiss codes. Missing, unfamiliar "
         "or ambiguous codes remain unknown. This forecast does not establish snow "
         "already on the route. Forecast freshness has not been assessed. "
-        "Temperatures are hourly means.</p>"
-        f"<table border=\"1\"><thead><tr>{headers}</tr></thead><tbody>{table}</tbody></table>"
+        "Hourly means and daily maximum forecasts are separate values; the daily maximum "
+        "applies to the local calendar day.</p>"
+        f'<table border="1"><thead><tr>{headers}</tr></thead><tbody>{table}</tbody></table>'
         f"<h2>Provenance</h2><pre>{metadata}</pre></body></html>"
     )
 
 
 def save_capture(output, raw, location, issued_at, urls, synthetic):
     """Validate before saving CSV, raw inputs, provenance and a readable table."""
+    parameters = set(PARAMETERS) | (
+        OPTIONAL_PARAMETERS & {name[:-4] for name in raw if name.endswith(".csv")}
+    )
     values = {
         parameter: measurements(read_csv(raw[f"{parameter}.csv"]), location, parameter)
-        for parameter in PARAMETERS
+        for parameter in parameters
     }
     rows = normalized_rows(values, "synthetic" if synthetic else "live_capture")
     selected = {
         name: selected_point_csv(content, location)
-        if name in {"points.csv", "tre200h0.csv", "jww003i0.csv"} else content
+        if name in {"points.csv", "tre200h0.csv", "jww003i0.csv", "tre200px.csv"}
+        else content
         for name, content in raw.items()
     }
     provenance = {
@@ -188,7 +204,8 @@ def main(argv=None):
         "--example", action="store_true", help="Use labelled synthetic offline data."
     )
     parser.add_argument(
-        "--output", type=Path,
+        "--output",
+        type=Path,
         help="New output directory; existing folders are never overwritten.",
     )
     arguments = parser.parse_args(argv)
@@ -201,7 +218,8 @@ def main(argv=None):
             raise FileExistsError(f"Output already exists: {output}. Choose a new directory.")
         inputs = (
             example_inputs(arguments.postal_code)
-            if arguments.example else live_inputs(arguments.postal_code)
+            if arguments.example
+            else live_inputs(arguments.postal_code)
         )
         count = save_capture(output, *inputs, synthetic=arguments.example)
     except (OSError, URLError, ValueError, KeyError, TypeError) as error:
