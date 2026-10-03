@@ -7,7 +7,6 @@ inputs cannot leave a previously selected plan looking current.
 
 import tomllib
 from datetime import timedelta
-from html import escape
 from pathlib import Path
 
 import streamlit as st
@@ -16,13 +15,17 @@ from treatment_planner.interfaces import (
     CandidatePlan,
     CheckStatus,
     EnvironmentInputs,
+    RecommendationResult,
     ResultStatus,
+    RouteSummary,
     TransportMode,
     TreatmentRequest,
 )
 from treatment_planner.ui.formatting import format_timestamp
 from treatment_planner.ui.presentation import apply_theme
+from treatment_planner.ui.recommendation import render_recommendation, selectable_plan
 from treatment_planner.ui.route_inputs import render_route_inputs as render_route_inputs
+from treatment_planner.ui.route_summary import render_route_diagram
 from treatment_planner.ui.timeline import timeline_chart
 from treatment_planner.ui.weather_advisories import render_weather_recheck_warnings
 
@@ -34,11 +37,7 @@ def _hours(value: timedelta | None) -> float | None:
 
 
 def _selectable(plan: CandidatePlan) -> bool:
-    return (
-        plan.status == ResultStatus.CONFIRMED
-        and bool(plan.checks)
-        and all(check.status == CheckStatus.PASS for check in plan.checks)
-    )
+    return selectable_plan(plan)
 
 
 def comparison_rows(plans: tuple[CandidatePlan, ...]) -> list[dict]:
@@ -210,62 +209,18 @@ def _render_material_flow(plan: CandidatePlan, theme: dict, diagram_prefix: str)
         ("4 · TREATMENT", "Factory", treatment, "Hospital"),
     )
     columns = st.columns(4)
-    palette = theme["theme"]
-    border = theme["surface"]["border"]
-    muted = theme["surface"]["muted"]
-    route_color = palette["primaryColor"]
-    background = palette["secondaryBackgroundColor"]
-
-    def svg_label(center: int, label: str, color: str, *, bold: bool = False) -> str:
-        lines = {
-            "Refrigerated truck": ("Refrigerated", "truck"),
-            "Sample + ingredients": ("Sample +", "ingredients"),
-            "Treatment ready": ("Treatment", "ready"),
-        }.get(label, (label,))
-        first_y = 50 if len(lines) > 1 else 59
-        spans = "".join(
-            f'<tspan x="{center}" y="{first_y + index * 16}">{escape(line)}</tspan>'
-            for index, line in enumerate(lines)
-        )
-        weight = ' font-weight="600"' if bold else ""
-        return (
-            f'<text text-anchor="middle" fill="{color}" font-size="13"{weight} '
-            f'font-family="sans-serif">{spans}</text>'
-        )
-
     for column, (heading, source, vehicle, destination) in zip(columns, cards, strict=True):
         with column:
             with st.container(border=True):
                 st.caption(heading)
-                vehicle_text = vehicle.title()
-                left_text = source
-                right_text = destination
-                marker = f"arrow-{diagram_prefix}-{heading[0]}"
-                diagram = f"""<svg
- viewBox="0 0 440 108" role="img"
- aria-label="{heading}: {left_text} to {right_text} via {vehicle_text}"
- style="width:100%;height:auto">
-<defs>
- <marker id="{marker}" markerWidth="8" markerHeight="8"
-  refX="7" refY="4" orient="auto">
-  <path d="M0,0 L8,4 L0,8 z" fill="{route_color}" />
- </marker>
-</defs>
-<rect x="4" y="18" width="116" height="70" rx="10"
- fill="{background}" stroke="{border}" />
-<rect x="162" y="18" width="116" height="70" rx="10"
- fill="{background}" stroke="{route_color}" />
-<rect x="320" y="18" width="116" height="70" rx="10"
- fill="{background}" stroke="{border}" />
-<path d="M124 53 H152" stroke="{route_color}" stroke-width="3"
- marker-end="url(#{marker})" />
-<path d="M282 53 H310" stroke="{route_color}" stroke-width="3"
- marker-end="url(#{marker})" />
-{svg_label(62, left_text, muted)}
-{svg_label(220, vehicle_text, palette["textColor"], bold=True)}
-{svg_label(378, right_text, muted)}
-</svg>"""
-                st.markdown(diagram, unsafe_allow_html=True)
+                render_route_diagram(
+                    heading,
+                    source,
+                    vehicle,
+                    destination,
+                    theme,
+                    f"{diagram_prefix}-{heading[0]}",
+                )
                 if heading.startswith("1") and plan.ingredient_mode == TransportMode.SHIP:
                     st.caption("Raw ingredients travel from Rotterdam by ship on the Rhine.")
                 elif heading.startswith("1"):
@@ -407,8 +362,13 @@ def _render_details(plan: CandidatePlan, theme: dict, *, current: bool) -> None:
             st.write(f"- {assumption}")
 
 
-def _render_evidence(request: TreatmentRequest, environment: EnvironmentInputs) -> None:
-    with st.expander("Data sources, coverage and manual route checks", expanded=False):
+def _render_evidence(
+    request: TreatmentRequest,
+    environment: EnvironmentInputs,
+    *,
+    expanded: bool = False,
+) -> None:
+    with st.expander("Data sources, coverage and manual route checks", expanded=expanded):
         for issue in environment.river.issues + environment.weather.issues:
             st.warning(issue)
         for window in environment.weather.windows:
@@ -439,6 +399,12 @@ def _render_evidence(request: TreatmentRequest, environment: EnvironmentInputs) 
             )
 
 
+def render_sources(request: TreatmentRequest, environment: EnvironmentInputs) -> None:
+    """Present current evidence on the Sources chapter without changing inputs."""
+    st.subheader("Sources & assumptions")
+    _render_evidence(request, environment, expanded=True)
+
+
 def render_comparison(
     plans: tuple[CandidatePlan, ...],
     *,
@@ -448,6 +414,10 @@ def render_comparison(
     compared_environment: EnvironmentInputs,
     key: str = "comparison",
     theme_path: Path = THEME_PATH,
+    recommendation: RecommendationResult | None = None,
+    route_summaries: tuple[RouteSummary, ...] = (),
+    confirmation_context: tuple = (),
+    baseline_plan: CandidatePlan | None = None,
 ) -> CandidatePlan | None:
     """Inspect alternatives and return a current, explicitly selected plan.
 
@@ -470,6 +440,33 @@ def render_comparison(
         f"Rotterdam ship {departure}"
     )
     _render_evidence(request, environment)
+    if recommendation is not None:
+
+        def details(plan: CandidatePlan) -> None:
+            _render_material_flow(plan, theme, f"{key}-detail")
+            _render_details(plan, theme["timeline"], current=current)
+
+        return render_recommendation(
+            plans,
+            recommendation,
+            route_summaries,
+            theme,
+            current=current,
+            context=(
+                request,
+                environment,
+                compared_request,
+                compared_environment,
+                confirmation_context,
+            ),
+            render_details=details,
+            original_collection=request.original_collection,
+            baseline_plan=baseline_plan,
+            render_advisories=lambda plan: render_weather_recheck_warnings(
+                plan, environment.weather
+            ),
+            key=f"{key}-v2",
+        )
     if not plans:
         st.info("No alternatives supplied. Run a comparison; feasibility is not yet known.")
         return None

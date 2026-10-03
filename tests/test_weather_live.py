@@ -32,7 +32,9 @@ def source():
         name = f"vnut12.lssw.202610030600.{parameter}.csv"
         url = f"{BASE_URL}/{name}"
         assets[name] = {"href": url}
-        payloads[url] = (EXAMPLE / f"{parameter}.csv").read_bytes()
+        # Git may check CSV fixtures out with CRLF on Windows. Normalize only
+        # these test payloads so byte edits below remove the intended records.
+        payloads[url] = (EXAMPLE / f"{parameter}.csv").read_bytes().replace(b"\r\n", b"\n")
     # A newer incomplete cycle must not mix with the complete 06:00 forecast.
     assets["vnut12.lssw.202610030700.tre200h0.csv"] = {"href": f"{BASE_URL}/unused.csv"}
     item_url = f"{COLLECTION_URL}/items/20261003-ch"
