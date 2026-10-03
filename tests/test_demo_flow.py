@@ -21,18 +21,31 @@ def widget(app, label):
     return next(box for box in app.selectbox if box.label == label)
 
 
+def table(app, column):
+    return next(box.value for box in app.dataframe if column in box.value.columns)
+
+
 def inspect(app, *, ingredients="ship", outbound="bicycle", returning="bicycle", shift=0):
-    rows = app.dataframe[0].value
+    rows = table(app, "Ingredients")
     matches = rows[
         (rows["Ingredients"] == {"ship": "Rhine ship", "truck": "refrigerated truck"}[ingredients])
         & (rows["Outbound"] == outbound)
         & (rows["Return"] == returning)
-        & (rows["Collection shift (h)"] == shift)
+        & (
+            rows["Sample pickup"]
+            == (
+                "Original scheduled pickup time (0 h later)"
+                if shift == 0
+                else f"{shift} h later than scheduled"
+            )
+        )
     ]
     assert len(matches) == 1
-    widget(app, "Inspect plan").select(int(matches.index[0])).run()
+    widget(app, "Choose a plan for deadline checks and timeline").select(
+        int(matches.index[0])
+    ).run()
     assert not app.exception
-    return app.dataframe[1].value.set_index("Constraint")
+    return table(app, "Constraint").set_index("Constraint")
 
 
 def test_baseline_deadlines_selection_and_timeline():
@@ -51,12 +64,12 @@ def test_baseline_deadlines_selection_and_timeline():
     app.button[0].click().run()
     first = app.session_state["selected_plan_id"]
     assert first
-    events = app.dataframe[2].value
+    events = table(app, "Event")
     assert "Outbound bicycle" in events["Event"].tolist()
     inspect(app, ingredients="truck", returning="car")
     app.button[0].click().run()
     assert app.session_state["selected_plan_id"] != first
-    assert "Return car preparation" in app.dataframe[2].value["Event"].tolist()
+    assert "Return car preparation" in table(app, "Event")["Event"].tolist()
     app.run()
     assert app.session_state["selected_plan_id"]
 
@@ -74,7 +87,7 @@ def test_rhine_delay_recovery_and_selection_invalidation():
     assert not app.button[0].disabled
     inspect(app, ingredients="truck")
     assert not app.button[0].disabled
-    assert "Truck approval / preparation" in app.dataframe[2].value["Event"].tolist()
+    assert "Truck approval / preparation" in table(app, "Event")["Event"].tolist()
 
 
 @pytest.mark.parametrize("scenario", ["Hot return", "Snow"])
@@ -88,7 +101,7 @@ def test_weather_disruptions_require_car_alternatives(scenario):
     assert not app.button[0].disabled
     app.button[0].click().run()
     assert app.session_state["selected_plan_id"]
-    events = app.dataframe[2].value.set_index("Event")
+    events = table(app, "Event").set_index("Event")
     assert (
         events.loc["Return car preparation", "Start (UTC)"] < events.loc["Processing", "End (UTC)"]
     )
@@ -173,6 +186,6 @@ def test_all_failed_alternatives_have_no_feasible_message():
             box.select("unavailable")
     app.run()
     assert not app.exception
-    assert (app.dataframe[0].value["Result"] == "infeasible").all()
+    assert (table(app, "Result")["Result"] == "infeasible").all()
     assert any("No feasible plan" in message.value for message in app.error)
     assert app.button[0].disabled

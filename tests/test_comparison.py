@@ -12,7 +12,12 @@ from treatment_planner.demo import (
     fixture_request,
     fixture_settings,
 )
-from treatment_planner.ui.comparison import THEME_PATH, comparison_rows, timeline_chart
+from treatment_planner.ui.comparison import (
+    THEME_PATH,
+    _key_option_rows,
+    comparison_rows,
+    timeline_chart,
+)
 
 APP = """
 from dataclasses import replace
@@ -103,7 +108,7 @@ def test_failure_and_missing_evidence_have_distinct_messages():
     assert app.button[0].disabled
     assert any("No confirmed plan yet" in message.value for message in app.warning)
     assert any("Return coverage missing" in message.value for message in app.warning)
-    assert app.dataframe[0].value["Tightest margin (h)"].isna().all()
+    assert app.dataframe[1].value["Tightest margin (h)"].isna().all()
 
 
 def test_unknown_manual_inputs_remain_unknown():
@@ -131,3 +136,15 @@ def test_negative_and_zero_margins_and_supplied_deadline_markers():
     detail = timeline_chart(postpone, theme, detail=True).to_dict()
     event_rows = detail["data"]["values"]
     assert all(event["Lane"] != "Ingredients" for event in event_rows)
+
+
+def test_key_options_explain_late_plan_and_recovery_in_plain_language():
+    plans = FixtureComparator("Low water").compare(
+        fixture_request(), fixture_environment("Low water"), fixture_settings("Low water")
+    )
+    rows = _key_option_rows(plans)
+    assert len(rows) <= 4
+    assert rows[0]["Deadline result"] == "5 h late"
+    assert rows[0]["Tightest deadline"] == "Production finishes"
+    assert rows[1]["Change from current"] == "Collect sample 12 h later"
+    assert rows[1]["Deadline result"] == "On time — 6 h buffer"

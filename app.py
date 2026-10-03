@@ -141,9 +141,12 @@ def render_sources(mode: str) -> None:
 def main() -> None:
     st.set_page_config(page_title="Treatment material-flow planner", layout="wide")
     apply_theme()
-    st.caption("OPERATIONS PREVIEW / MATERIAL FLOW")
-    st.title("Treatment material-flow planner")
-    st.write("Compare generated transport alternatives, inspect constraints and select a plan.")
+    st.caption("ONE TREATMENT · INGREDIENTS → PRODUCTION → HOSPITAL")
+    st.title("Plan the journey for one treatment")
+    st.write(
+        "Follow the ingredients and hospital sample to production, then compare how the "
+        "finished treatment returns to the hospital."
+    )
     st.warning(
         "Synthetic treatment demo — planning choices only; no transport or treatment booked."
     )
