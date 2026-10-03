@@ -12,7 +12,15 @@ from treatment_planner.demo import (
     fixture_request,
     fixture_settings,
 )
-from treatment_planner.ui.comparison import THEME_PATH, comparison_rows, timeline_chart
+from treatment_planner.interfaces import CheckStatus, ResultStatus
+from treatment_planner.ui.comparison import (
+    THEME_PATH,
+    _key_option_rows,
+    _key_options,
+    _plain_status,
+    comparison_rows,
+    timeline_chart,
+)
 
 APP = """
 from dataclasses import replace
@@ -103,7 +111,7 @@ def test_failure_and_missing_evidence_have_distinct_messages():
     assert app.button[0].disabled
     assert any("No confirmed plan yet" in message.value for message in app.warning)
     assert any("Return coverage missing" in message.value for message in app.warning)
-    assert app.dataframe[0].value["Tightest margin (h)"].isna().all()
+    assert app.dataframe[1].value["Tightest margin (h)"].isna().all()
 
 
 def test_unknown_manual_inputs_remain_unknown():
@@ -131,3 +139,80 @@ def test_negative_and_zero_margins_and_supplied_deadline_markers():
     detail = timeline_chart(postpone, theme, detail=True).to_dict()
     event_rows = detail["data"]["values"]
     assert all(event["Lane"] != "Ingredients" for event in event_rows)
+
+
+def test_key_options_explain_late_plan_and_recovery_in_plain_language():
+    plans = FixtureComparator("Low water").compare(
+        fixture_request(), fixture_environment("Low water"), fixture_settings("Low water")
+    )
+    rows = _key_option_rows(plans)
+    assert len(rows) <= 4
+    assert rows[0]["Deadline result"] == "5 h late"
+    assert rows[0]["Tightest deadline"] == "Production finishes"
+    assert rows[1]["Change from current"] == "Collect sample 12 h later"
+    assert rows[1]["Deadline result"] == "On time — 6 h buffer"
+
+
+def test_key_options_keep_a_confirmed_plan_visible_when_heuristic_options_fail():
+    plans = sample_plans()
+    confirmed = plans[-1]
+    failed_plans = tuple(
+        replace(
+            plan,
+            status=ResultStatus.INFEASIBLE,
+            checks=(replace(plan.checks[0], status=CheckStatus.FAIL),) + plan.checks[1:],
+        )
+        for plan in plans[:-1]
+    )
+
+    options = _key_options(failed_plans + (confirmed,))
+
+    assert len(options) <= 4
+    assert any(plan.plan_id == confirmed.plan_id for plan in options)
+    assert any(plan.status == ResultStatus.CONFIRMED for plan in options)
+
+
+def test_non_deadline_weather_failure_is_not_reported_as_a_missed_deadline():
+    plan = sample_plans()[0]
+    weather_failure = replace(
+        plan.checks[0],
+        constraint="Return weather",
+        status=CheckStatus.FAIL,
+        margin=None,
+        deadline=None,
+        reason="Return bicycle blocked by the forecast.",
+    )
+    infeasible = replace(
+        plan,
+        status=ResultStatus.INFEASIBLE,
+        checks=(weather_failure,)
+        + tuple(replace(check, status=CheckStatus.PASS) for check in plan.checks[1:]),
+    )
+
+    status = _plain_status(infeasible)
+
+    assert "weather" in status.lower()
+    assert "late" not in status.lower()
+    assert "deadline" not in status.lower()
+
+
+def test_collection_timing_failure_uses_a_neutral_rule_message():
+    plan = sample_plans()[0]
+    collection_failure = replace(
+        plan.checks[0],
+        constraint="Collection timing",
+        status=CheckStatus.FAIL,
+        margin=None,
+        deadline=None,
+        reason="Collection cannot advance or precede the planning decision.",
+    )
+    infeasible = replace(
+        plan,
+        status=ResultStatus.INFEASIBLE,
+        checks=(collection_failure,)
+        + tuple(replace(check, status=CheckStatus.PASS) for check in plan.checks[1:]),
+    )
+
+    status = _plain_status(infeasible)
+
+    assert status == "A planning rule blocks this option"
