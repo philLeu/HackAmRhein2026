@@ -194,3 +194,25 @@ def test_non_deadline_weather_failure_is_not_reported_as_a_missed_deadline():
     assert "weather" in status.lower()
     assert "late" not in status.lower()
     assert "deadline" not in status.lower()
+
+
+def test_collection_timing_failure_uses_a_neutral_rule_message():
+    plan = sample_plans()[0]
+    collection_failure = replace(
+        plan.checks[0],
+        constraint="Collection timing",
+        status=CheckStatus.FAIL,
+        margin=None,
+        deadline=None,
+        reason="Collection cannot advance or precede the planning decision.",
+    )
+    infeasible = replace(
+        plan,
+        status=ResultStatus.INFEASIBLE,
+        checks=(collection_failure,)
+        + tuple(replace(check, status=CheckStatus.PASS) for check in plan.checks[1:]),
+    )
+
+    status = _plain_status(infeasible)
+
+    assert status == "A planning rule blocks this option"

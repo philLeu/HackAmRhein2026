@@ -322,7 +322,7 @@ def _plain_status(plan: CandidatePlan) -> str:
             late = abs(min(missed).total_seconds() / 3600)
             causes.insert(0, f"{late:g} h late")
         elif not causes:
-            causes.append("Misses at least one deadline")
+            causes.append("A planning rule blocks this option")
         return " · ".join(causes)
     if not margins:
         return "Deadlines met — exact buffer unavailable"

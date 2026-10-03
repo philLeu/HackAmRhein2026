@@ -1,6 +1,6 @@
 # V2-0 comparison adoption handoff
 
-Status: ready for integration review
+Status: fixes applied; ready for re-review
 
 ## Scope
 
@@ -15,15 +15,25 @@ branch and `app.py` were not changed.
 - Corrected result wording so weather and route restrictions are not described
   as missed deadlines. A late result is reported only when a failed check has
   a negative deadline margin.
+- Added a neutral status for non-deadline failures such as invalid collection
+  timing; it no longer claims that a deadline was missed.
 - Added a shortlist fallback that keeps one confirmed plan visible whenever
   the full generated set contains one, even when the heuristic examples fail.
-- Added regression tests for both reported cases.
+- Added regression tests for the collection-timing label and the real planner
+  scenario with outbound route snow and unavailable return car. The planner
+  generates 16 candidates, including four confirmed alternatives, and the
+  shortlist retains a confirmed car-outbound/bicycle-return plan.
 
 ## Verification
 
-- `pytest -q tests/test_comparison.py tests/test_demo_flow.py`: 18 passed.
+- Full suite: 143 passed.
 - Ruff check and format check passed for the changed Python files.
 - `git diff --check` passed.
+- Strict `scripts/doc-check.sh` passed.
+
+The repository-wide Ruff check still reports 12 pre-existing findings in the
+interface skill templates, the Rhine notebook and weather replay processing;
+none are in the files changed by this task.
 
 ## Integration notes
 

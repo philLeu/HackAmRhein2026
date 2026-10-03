@@ -2,13 +2,22 @@
 
 import importlib.util
 import socket
+from dataclasses import replace
 from datetime import timedelta
 from pathlib import Path
 
 import pytest
 from streamlit.testing.v1 import AppTest
 
-from treatment_planner.interfaces import CheckStatus
+from treatment_planner.interfaces import (
+    Availability,
+    CheckStatus,
+    CourierLeg,
+    ResultStatus,
+    RouteSnow,
+    TransportMode,
+)
+from treatment_planner.ui.comparison import _key_options
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -189,3 +198,41 @@ def test_all_failed_alternatives_have_no_feasible_message():
     assert (table(app, "Result")["Result"] == "infeasible").all()
     assert any("No feasible plan" in message.value for message in app.error)
     assert app.button[0].disabled
+
+
+def test_outbound_snow_and_unavailable_return_car_keep_real_confirmed_plan_in_shortlist():
+    spec = importlib.util.spec_from_file_location("demo_app", ROOT / "app.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    request = module.demo_request(module.MODES[0])
+    request = replace(
+        request,
+        routes=tuple(
+            replace(route, snow=RouteSnow.PRESENT)
+            if route.leg == CourierLeg.OUTBOUND
+            else replace(route, car_availability=Availability.UNAVAILABLE)
+            for route in request.routes
+        ),
+    )
+    settings = module.load_settings(ROOT / "config" / "planning.json")
+    environment = module.synthetic_environment("Baseline")
+    plans = module.PlanningComparator(
+        weather_location="Invented Basel route", t4_replay=True
+    ).compare(request, environment, settings)
+
+    confirmed = [plan for plan in plans if plan.status == ResultStatus.CONFIRMED]
+    shortlist = _key_options(plans)
+    fallback = next(
+        (
+            plan
+            for plan in shortlist
+            if plan.status == ResultStatus.CONFIRMED
+            and plan.outbound_mode == TransportMode.CAR
+            and plan.return_mode == TransportMode.BICYCLE
+        ),
+        None,
+    )
+
+    assert len(confirmed) == 4
+    assert fallback is not None
+    assert all(check.status == CheckStatus.PASS for check in fallback.checks)
