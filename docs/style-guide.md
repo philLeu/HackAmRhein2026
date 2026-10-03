@@ -64,8 +64,7 @@ unknown delay remains “Delay unknown”. Demo carry-over is a small visible no
 with old/new intervals in details. The original baseline is a separate reference,
 while the coordinator's confirmed plan has an explicit acknowledgement.
 
-These are reusable UI components awaiting V2-8 application wiring; the current
-V1 entry point retains its existing comparison flow. `route.card_width` controls
+The V2 entry point wires these components to the planning engine. `route.card_width` controls
 native wrapping of V2 route cards; `route.label_font_size` keeps the shared SVG
 labels readable. Both values live in the existing theme file. Demo buttons use
 native wrapping containers so full route names remain visible on narrow screens.

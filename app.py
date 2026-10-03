@@ -1,4 +1,4 @@
-"""T9 connects offline evidence, the planning engine and coordinator screen."""
+"""PulseShift application entry point for guided treatment planning."""
 
 from dataclasses import replace
 from datetime import UTC, datetime, timedelta
@@ -6,109 +6,30 @@ from pathlib import Path
 
 import streamlit as st
 
-from treatment_planner.data.rhine import RhineReplayProvider
-from treatment_planner.data.weather import WeatherReplayProvider
-from treatment_planner.demo import ORDER, SyntheticWeatherProvider, fixture_request
+from treatment_planner.data.weather import WeatherLiveProvider
+from treatment_planner.demo import ORDER
 from treatment_planner.interfaces import (
-    EnvironmentInputs,
-    PlanningSettings,
-    RiverReport,
-    TimeWindow,
-    TreatmentRequest,
-    WeatherReport,
+    DemoOverrides,
+    EvidenceMode,
+    PlanningGoal,
+    TransportMode,
 )
-from treatment_planner.planning import PlanningComparator, load_settings
+from treatment_planner.planning import load_settings
+from treatment_planner.recommendations import GoalRecommendationEngine
 from treatment_planner.ui.comparison import render_comparison, render_route_inputs
+from treatment_planner.ui.comparison import render_sources as render_evidence_sources
+from treatment_planner.ui.demo_controls import render_demo_controls
+from treatment_planner.ui.navigation import render_evidence_mode, render_navigation
 from treatment_planner.ui.presentation import apply_theme
+from treatment_planner.ui.recommendation import render_goal
 from treatment_planner.ui.rhine import render_rhine_conditions
+from treatment_planner.ui.route_summary import render_route_summaries
+from treatment_planner.v2_flow import FORECAST_AGE, baseline_overrides, build_flow, live_request
 
 ROOT = Path(__file__).resolve().parent
-SCENARIOS = ("Baseline", "Low water", "Hot return", "Snow", "Missing weather")
-MODES = ("Synthetic walkthrough", "Saved provider replay")
-ARCHIVE_ORDER = datetime(2026, 10, 3, 11, 30, tzinfo=UTC)
-LOCATION = "Basel 4056 forecast point"
 
 
-def demo_request(mode: str) -> TreatmentRequest:
-    """Keep invented treatment offsets, using capture dates for provider replay."""
-    request = fixture_request()
-    if mode == MODES[0]:
-        return request
-    offset = ARCHIVE_ORDER - ORDER
-    return replace(
-        request,
-        order_time=ARCHIVE_ORDER,
-        original_collection=request.original_collection + offset,
-        nominal_departure=request.nominal_departure + offset,
-        decision_time=ARCHIVE_ORDER,
-        routes=tuple(
-            replace(
-                route,
-                checked_at=ARCHIVE_ORDER,
-                provenance=replace(
-                    route.provenance, source_time=ARCHIVE_ORDER, retrieved_at=ARCHIVE_ORDER
-                ),
-            )
-            for route in request.routes
-        ),
-    )
-
-
-def synthetic_environment(scenario: str) -> EnvironmentInputs:
-    """Supply labelled T4 weather; the engine calculates every alternative."""
-    weather = SyntheticWeatherProvider(scenario == "Hot return").load(
-        "Invented Basel route", TimeWindow(ORDER, ORDER + timedelta(hours=200))
-    )
-    if scenario == "Snow":
-        weather = replace(
-            weather, windows=tuple(replace(w, snowfall=True) for w in weather.windows)
-        )
-    elif scenario == "Missing weather":
-        weather = WeatherReport((), ("Synthetic missing-weather example: no journey coverage.",))
-    # The explicit t4_replay engine mode labels the synthetic delay assumption.
-    return EnvironmentInputs(RiverReport(()), weather)
-
-
-def provider_environment(
-    request: TreatmentRequest,
-    settings: PlanningSettings,
-    forecast_age: timedelta,
-    observation_age: timedelta,
-    *,
-    replay_root: Path = ROOT / "data" / "replay",
-) -> EnvironmentInputs:
-    """Load saved providers offline at a historical clock, preserving all issues.
-
-    Probe the engine for candidate journey envelopes before loading weather.
-    Issues anywhere in these envelopes conservatively affect bicycle plans.
-    """
-    river = RhineReplayProvider(
-        replay_root / "rhine", observation_age, clock=lambda: request.decision_time
-    ).load(
-        TimeWindow(
-            datetime(2026, 10, 3, 8, 30, tzinfo=UTC),
-            datetime(2026, 10, 3, 8, 55, tzinfo=UTC),
-        )
-    )
-    provider = WeatherReplayProvider(
-        replay_root / "weather" / "capture-20261003T112609Z", forecast_age
-    )
-    probe = PlanningComparator(weather_location=LOCATION).compare(
-        request, EnvironmentInputs(river, WeatherReport(())), settings
-    )
-    windows, issues = [], []
-    for event_id, leg in (("sample", "outbound"), ("return", "return")):
-        journeys = [
-            event.interval for plan in probe for event in plan.events if event.event_id == event_id
-        ]
-        envelope = TimeWindow(min(w.start for w in journeys), max(w.end for w in journeys))
-        report = provider.load(leg, envelope)
-        windows.extend(report.windows)
-        issues.extend(report.issues)
-    return EnvironmentInputs(river, WeatherReport(tuple(windows), tuple(dict.fromkeys(issues))))
-
-
-def render_sources(mode: str) -> None:
+def render_sources(mode: EvidenceMode) -> None:
     """Keep provider attribution and deliberate simplifications visible."""
     with st.expander("Sources and demo limits", expanded=True):
         st.markdown(
@@ -120,69 +41,147 @@ def render_sources(mode: str) -> None:
         st.write(
             "Invented treatment and transport/process durations. Rhine delays are synthetic "
             "scenario inputs, never inferred from the Basel gauge or proof of route navigability. "
-            "The finite alternative set is unranked and is not exhaustive optimisation."
+            "The finite alternative set is goal-ranked but is not exhaustive optimisation."
         )
-        if mode == MODES[0]:
+        if mode == EvidenceMode.DEMO:
             st.write(
-                "Synthetic walkthrough: weather maxima and snowfall are invented. Unedited "
-                "synthetic route entries assume renewed clear-route checks at dispatch. "
-                "Edited manual entries require renewed checks and may remain unconfirmed."
+                "Demo mode uses a fixed clock and simulated Rhine, weather and route inputs. "
+                "The low-water-to-delay rule is illustrative; clear synthetic route checks "
+                "are assumed renewed at dispatch."
             )
         else:
             st.write(
-                "Historical provider replay, evaluated at 03.10.2026 · 11:30 UTC. "
-                "Saved weather is hourly mean; maximum temperature remains unknown. "
-                "Rhine original retrieval time is unknown. Synthetic route/car inputs remain "
-                "labelled; future route checks are required. Freshness values are inspection "
-                "controls, not an approved operational policy. Any weather issue within the "
-                "candidate journey envelopes conservatively affects bicycle alternatives."
+                "Live evidence comes from current public provider responses. MeteoSwiss "
+                "hourly mean temperature is never treated as a journey maximum. Future "
+                "manual route checks remain unknown until renewed. Provider failures and "
+                "coverage gaps do not trigger a simulated fallback."
             )
 
 
 def main() -> None:
-    st.set_page_config(page_title="Treatment material-flow planner", layout="wide")
+    """Present V2 planning with explicit live evidence and a fixed demo clock."""
+    st.set_page_config(page_title="PulseShift · Treatment planner", layout="wide")
     theme = apply_theme()
     st.caption("OPERATIONS PREVIEW / MATERIAL FLOW")
-    st.title("Treatment material-flow planner")
-    st.write("Compare generated transport alternatives, inspect constraints and select a plan.")
+    st.title("PulseShift · Treatment material-flow planner")
     st.warning(
         "Synthetic treatment demo — planning choices only; no transport or treatment booked."
     )
-    mode = st.selectbox("Evidence mode", MODES)
+    state = st.session_state
+    chapter = render_navigation()
+    mode = render_evidence_mode(state.get("v2-mode-value", EvidenceMode.LIVE))
+    previous_mode = state.get("v2-mode-value")
+    if previous_mode is not None and mode != previous_mode:
+        state["v2-overrides"] = DemoOverrides()
+        state.pop("v2-live-flow", None)
+        state.pop("v2-live-request", None)
+        state.pop("comparison-v2-confirmed", None)
+        state["v2-confirmed-id"] = None
+    state["v2-mode-value"] = mode
     settings = load_settings(ROOT / "config" / "planning.json")
-    if mode == MODES[0]:
-        scenario = st.selectbox("Scenario", SCENARIOS)
-        settings = replace(
-            settings, river_delay=timedelta(hours=12 if scenario == "Low water" else 0)
-        )
-        environment = synthetic_environment(scenario)
+    baseline = baseline_overrides(settings)
+    overrides = state.get("v2-overrides", DemoOverrides())
+    overrides, reset = render_demo_controls(
+        mode,
+        overrides,
+        baseline,
+        clock=ORDER,
+        station_label="Basel Rhine gauge (station level)",
+    )
+    if reset:
+        overrides = DemoOverrides()
+        state["v2-goal-value"] = PlanningGoal.LOWER_DISRUPTION_RISK
+        state["v2-target-value"] = datetime(2026, 11, 8, 5, tzinfo=UTC)
+        state["v2-reset-generation"] = state.get("v2-reset-generation", 0) + 1
+        for name in tuple(state):
+            if name.startswith(("v2-goal", "comparison-v2", "v2-demo-fields-")):
+                state.pop(name, None)
+        state["v2-confirmed-id"] = None
+    if overrides != state.get("v2-overrides"):
+        state["v2-overrides"] = overrides
+        state["v2-confirmed-id"] = None
+        state.pop("comparison-v2-confirmed", None)
+    goal = state.get("v2-goal-value", PlanningGoal.LOWER_DISRUPTION_RISK)
+    target = state.get("v2-target-value", datetime(2026, 11, 8, 5, tzinfo=UTC))
+    if chapter == "Plan":
+        goal, target = render_goal(goal, target)
+        state["v2-goal-value"], state["v2-target-value"] = goal, target
+    if mode == EvidenceMode.DEMO:
+        flow = build_flow(mode, settings, overrides, baseline)
     else:
-        forecast_age = st.number_input(
-            "Inspect maximum forecast age (hours)", min_value=1, value=24
-        )
-        observation_age = st.number_input(
-            "Inspect maximum observation age (hours)", min_value=1, value=6
-        )
-    request = render_route_inputs(demo_request(mode))
-    if mode == MODES[1]:
-        environment = provider_environment(
-            request, settings, timedelta(hours=forecast_age), timedelta(hours=observation_age)
-        )
-    comparator = PlanningComparator(
-        weather_location="Invented Basel route" if mode == MODES[0] else LOCATION,
-        t4_replay=mode == MODES[0],
+        if "v2-live-request" not in state:
+            state["v2-live-request"] = live_request(datetime.now(UTC))
+        request = render_route_inputs(state["v2-live-request"])
+        if request != state["v2-live-request"]:
+            state["v2-live-request"] = request
+            state.pop("v2-live-flow", None)
+        if st.button("Refresh live evidence"):
+            request = replace(request, decision_time=datetime.now(UTC))
+            state["v2-live-request"] = request
+            state.pop("v2-live-flow", None)
+            state.pop("v2-live-weather", None)
+        if "v2-live-weather" not in state:
+            state["v2-live-weather"] = WeatherLiveProvider(FORECAST_AGE)
+        if "v2-live-flow" not in state:
+            with st.spinner("Loading current Rhine and weather evidence"):
+                state["v2-live-flow"] = build_flow(
+                    mode,
+                    settings,
+                    DemoOverrides(),
+                    baseline,
+                    request=request,
+                    weather=state["v2-live-weather"],
+                )
+        flow = state["v2-live-flow"]
+        if flow.environment.river.issues or flow.environment.weather.issues:
+            st.info("Live evidence has gaps or limits. Switch to Demo for an offline walkthrough.")
+    context = (
+        goal,
+        target,
+        mode,
+        overrides,
+        flow.request,
+        flow.environment,
+        state.get("v2-reset-generation", 0),
     )
-    plans = comparator.compare(request, environment, settings)
-    render_sources(mode)
-    render_rhine_conditions(ROOT, theme)
-    selected = render_comparison(
-        plans,
-        request=request,
-        environment=environment,
-        compared_request=request,
-        compared_environment=environment,
+    if state.get("v2-confirmation-context") != context:
+        state["v2-confirmation-context"] = context
+        state["v2-confirmed-id"] = None
+        state.pop("comparison-v2-confirmed", None)
+    recommendation = GoalRecommendationEngine().recommend(flow.plans, goal, target, flow.summaries)
+    baseline_plan = next(
+        (
+            plan
+            for plan in flow.plans
+            if plan.ingredient_mode == TransportMode.SHIP
+            and plan.outbound_mode == plan.return_mode == TransportMode.BICYCLE
+            and plan.collection_shift == timedelta()
+        ),
+        None,
     )
-    st.session_state["selected_plan_id"] = selected.plan_id if selected else None
+    if chapter == "Plan":
+        selected = render_comparison(
+            flow.plans,
+            request=flow.request,
+            environment=flow.environment,
+            compared_request=flow.request,
+            compared_environment=flow.environment,
+            recommendation=recommendation,
+            route_summaries=flow.summaries,
+            confirmation_context=context,
+            baseline_plan=baseline_plan,
+        )
+        state["v2-confirmed-id"] = selected.plan_id if selected else None
+    elif chapter == "Routes & conditions":
+        plan_id = state.get("v2-confirmed-id") or state.get("comparison-v2-picked")
+        if plan_id:
+            render_route_summaries(flow.summaries, plan_id, theme)
+        else:
+            st.info("Choose a plan on the Plan chapter to inspect its routes.")
+    else:
+        render_evidence_sources(flow.request, flow.environment)
+        render_sources(mode)
+        render_rhine_conditions(ROOT, theme)
     st.caption(
         "Planning preview only. No patient records, clinical decisions or transport bookings."
     )
