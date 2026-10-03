@@ -7,9 +7,9 @@ Status: done · Updated: 2026-10-03 · Branch: feat/t5-planning · Last owner: @
 Implement the agreed T4 alternatives with shared inputs/results, deadlines,
 preparations and explicit unknown evidence. Built from main at 7f2b014 after
 T1 and T4 merged. Implementation is complete; teammate PR review and explicit
-merge approval remain. App registration belongs to T9. Publication is pending:
-automatic approval review rejected the branch push because it requires explicit
-authorization for the code payload and GitHub destination. No PR is open yet.
+merge approval remain. App registration belongs to T9. Publication was explicitly
+authorized and the branch is pushed. [PR #4](https://github.com/philLeu/HackAmRhein2026/pull/4)
+is open for teammate review.
 
 ## Done
 
@@ -59,8 +59,8 @@ T4's late-return-preparation counterexample. Generated alternatives prepare ahea
 
 ## Next
 
-1. Obtain push/PR authorization, publish feat/t5-planning, then have a teammate
-   review S1–S5 results; merge only with explicit approval for that PR.
+1. Have a teammate review PR #4 and S1–S5 results; merge only with explicit
+   approval for that PR.
 2. T9 connects the comparator/config to the screen and provider inputs, displaying
    assumptions and reasons, and distinguishing no confirmed plan from all
    generated alternatives being infeasible.
