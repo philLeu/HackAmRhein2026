@@ -1,6 +1,6 @@
 # Team
 
-Track: Manufacturing · Challenge: To be agreed · Repo: https://github.com/philLeu/HackAmRhein2026
+Track: Manufacturing · Challenge: Open-data-driven material-flow decisions · Repo: https://github.com/philLeu/HackAmRhein2026
 
 ## People
 
@@ -8,20 +8,21 @@ Track: Manufacturing · Challenge: To be agreed · Repo: https://github.com/phil
 
 | GitHub username | Working on (areas, files) |
 |---|---|
-| @philLeu | To be agreed |
-| @Fhuelin | To be agreed |
-| @luapreta-cloud | To be agreed |
+| @philLeu | app foundation, planning engine and final integration |
+| @Fhuelin | domain scenarios and timeline/comparison screen |
+| @luapreta-cloud | Rhine dataset investigation already started; Rhine adapter |
+| @janaaaaaaaa | weather research, weather adapter and fallback demo |
 
-One additional teammate is completing setup; add their GitHub username when available.
+Task boundaries and files are in docs/plan.md. The team agreed this split.
 
-Special roles: demo owner: To be agreed · time keeper: Optional, to be agreed
+Special roles: demo owner: @philLeu · time keeper: Optional, to be agreed
 
 ## Working rules
 
 - Branches `<type>/<task>-<topic>` (e.g. `feat/t3-csv-upload`), never a person's name; never commit to `main` directly.
 - The privacy check must pass before every commit and push. Never `--no-verify`.
 - Every change goes through a pull request. Merge only after explicit approval for that PR.
-- Merge policy: To be agreed.
+- Merge policy: one other teammate checks each PR, followed by explicit merge approval.
 - Sync times: To be agreed.
 - Keep `main` working so the demo can run when needed.
 - Decisions that affect others: `docs/decisions.md`.

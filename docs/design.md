@@ -1,8 +1,8 @@
 # Treatment material-flow planner
 
-Team: @philLeu, @Fhuelin, @luapreta-cloud; one teammate pending setup · Track: Manufacturing · Updated: 2026-10-03
+Team: @philLeu, @Fhuelin, @luapreta-cloud, @janaaaaaaaa · Track: Manufacturing · Updated: 2026-10-03
 
-Status: Agreed demo flow and constraints; data sources, durations, implementation and ownership still to be agreed. All treatment timing rules below are team-defined demo assumptions.
+Status: Agreed demo flow and constraints; source integrations and scenario durations still to be finalised; task split and Python/Streamlit agreed. All treatment timing rules below are team-defined demo assumptions.
 
 ## Problem
 A production coordinator plans one individual treatment whose ingredients are ordered from Rotterdam. Rhine and local weather disruptions can invalidate its logistics and production schedule. The demo baseline is an invented manual planning workflow, not a documented hospital or factory process.
@@ -47,7 +47,7 @@ Preparation is separate from travel. The return car's preparation must start bef
 Open data supplies environmental signals. Delivery-delay estimates, travel times and transport availability are separate demo assumptions, not facts established by those signals. Record verified providers, licence, timestamps and replay provenance in docs/SOURCES.md before using them.
 
 ## How it's built
-Proposed components: an environmental-data adapter, a planning engine that evaluates timing constraints, and a timeline/comparison screen. Stack, shared interface, data format and folder layout are pending agreement. No application code has been started.
+Python with Streamlit for the timeline/comparison screen, a separate planning engine and independent environmental-data adapters. No database for the first demo. T1 establishes the shared interface and project setup; planned file ownership is in docs/plan.md. No application code has been started.
 
 ## Out of scope / faked
 Multiple treatments, production capacity optimisation, in-transit ingredient transfers, real bookings, patient records, clinical validation and actual refrigeration monitoring. Journey intervals to check, minimum production duration, truck/local journey durations, forecast horizon and Rhine delay mapping remain open. Existing route snow uses a manual status rather than automatic route inspection; freshness rules remain to be specified. A forecast alone cannot establish that the route is clear. Do not treat unknown route status or missing/stale forecasts as proof that bicycle travel is available.
@@ -55,9 +55,12 @@ Multiple treatments, production capacity optimisation, in-transit ingredient tra
 ## Who does what
 | GitHub username | Owns |
 |---|---|
-| @philLeu | To be agreed |
-| @Fhuelin | To be agreed |
-| @luapreta-cloud | To be agreed |
+| @philLeu | foundation, planning engine, integration |
+| @Fhuelin | scenarios and comparison screen |
+| @luapreta-cloud | Rhine investigation underway; Rhine adapter |
+| @janaaaaaaaa | weather and fallback demo |
+
+See docs/plan.md for the agreed task boundaries and dependencies.
 
 ## Risks and fallback
 MeteoSwiss local forecasts cover nine full days including the current day; the ingredient delivery plus treatment cycle can extend beyond that horizon. Transport assumptions may dominate the result. Display data coverage and uncertainty, and distinguish provisional plans from checked journey windows. Use a saved, timestamped environmental scenario for reliable replay, plus screenshots of the comparison if the live demo fails. Final scope and team review are pending.

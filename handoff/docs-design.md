@@ -9,7 +9,7 @@ Agree a small manufacturing-control demo using real environmental open data to c
 Design draft and starter kit form the initial repository snapshot; no application code yet. Shared repository is https://github.com/philLeu/HackAmRhein2026. Check Git history and remote tracking for current publication state. Future work goes through task branches and pull requests.
 
 ## Done
-- Confirmed team usernames and shared repository in TEAM.md; one teammate pending setup.
+- Confirmed four team usernames and shared repository in TEAM.md; @janaaaaaaaa has joined.
 - Captured one-treatment timeline, Rotterdam shipment, schedule and transport alternatives, and local bicycle/car courier rules in docs/design.md.
 - Recorded confirmed product decisions in docs/decisions.md.
 - Confirmed snow blocking includes either forecast snowfall during the journey or existing snow on the route.
@@ -21,7 +21,7 @@ Design draft and starter kit form the initial repository snapshot; no applicatio
 1. Agree synthetic transport/production durations and remaining timing semantics; define freshness of manual route status.
 2. Verify open Rhine/weather providers, licence, timestamps and forecast coverage; document in docs/SOURCES.md.
 3. Agree synthetic durations and remaining timing semantics listed in docs/design.md.
-4. Agree stack, team ownership and review policy, then finalise the design and create docs/plan.md.
+4. Agree stack, proposed team ownership and review policy from docs/plan.md, then finalise the design. See handoff/docs-plan.md for the proposed task split.
 5. Run privacy and documentation checks before saving/sharing. Ask explicitly before merging any PR.
 
 ## Files
