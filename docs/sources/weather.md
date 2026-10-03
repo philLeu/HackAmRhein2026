@@ -1,7 +1,10 @@
 # Basel weather: T3 investigation
 
-Status: downloader, documented snow-code mapping and synthetic offline example
-verified; real capture still pending. This is T3 support, not the T7 application adapter.
+Status: downloader, documented snow-code mapping, synthetic offline example and
+permitted real capture verified. The historical capture at
+`data/replay/weather/capture-20261003T112609Z/` is for inspection and replay; it
+is not a current forecast. This is T3 source research, with the T7 adapter
+documented below.
 
 ## Source and fields
 
@@ -141,6 +144,9 @@ the licence link and indicate filtering or other transformations; do not imply
 endorsement. Icon artwork is excluded from this investigation.
 [Official terms](https://opendatadocs.meteoswiss.ch/general/terms-of-use).
 
-Before completing T3, run a real capture with network access, inspect the selected
-location and actual rows, verify temperature metadata and observed code coverage, and
-record the outcome in [the task handoff](../../handoff/t3-weather-research.md).
+T3's real capture is saved at
+`data/replay/weather/capture-20261003T112609Z/`. It records the selected point,
+real forecast rows, parameter metadata, issue and retrieval times, coverage,
+hashes and licence attribution. Re-run the capture utility for current data; do
+not treat this historical snapshot as fresh. The outcome is summarized in
+[the task handoff](../../handoff/t3-weather-research.md).

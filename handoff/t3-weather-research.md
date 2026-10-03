@@ -1,19 +1,22 @@
 # Handoff: T3 Weather source investigation
 
-Status: in progress · Updated: 2026-10-03 · Branch: data/t3-weather-research · Last owner: @janaaaaaaaa
+Status: done · Updated: 2026-10-03 · Branch: docs/t3-weather-handoff · Last owner: @janaaaaaaaa
 
 ## Goal
 Provide an inspectable Basel forecast sample with temperature, snow-code meaning,
 validity intervals, issue time, coverage and licence, as specified in docs/plan.md.
 
 ## State
-Work is in a separate writable local clone. The original checkout is read-only in
-this environment. A standalone downloader, CSV export, readable HTML table and
-source notes are ready. A live capture has 220 real MeteoSwiss rows for Basel
-postcode 4056, issued at 2026-10-03 11:00 UTC. The former timestamp error came from
-a capitalized `Date` header; the parser now handles header case and spacing.
-Snow-code meanings are verified from the official PDF, with code 133 explicitly
-unresolved. German short descriptions are now included beside the raw code.
+The permitted live capture is committed at
+`data/replay/weather/capture-20261003T112609Z/`. It contains 220 real MeteoSwiss
+temperature rows and 217 weather-code rows for the 4056 postcode centre (point
+ID 405600), from a forecast issued at 2026-10-03 11:00 UTC and retrieved at
+11:26 UTC. The selected location, valid intervals, coverage, provenance and CC BY
+4.0 attribution are documented in `docs/sources/weather.md` and the capture files.
+The former timestamp error came from a capitalized `Date` header; the parser now
+handles header case and spacing. Snow-code meanings are verified against the
+official PDF, with ambiguous code 133 explicitly retained as unknown. German
+short descriptions appear beside the raw code.
 
 ## Done
 - Read the task boundaries and current decisions at repository commit b3caddb.
@@ -38,10 +41,13 @@ unresolved. German short descriptions are now included beside the raw code.
   saved capture's derived table without modifying its downloaded-input hashes.
 
 ## Next
-1. Inspect the live preview and confirm the German descriptions are useful.
-2. Ask the provider about code 133 if clarification becomes available; until then
-   preserve `unknown`. Agree the forecast freshness policy with the team.
-3. Implement T7 only after T1 provides the shared interface and T3 is complete.
+- Keep code 133 as `unknown` unless MeteoSwiss clarifies its conflicting
+  language descriptions.
+- Agree a forecast freshness age before live/replay evidence is treated as
+  usable; T7 requires the caller to provide this policy.
+- The source supplies hourly mean temperature rather than hourly maximum, so it
+  cannot confirm the planning rule's maximum-temperature limit. T7 preserves
+  the mean separately and leaves the maximum unknown.
 
 ## Files
 - docs/sources/weather.md: source notes and standalone run/test commands.
@@ -57,18 +63,14 @@ unresolved. German short descriptions are now included beside the raw code.
 No shared interface, transport rules or shipment clocks have been changed.
 
 ## Open questions / problems
-- A genuine forecast sample has not been retrieved.
-- Code 133 remains ambiguous in the source; other documented snow codes are
-  mapped. The forecast freshness policy still needs agreement.
-- Git commits require the verified private GitHub noreply address; files can be
-  prepared and checked without committing.
-- T1 has not provided the application dependency workflow or formatter. No
-  third-party package was installed; do not claim formatter or live tests passed.
-- The original checkout remains unchanged. Task files are staged in this working
-  clone, and a transferable patch is saved outside the repository. No commit,
-  push or merge has been made. Documentation and privacy checks passed.
+- Code 133 remains ambiguous in the source; its mapped result is `unknown`.
+- The team has not agreed a forecast freshness age.
+- Hourly mean temperature does not prove whether an hourly maximum crossed 30°C.
+- This capture is a historical snapshot, not a current forecast; re-fetch before
+  any live use.
+- The offline research suite passes: 18 tests.
 
 ## Resume prompt
-> Continue T3 from handoff/t3-weather-research.md on data/t3-weather-research.
-> Follow Next, preserve the distinction between synthetic examples and real data,
-> and leave timing assumptions and shared interfaces to their task owners.
+> Continue from the T3 handoff only to resolve its open data questions. Preserve
+> the distinction between the real historical capture and synthetic examples;
+> coordinate any freshness or temperature-rule changes with the team.
