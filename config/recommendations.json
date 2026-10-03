@@ -1,0 +1,5 @@
+{
+  "source": "Agreed V2-1 rules: docs/v2/recommendation-rules.md and docs/v2/scenarios.md.",
+  "injection_early_weight": 1,
+  "injection_late_weight": 2
+}
