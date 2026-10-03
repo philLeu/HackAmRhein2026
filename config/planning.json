@@ -1,0 +1,21 @@
+{
+  "source": "Approved synthetic demo conventions: docs/scenarios.md; not clinical or observed logistics values.",
+  "hours": {
+    "ingredient_limit": 240,
+    "collection_shift_limit": 24,
+    "sample_limit": 12,
+    "production_limit": 24,
+    "injection_limit": 8,
+    "river_order_to_arrival": 144,
+    "river_delay": 0,
+    "truck_travel": 48,
+    "truck_preparation": 6,
+    "bicycle_travel": 1,
+    "car_travel": 1,
+    "car_preparation": 8,
+    "production_processing": 18,
+    "hospital_handling": 1,
+    "route_status_freshness": 6
+  },
+  "bicycle_temperature_limit_c": 30
+}
