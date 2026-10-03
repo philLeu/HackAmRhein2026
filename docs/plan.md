@@ -93,6 +93,22 @@ Needs: T9
 Files: docs/demo-story.md, handoff/t11-demo-story.md
 Done when: a short rehearsal explains the coordinator's problem, two changed decisions, the open-data contribution and all simulated assumptions.
 
+## M4 Expandable Rhine conditions (one implementation PR)
+
+### In order
+
+#### T12 Forecast evidence and notebook assessments
+Owner: @philLeu
+Needs: T6, T9
+Files: src/treatment_planner/interfaces.py, src/treatment_planner/data/rhine_forecast.py, src/treatment_planner/rhine_conditions.py, config/rhine.json, data/replay/rhine/forecast-capture/, tests/test_rhine_forecast.py, tests/test_rhine_conditions.py, docs/decisions.md
+Done when: BAFU median and uncertainty bands plus history can be replayed offline; notebook classes and exact threshold boundaries are preserved; missing/stale/outside-horizon data remain explicit.
+
+#### T13 Expandable summary and chart
+Owner: @philLeu
+Needs: T12
+Files: app.py, src/treatment_planner/ui/rhine.py, src/treatment_planner/ui/rhine_chart.py, config/theme.toml, tests/test_rhine_screen.py, README.md, docs/SOURCES.md, docs/sources/rhine.md, handoff/feat-rhine-forecast.md
+Done when: the summary above plan comparison expands to the history/forecast chart with restriction zones, uncertainty bands and findings; saved replay and optional live evidence are clearly labelled and planning delays remain separate.
+
 ## Coordination
 
 - Demo flow owner: @philLeu; presenter to be chosen by the team.

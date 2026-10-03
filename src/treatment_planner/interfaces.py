@@ -124,6 +124,76 @@ class RiverReport:
     issues: tuple[str, ...] = ()
 
 
+class RiverStatus(StrEnum):
+    NORMAL = "normal"
+    WATCH = "watch"
+    WARNING = "warning"
+    CRITICAL = "critical"
+    UNKNOWN = "unknown"
+
+
+@dataclass(frozen=True)
+class RiverFinding:
+    """One crossed threshold or proximity finding under the notebook rules."""
+
+    state: str
+    severity: RiverStatus
+    quantity: str
+    limit_cm: float
+    distance_cm: float
+    consequence: str
+    message: str
+
+
+@dataclass(frozen=True)
+class RiverAssessment:
+    """Notebook station classification, never a whole-route safety verdict."""
+
+    status: RiverStatus
+    gauge_height_cm: float | None
+    draft_cm: float | None
+    findings: tuple[RiverFinding, ...] = ()
+
+
+@dataclass(frozen=True)
+class RiverForecastPoint:
+    """An hourly gauge-height forecast in cm above the station datum.
+
+    Optional ensemble bounds are not probabilities of a navigation class.
+    """
+
+    timestamp: datetime
+    median_cm: float
+    minimum_cm: float | None = None
+    p25_cm: float | None = None
+    p75_cm: float | None = None
+    maximum_cm: float | None = None
+
+    def __post_init__(self) -> None:
+        _aware(self.timestamp)
+
+
+@dataclass(frozen=True)
+class RiverForecastReport:
+    """Forecast provenance source_time is issue time, not download time."""
+
+    points: tuple[RiverForecastPoint, ...] = ()
+    provenance: Provenance | None = None
+    issues: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class RiverSummary:
+    """Current and worst future median class, with explicit horizon coverage."""
+
+    current: RiverAssessment
+    forecast: RiverAssessment
+    first_at: datetime | None
+    covered_until: datetime | None
+    complete: bool
+    issues: tuple[str, ...] = ()
+
+
 @dataclass(frozen=True)
 class WeatherReport:
     windows: tuple[WeatherWindow, ...]

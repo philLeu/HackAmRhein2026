@@ -1,0 +1,11 @@
+{
+  "source": "https://www.hydrodaten.admin.ch/plots/p_forecast/2289_p_forecast_en.json",
+  "retrieved_at": "2026-10-03T15:11:45.021065+00:00",
+  "station": "2289",
+  "kind": "forecast_replay",
+  "observation_source": "https://data.bs.ch/api/explore/v2.1/catalog/datasets/100089/records",
+  "observation_retrieved_at": "2026-10-03T15:12:41.808531+00:00",
+  "evaluation_time": "2026-10-03T11:30:00+00:00",
+  "history_start": "2026-10-01T11:30:00+00:00",
+  "history_end": "2026-10-03T11:30:00+00:00"
+}

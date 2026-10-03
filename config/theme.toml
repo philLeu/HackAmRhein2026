@@ -21,3 +21,18 @@ axis_tick_count = 3
 axis_label_angle = -20
 event_radius = 4
 deadline_dash = [5, 4]
+
+[rhine]
+normal = "#0ca30c"
+watch = "#0ca30c"
+warning = "#fab219"
+critical = "#d03b3b"
+unknown = "#B4C5D9"
+series = "#66AAFF"
+ink = "#EDF3FA"
+grid = "#34465E"
+zone_opacity = 0.16
+outer_opacity = 0.12
+inner_opacity = 0.22
+forecast_dash = [6, 4]
+height = 380

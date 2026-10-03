@@ -54,6 +54,18 @@ Python with Streamlit for the timeline/comparison screen, a separate planning en
 ## Out of scope / faked
 Multiple treatments, production capacity optimisation, in-transit ingredient transfers, real bookings, patient records, clinical validation and actual refrigeration monitoring. Journey and production durations and disruption delays use the synthetic fixtures in docs/scenarios.md. Real forecast coverage and a validated route-wide Rhine delay mapping remain unresolved; no such mapping is claimed by the demo. Existing route snow uses a timestamped manual status rather than automatic route inspection. A forecast alone cannot establish that the route is clear. Future route checks and missing/stale forecasts leave eligibility unconfirmed.
 
+## Additional feature: expandable Rhine conditions
+
+Approved presentation: option A, an inline expandable summary above the plan comparison. Label it "Basel Rhine conditions". Its collapsed header shows the current notebook class and the worst forecast median class within the selected forecast window, with the first future occurrence of that worst class and a short restriction explanation. Use the notebook's `normal`, `watch`, `warning`, `critical` classes; `unknown` represents unavailable assessment. Display text as well as colour. Preserve the notebook's strict threshold comparisons and independent 5 cm proximity margin.
+
+Opening the summary reveals the notebook's chart: up to two days of measured gauge height, a dashed BAFU median forecast, min–max and 25th–75th percentile bands, coloured restriction zones, threshold lines, proximity hatching, current/selected forecast markers, the full-scale reference strip and written findings. Include a forecast-date selector, source issue time and actual coverage end. Follow the dashboard's existing UTC display convention. Status and chart must use the same assessment rules.
+
+Extract fetching, assessment and plotting from `Rhein_water_first_try.ipynb` into reusable modules. Add forecast series, assessment and provenance to the shared contract with a corresponding decision line. Cache provider data and provide a saved forecast replay aligned with the demo clock. Missing/stale measurements or forecasts remain explicit; missing uncertainty bands are labelled. Dates beyond coverage yield unavailable forecast assessment rather than silently substituting the last point. Evaluate future status only after the decision/current observation time, rather than including already elapsed forecast steps.
+
+This feature uses BAFU's ensemble forecast; it does not train a new prediction model. The classifications describe notebook rules for Basel Rheinhalle, including unverified reference-vessel assumptions documented in `docs/sources/rhine.md`. They do not establish whole-route navigability, shipment arrival or delivery delay. Existing synthetic delay assumptions stay separate. Implementation must refresh source documentation to reflect the updated notebook and verify forecast attribution and trace parsing before live integration.
+
+Acceptance: clicking the collapsed summary opens the chart inline; current and future statuses agree with charted values; proximity, missing/stale evidence and outside-horizon requests remain explicit; saved replay works offline without mixing live timestamps into the historical scenario.
+
 ## Who does what
 | GitHub username | Owns |
 |---|---|
