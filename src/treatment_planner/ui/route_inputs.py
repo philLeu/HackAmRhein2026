@@ -64,6 +64,10 @@ def render_route_inputs(request: TreatmentRequest, *, key: str = "routes") -> Tr
     until edited. Freshness and future-dispatch requirements belong to T5.
     """
     st.subheader("Local route inputs")
+    st.caption(
+        "The hospital-to-factory route carries the sample. "
+        "The factory-to-hospital route carries the finished treatment."
+    )
     signature = (request.treatment_id, request.routes)
     if st.session_state.get(f"{key}-source") != signature:
         for route in request.routes:
