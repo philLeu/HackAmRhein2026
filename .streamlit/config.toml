@@ -1,7 +1,6 @@
+# Inherit the single project theme.
 [theme]
-base = "light"
-primaryColor = "#526D82"
-font = "sans serif"
+base = "config/theme.toml"
 
 [browser]
 gatherUsageStats = false

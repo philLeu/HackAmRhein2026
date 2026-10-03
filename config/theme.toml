@@ -1,5 +1,23 @@
-# Neutral comparison theme; visual values stay here.
+# Control-room demo theme; all visual values live here.
+[theme]
+base = "dark"
+backgroundColor = "#0E1726"
+secondaryBackgroundColor = "#18263B"
+textColor = "#EDF3FA"
+primaryColor = "#56D6C4"
+font = "sans-serif"
+
+[surface]
+muted = "#B4C5D9"
+border = "#34465E"
+radius = "12px"
+padding = "1.25rem"
+
 [timeline]
-event_color = "#526D82"
-deadline_color = "#A64444"
-height_per_lane = 42
+event_color = "#56D6C4"
+deadline_color = "#FF8791"
+height_per_lane = 52
+axis_tick_count = 3
+axis_label_angle = -20
+event_radius = 4
+deadline_dash = [5, 4]

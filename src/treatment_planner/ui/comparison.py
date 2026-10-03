@@ -6,7 +6,7 @@ inputs cannot leave a previously selected plan looking current.
 """
 
 import tomllib
-from datetime import UTC, timedelta
+from datetime import timedelta
 from pathlib import Path
 
 import streamlit as st
@@ -18,6 +18,8 @@ from treatment_planner.interfaces import (
     ResultStatus,
     TreatmentRequest,
 )
+from treatment_planner.ui.formatting import format_timestamp
+from treatment_planner.ui.presentation import apply_theme
 from treatment_planner.ui.route_inputs import render_route_inputs as render_route_inputs
 from treatment_planner.ui.timeline import timeline_chart
 
@@ -76,9 +78,7 @@ def _render_details(plan: CandidatePlan, theme: dict, *, current: bool) -> None:
                 "Check": check.status.value,
                 "Margin (h)": _hours(check.margin),
                 "Reason": check.reason,
-                "Deadline (UTC)": check.deadline.astimezone(UTC).isoformat()
-                if check.deadline
-                else None,
+                "Deadline (UTC)": format_timestamp(check.deadline),
             }
             for check in plan.checks
         ],
@@ -100,8 +100,8 @@ def _render_details(plan: CandidatePlan, theme: dict, *, current: bool) -> None:
                 {
                     "Lane": event.lane,
                     "Event": event.label,
-                    "Start (UTC)": event.interval.start.astimezone(UTC).isoformat(),
-                    "End (UTC)": event.interval.end.astimezone(UTC).isoformat(),
+                    "Start (UTC)": format_timestamp(event.interval.start),
+                    "End (UTC)": format_timestamp(event.interval.end),
                 }
                 for event in plan.events
             ],
@@ -125,24 +125,24 @@ def _render_evidence(request: TreatmentRequest, environment: EnvironmentInputs) 
             source = window.provenance
             st.write(
                 f"Weather · {source.kind.value} · {source.source} · {window.location} · "
-                f"coverage {window.interval.start.isoformat()} "
-                f"to {window.interval.end.isoformat()} · "
+                f"coverage {format_timestamp(window.interval.start)} "
+                f"to {format_timestamp(window.interval.end)} · "
                 f"maximum temperature {window.maximum_temperature_c} °C · "
                 f"snowfall {window.snowfall} · "
-                f"source time {source.source_time.isoformat()} · "
-                f"retrieved {source.retrieved_at.isoformat()}"
+                f"source time {format_timestamp(source.source_time)} · "
+                f"retrieved {format_timestamp(source.retrieved_at)}"
             )
         for reading in environment.river.observations:
             source = reading.provenance
             st.write(
                 f"River · {source.kind.value} · {source.source} · station {reading.station} · "
-                f"observed {reading.observed_at.isoformat()} · "
+                f"observed {format_timestamp(reading.observed_at)} · "
                 f"water level {reading.water_level_m} m · "
                 f"discharge {reading.discharge_m3_s} m³/s · "
-                f"retrieved {source.retrieved_at.isoformat()}"
+                f"retrieved {format_timestamp(source.retrieved_at)}"
             )
         for route in request.routes:
-            checked = route.checked_at.isoformat() if route.checked_at else "unknown"
+            checked = format_timestamp(route.checked_at)
             st.write(
                 f"{route.leg.value} · {route.snow.value} · checked {checked} · "
                 f"car {route.car_availability.value} · {route.provenance.kind.value}"
@@ -166,6 +166,7 @@ def render_comparison(
     inspectable, with selection disabled until recomputed by the caller.
     """
     signature = (request, environment, plans, compared_request, compared_environment)
+    apply_theme(theme_path)
     if st.session_state.get(f"{key}-signature") != signature:
         st.session_state[f"{key}-selected"] = None
         st.session_state.pop(f"{key}-inspect", None)
@@ -173,8 +174,9 @@ def render_comparison(
     current = request == compared_request and environment == compared_environment
     departure = "pending" if request.decision_time < request.nominal_departure else "departed"
     st.caption(
-        f"Decision {request.decision_time.isoformat()} · Order {request.order_time.isoformat()} · "
-        f"Original collection {request.original_collection.isoformat()} · "
+        f"Decision {format_timestamp(request.decision_time)} · "
+        f"Order {format_timestamp(request.order_time)} · "
+        f"Original collection {format_timestamp(request.original_collection)} · "
         f"Rotterdam departure {departure}"
     )
     _render_evidence(request, environment)

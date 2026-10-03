@@ -13,6 +13,7 @@ from treatment_planner.interfaces import (
     RouteSnow,
     TreatmentRequest,
 )
+from treatment_planner.ui.formatting import DATE_INPUT_FORMAT
 
 
 def _route_fields(route: LocalRouteInput, decision_time: datetime, key: str) -> LocalRouteInput:
@@ -30,8 +31,10 @@ def _route_fields(route: LocalRouteInput, decision_time: datetime, key: str) -> 
         "Route check timestamp known", value=route.checked_at is not None, key=f"{key}-known"
     )
     initial = (route.checked_at or decision_time).astimezone(UTC)
-    date = st.date_input("Checked on (UTC)", value=initial.date(), key=f"{key}-date")
-    time = st.time_input("Checked at (UTC)", value=initial.time(), key=f"{key}-time")
+    date = st.date_input(
+        "Checked on (UTC)", value=initial.date(), format=DATE_INPUT_FORMAT, key=f"{key}-date"
+    )
+    time = st.time_input("Checked at (UTC)", value=initial.time(), format="24h", key=f"{key}-time")
     checked_at = datetime.combine(date, time, tzinfo=UTC) if timestamp_known else None
     if (snow, car, checked_at) == (route.snow, route.car_availability, route.checked_at):
         return route

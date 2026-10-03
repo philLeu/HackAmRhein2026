@@ -5,6 +5,7 @@ from datetime import UTC
 import altair as alt
 
 from treatment_planner.interfaces import CandidatePlan
+from treatment_planner.ui.formatting import TIMESTAMP_FORMAT, format_timestamp
 
 
 def timeline_chart(
@@ -18,6 +19,12 @@ def timeline_chart(
             "Event": event.label,
             "Start": event.interval.start.astimezone(UTC).isoformat(),
             "End": event.interval.end.astimezone(UTC).isoformat(),
+            "Start display": format_timestamp(event.interval.start),
+            "End display": format_timestamp(event.interval.end),
+            "Description": (
+                f"{event.label}: {format_timestamp(event.interval.start)} "
+                f"to {format_timestamp(event.interval.end)}"
+            ),
             "Source": event.provenance.source,
             "Evidence": event.provenance.kind.value,
         }
@@ -25,16 +32,38 @@ def timeline_chart(
     ]
     bars = (
         alt.Chart(alt.Data(values=rows))
-        .mark_bar(color=theme["event_color"])
+        .mark_bar(color=theme["event_color"], cornerRadius=theme["event_radius"])
         .encode(
-            x=alt.X("Start:T", title="UTC", scale=alt.Scale(type="utc")),
+            x=alt.X(
+                "Start:T",
+                title=None,
+                scale=alt.Scale(type="utc"),
+                axis=alt.Axis(
+                    format=TIMESTAMP_FORMAT,
+                    tickCount=theme["axis_tick_count"],
+                    labelOverlap=True,
+                    labelLimit=0,
+                    labelAngle=theme["axis_label_angle"],
+                ),
+            ),
             x2="End:T",
             y=alt.Y("Lane:N", sort=None, title=None),
-            tooltip=["Event:N", "Start:N", "End:N", "Evidence:N", "Source:N"],
+            description="Description:N",
+            tooltip=[
+                "Event:N",
+                alt.Tooltip("Start display:N", title="Start"),
+                alt.Tooltip("End display:N", title="End"),
+                "Evidence:N",
+                "Source:N",
+            ],
         )
     )
     deadlines = [
-        {"Deadline": check.constraint, "Time": check.deadline.astimezone(UTC).isoformat()}
+        {
+            "Deadline": check.constraint,
+            "Time": check.deadline.astimezone(UTC).isoformat(),
+            "Time display": format_timestamp(check.deadline),
+        }
         for check in plan.checks
         if check.deadline is not None
         and (not detail or not check.constraint.startswith("Ingredient"))
@@ -43,9 +72,10 @@ def timeline_chart(
     if deadlines:
         markers = (
             alt.Chart(alt.Data(values=deadlines))
-            .mark_rule(color=theme["deadline_color"])
+            .mark_rule(color=theme["deadline_color"], strokeDash=theme["deadline_dash"])
             .encode(
-                x=alt.X("Time:T", scale=alt.Scale(type="utc")), tooltip=["Deadline:N", "Time:N"]
+                x=alt.X("Time:T", scale=alt.Scale(type="utc")),
+                tooltip=["Deadline:N", alt.Tooltip("Time display:N", title="Time")],
             )
         )
         chart = bars + markers
