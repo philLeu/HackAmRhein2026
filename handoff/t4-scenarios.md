@@ -16,6 +16,7 @@ Provide baseline, low-water, hot return, snow and no-feasible-plan examples with
 - Recorded owner approval and reconciled design and decision log.
 - Verified fixture arithmetic, whitespace and strict documentation paths; commit and push privacy checks passed for the approved documents.
 - Pushed the work branch and opened PR #2 for teammate review.
+- Diagnosed a PR-only privacy failure in GitHub's temporary merge metadata. The owner enabled GitHub email privacy; the regenerated test merge uses noreply identities. A handoff checkpoint triggers a new revision because the reopen run checked out the old test merge. Verify the new CI run before merge.
 
 ## Next
 1. Obtain a teammate review on PR #2 of S1–S5 and the screen sketch.
