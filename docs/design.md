@@ -2,7 +2,7 @@
 
 Team: @philLeu, @Fhuelin, @luapreta-cloud, @janaaaaaaaa · Track: Manufacturing · Updated: 2026-10-03
 
-Status: Agreed demo flow and constraints; source integrations and scenario durations still to be finalised; task split and Python/Streamlit agreed. All treatment timing rules below are team-defined demo assumptions.
+Status: Agreed demo flow, constraints, task split and Python/Streamlit. T4 scenario conventions and screen layout approved by @fhuelin, awaiting teammate PR review; source integrations remain to be finalised. All treatment timing rules below are team-defined demo assumptions.
 
 ## Problem
 A production coordinator plans one individual treatment whose ingredients are ordered from Rotterdam. Rhine and local weather disruptions can invalidate its logistics and production schedule. The demo baseline is an invented manual planning workflow, not a documented hospital or factory process.
@@ -22,7 +22,7 @@ A timeline planner that compares feasible alternatives for ingredient delivery, 
 | Rule | Confirmed demo constraint |
 |---|---|
 | Ingredient order | Separate order for this treatment from Rotterdam to Basel |
-| Rhine shipment | Normal duration 5–7 days; maximum 10 days; exact clock origin and baseline duration still to be specified |
+| Rhine shipment | Normal duration 5–7 days; maximum 10 days. Clock origin and baseline fixture are specified in docs/scenarios.md |
 | Ingredient transport switch | Refrigerated truck, before departure from Rotterdam only; 6 hours approval and preparation |
 | Sample collection | May move later by at most 24 hours from its original planned time |
 | Sample arrival | Factory arrival within 12 hours of collection |
@@ -32,6 +32,8 @@ A timeline planner that compares feasible alternatives for ingredient delivery, 
 | Bicycle availability | Blocked by forecast snowfall during the journey, snow already on the route, or temperature strictly above 30°C; evaluate each journey separately |
 | Existing route snow | Coordinator-entered status per local route: clear / snow present / unknown. Snow present blocks bicycle transport; unknown leaves bicycle feasibility unconfirmed |
 | Car preparation | 8 hours separately for each journey, completed before dispatch; may begin in advance based on forecasts |
+
+T4's approved [scenario conventions](scenarios.md) specify shipment clock origin, material readiness, earliest preparation, manual snow freshness, explicit car availability and synthetic durations. Expected outcomes and boundary cases live there. The approved [screen sketch](ui-sketch.md) defines comparison, evidence display and selection behaviour.
 
 Preparation is separate from travel. The return car's preparation must start before production finishes to leave room for travel and hospital handling. Exact preparation lead time depends on the planned dispatch time. Changing ingredients to a truck is not an instantaneous response; domain approval and preparation time must appear in the plan.
 
@@ -50,7 +52,7 @@ Open data supplies environmental signals. Delivery-delay estimates, travel times
 Python with Streamlit for the timeline/comparison screen, a separate planning engine and independent environmental-data adapters. No database for the first demo. T1 establishes the shared interface and project setup; planned file ownership is in docs/plan.md. No application code has been started.
 
 ## Out of scope / faked
-Multiple treatments, production capacity optimisation, in-transit ingredient transfers, real bookings, patient records, clinical validation and actual refrigeration monitoring. Journey intervals to check, minimum production duration, truck/local journey durations, forecast horizon and Rhine delay mapping remain open. Existing route snow uses a manual status rather than automatic route inspection; freshness rules remain to be specified. A forecast alone cannot establish that the route is clear. Do not treat unknown route status or missing/stale forecasts as proof that bicycle travel is available.
+Multiple treatments, production capacity optimisation, in-transit ingredient transfers, real bookings, patient records, clinical validation and actual refrigeration monitoring. Journey and production durations and disruption delays use the synthetic fixtures in docs/scenarios.md. Real forecast coverage and a validated route-wide Rhine delay mapping remain unresolved; no such mapping is claimed by the demo. Existing route snow uses a timestamped manual status rather than automatic route inspection. A forecast alone cannot establish that the route is clear. Future route checks and missing/stale forecasts leave eligibility unconfirmed.
 
 ## Who does what
 | GitHub username | Owns |

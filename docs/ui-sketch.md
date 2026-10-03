@@ -1,6 +1,6 @@
 # T4 comparison screen sketch
 
-Status: proposed layout for @Fhuelin and team review; no visual style or scenario defaults accepted yet. Timing fixtures and expected outcomes live in [scenarios.md](scenarios.md). This sketch guides T8 after T1 and T4 are merged; T9 owns app wiring.
+Status: layout and interaction approved by @fhuelin on 2026-10-03; awaiting teammate PR review. Timing fixtures and expected outcomes live in [scenarios.md](scenarios.md). This sketch guides T8 after T1 and T4 are merged; T9 owns app wiring. A fuller visual style remains for T8.
 
 ## Coordinator flow
 
@@ -58,8 +58,8 @@ The comparison rows illustrate S2; the generic timeline includes optional events
 - If no alternatives pass, distinguish demonstrated failure (“No feasible plan”) from insufficient evidence (“No confirmed plan yet”). Keep alternative explanations visible.
 - Update selected timeline and selection label together. When inputs change, clear the prior selection and request a new comparison; do not retain an obsolete confirmed state.
 - Default unknown inputs to unknown. Clearly mark replay route-status entries as synthetic; never imply a forecast checks existing snow on the route.
-- Keep visual values in T8's theme file. This task proposes layout and interaction only.
+- Keep visual values in T8's theme file. This task defines layout and interaction only.
 
 ## Review check
 
-Walk through baseline, low water, hot return, snow and no feasible plan. Confirm that the coordinator can find the changed transport, separate preparations, 1h handling, deadline failure and missing evidence without reading code. Confirm the layout with @Fhuelin and another teammate before T4 is marked done.
+Walk through baseline, low water, hot return, snow and no feasible plan. Confirm that the coordinator can find the changed transport, separate preparations, 1h handling, deadline failure and missing evidence without reading code. @fhuelin approved this layout; another teammate's review remains before T4 is marked done.

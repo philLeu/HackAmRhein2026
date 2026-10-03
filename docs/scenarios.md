@@ -1,17 +1,17 @@
 # T4 domain scenarios
 
-Status: proposal for @Fhuelin and team review. These examples are synthetic planning fixtures, not clinical guidance or observed journey durations. Confirmed constraints remain in [design.md](design.md); the proposed values below have not been accepted and must not silently become production defaults.
+Status: approved by @fhuelin on 2026-10-03; awaiting teammate PR review. These examples are synthetic planning fixtures, not clinical guidance or observed journey durations. Shared constraints remain in [design.md](design.md); the fixture conventions below supply the agreed examples for T5 and T8 once T4 is merged.
 
-## Proposed conventions to approve
+## Approved demo conventions
 
-| Open point | Proposed demo convention |
+| Rule | Demo convention |
 |---|---|
 | Shipment clock | The 10-day clock starts at ingredient-order placement; ingredient arrival at the factory must be at or before order + 240 hours. |
 | Material readiness | Production starts only when both ingredients and the sample are at the factory. No extra ingredient release or unloading period in the demo. |
 | Earliest preparation | Each preparation starts at or after the planning decision time. Preparation can overlap other events. A shipment switch is allowed only while departure is still in the future. |
 | Manual route snow | Each route has its own status and entry time. At decision time an entry up to 6 hours old is current; older, missing or future-dated entries become unknown. Clear is a snapshot, not assurance of future conditions; future dispatches need a renewed route check and remain provisional until then. |
 | Car availability | Explicit available / unavailable / unknown for each journey, independent of weather. Unknown prevents confirmation. Two legs do not automatically share one prepared car. |
-| Journey durations | Rhine 144 hours (6 days); refrigerated truck 48 hours travel after 6 hours approval/preparation; bicycle 1 hour per leg; car 1 hour per leg. |
+| Journey durations | Rhine 144 hours (6 days) from order to factory arrival, including the initial 6 hours before departure; refrigerated truck 48 hours travel after 6 hours approval/preparation; bicycle 1 hour per leg; car 1 hour per leg. |
 | Production | 18 hours processing after all required material is ready; waiting counts toward the 24-hour arrival-to-completion deadline. |
 | Disruption | Low-water fixture adds 12 hours to Rhine arrival. This is a synthetic delay input, not a conversion from a measured water level. |
 
@@ -19,11 +19,11 @@ All intervals below use UTC on an invented fixture calendar. Let O = 2026-11-01 
 
 ## Common checks and presentation
 
-- Collection shift: 0 to 24 hours inclusive from C; advancing collection is not proposed.
+- Collection shift: 0 to 24 hours inclusive from C; advancing collection is outside the defined alternatives.
 - Sample deadline: sample factory arrival <= actual collection + 12h.
 - Production deadline: completion <= sample factory arrival + 24h, including waiting for ingredients.
 - Injection deadline: injection <= production completion + 8h. Include a separate 1h hospital handling interval after return delivery.
-- Ingredient deadline: factory arrival <= O + 240h under the proposed clock convention.
+- Ingredient deadline: factory arrival <= O + 240h under the approved clock convention.
 - Bicycle eligibility: check the entire interval of each leg separately. Exactly 30°C passes the temperature rule; any value above 30°C, forecast snowfall during the interval, or existing route snow blocks it. Unknown/stale inputs or incomplete coverage leave it unconfirmed.
 - Car: a separate 8h preparation interval for each leg, completed before dispatch, plus explicit availability. Car eligibility here assumes no other demonstrated car disruption.
 - Result: confirmed only if every applicable check passes with adequate evidence; infeasible for a demonstrated failure; unconfirmed if there is no demonstrated failure but evidence is missing. Passing a time calculation alone does not confirm environmental eligibility.
@@ -96,13 +96,13 @@ Latest legal collection is Nov 8 08:00 (C + 24h), with factory arrival 09:00. Wa
 | Return travel plus handling 8h / 8h + 1 minute | Injection constraint passes / fails; handling cannot be omitted. |
 | Car preparation ends at dispatch / after dispatch | Preparation timing passes / fails. |
 | Preparation would need to start before D | Infeasible; do not backdate preparation. |
-| Current clear route entry exactly 6h old / older by one minute | Snapshot current / unknown under the proposed freshness rule; a future dispatch still requires a renewed check. |
+| Current clear route entry exactly 6h old / older by one minute | Snapshot current / unknown under the approved freshness rule; a future dispatch still requires a renewed check. |
 | Missing entry time, future-dated entry, or unknown route status | Bicycle eligibility unconfirmed. |
 | Forecast covers outbound but stops before return arrival | Outbound can be checked; return bicycle eligibility unconfirmed. |
 | Missing or stale weather, or missing Rhine input for the delay scenario | Affected alternative unconfirmed; explain the missing evidence and offer labelled replay. |
 
-Provider-specific weather/Rhine freshness and timestamp semantics belong to T2/T3 source notes and T6/T7 adapters; this proposal does not invent them. A route check is not a weather forecast. A missing input is not evidence of safe conditions. Show “no confirmed plan yet” when evidence is missing, distinct from “no feasible plan” when all supported alternatives demonstrably fail.
+Provider-specific weather/Rhine freshness and timestamp semantics belong to T2/T3 source notes and T6/T7 adapters; these fixtures do not invent them. A route check is not a weather forecast. A missing input is not evidence of safe conditions. Show “no confirmed plan yet” when evidence is missing, distinct from “no feasible plan” when all supported alternatives demonstrably fail.
 
 ## Acceptance walkthrough
 
-Review S1–S5 with @Fhuelin and a teammate, then confirm or amend the proposed conventions and [ui-sketch.md](ui-sketch.md). Record accepted shared rules in docs/decisions.md and reconcile docs/design.md in the same change. T5 can then turn these examples into executable checks; T8 can render their events and reasons after T1 and T4 are merged.
+@fhuelin approved the conventions and [ui-sketch.md](ui-sketch.md). A teammate still needs to review S1–S5 and the sketch through the PR before merge. Accepted rules are recorded in docs/decisions.md and linked from docs/design.md. T5 can turn these examples into executable checks; T8 can render their events and reasons after T1 and T4 are merged.
