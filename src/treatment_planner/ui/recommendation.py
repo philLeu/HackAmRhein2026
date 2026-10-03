@@ -97,6 +97,7 @@ def render_recommendation(
     render_details: Callable[[CandidatePlan], None],
     original_collection: datetime | None = None,
     baseline_plan: CandidatePlan | None = None,
+    render_advisories: Callable[[CandidatePlan], None] | None = None,
     key: str = "v2-recommendation",
 ) -> CandidatePlan | None:
     """Return only explicit confirmation of a current, fully checked candidate.
@@ -153,6 +154,8 @@ def render_recommendation(
         chosen = eligible.get(picked)
         state[f"{key}-picked"] = picked
     if chosen is not None:
+        if current and render_advisories is not None:
+            render_advisories(chosen)
         with st.container(border=True):
             st.write(_plan_label(chosen))
             events = {event.event_id: event.interval.end for event in chosen.events}

@@ -5,6 +5,8 @@ Status: ready for review · Owner: @fhuelin · Updated: 2026-10-03
 ## State
 Local branch feat/v2-7-guided-ui starts at shared V2 commit 428abbb.
 V2-0 and V2-3 are integrated; use the approved V2-1/V2-2 rules and sketch.
+UI implementation is saved at bcae014. Shared V2 weather update 65a2a19
+was merged without conflicts; the integration adjustments are saved locally.
 
 ## Scope
 Navigation, goal/recommendation display, route summaries and independent typed
@@ -27,6 +29,10 @@ Only the shared V2 release branch may be pushed. V2-8 performs app wiring.
 - comparison.py accepts optional V2 contracts without changing V1 callers;
   sources and full adopted diagrams remain available on demand.
 - tests/test_v2_screen.py supplies contract examples, not ranking logic.
+- The V2 comparison also renders the supplied non-blocking weather recheck
+  reminder. Its displayed dates use the shared application format.
+- Weather test payloads normalize CRLF before removing hourly readings, so
+  missing-reading assertions exercise the same scenario on Windows and Linux.
 
 ## V2-8 integration notes
 - Call render_navigation and render_evidence_mode; default to Live. The caller
@@ -54,7 +60,7 @@ Only the shared V2 release branch may be pushed. V2-8 performs app wiring.
   and labels readable. Demo buttons use native wrapping rather than fixed columns.
 
 ## Verification
-- Final full suite: 154 passed.
+- Final full suite after the shared weather update: 182 passed.
 - Ruff lint and format checks pass for the changed UI modules and V2 tests.
 - V1 comparison, contract and end-to-end tests remain green.
 - Browser verified explicit confirmation with optional details, desktop route

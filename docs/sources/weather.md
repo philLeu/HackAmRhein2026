@@ -150,3 +150,78 @@ real forecast rows, parameter metadata, issue and retrieval times, coverage,
 hashes and licence attribution. Re-run the capture utility for current data; do
 not treat this historical snapshot as fresh. The outcome is summarized in
 [the task handoff](../../handoff/t3-weather-research.md).
+
+## V2 live provider and independent demo routes
+
+`WeatherLiveProvider`, exported from `src/treatment_planner/data/weather.py`,
+loads the latest complete MeteoSwiss cycle automatically on its first `load`.
+The required positive `maximum_forecast_age` is a caller-supplied inspection
+limit, not an approved operational policy. Postcode 4056 is the default forecast
+point; `postal_code` can be supplied explicitly. Point metadata is resolved by
+both type and ID, and the selected point is identified in source provenance.
+
+The provider reuses that cycle across sample and treatment journey requests;
+`refresh()` discards it and the next load retrieves new provider evidence.
+This avoids repeated country-wide downloads on every UI rerun. The integration
+layer should retain the provider instance until an explicit refresh, display
+issue/retrieval times and invalidate confirmation when material evidence changes.
+Cached forecast age is reassessed on every load at the actual evaluation clock,
+not at the future journey time. Validity coverage is assessed separately for
+each requested journey. Replay retains its existing journey-relative age check.
+
+Live network/metadata failures produce an empty report with an explicit issue.
+Only a daily-item HTTP 404 permits yesterday's item; no saved or synthetic data
+is substituted. Unknown snowfall, internal gaps and time outside the forecast
+horizon remain unknown. The live provider always explicitly reports that hourly
+mean temperature cannot establish the maximum-temperature check.
+
+Live access was verified on 2026-10-03 at 18:45 UTC: postcode 4056 resolved to
+point type 2, ID 405600; cycle 18:00 UTC covered the sample interval at 19:00–20:00
+UTC and a separate interval two days later. A request twelve days later remained
+outside coverage. This verification is historical evidence of access, not a
+forecast to use for current planning. The provider specification and CC BY 4.0
+terms linked above were checked again for this task.
+
+The parser now lives in `src/treatment_planner/data/weather_csv.py`, shared by
+live retrieval and the existing standalone capture utility. Its compatibility
+entry point keeps the documented T3 commands working without installation.
+The existing documented snow-code mapping remains the single source of rules.
+
+`src/treatment_planner/weather_demo.py` consumes V2-3's `LocalRouteOverride`:
+
+- Construct one `DemoWeatherProvider` per sample/treatment override and load it
+  using that override's `CourierLeg.value` and the candidate journey interval.
+  Temperature is explicitly a simulated maximum; forecast snowfall stays separate
+  from snow already on the route. None values remain unknown.
+- `demo_route_input` supplies that leg's route snow and independent car availability
+  without changing its simulated source/check timestamp.
+- `demo_carry_over` returns the originally entered interval when the candidate
+  journey moves. Pass it to the route summary's `carried_from` field and show the
+  approved carry-over note; it is not a data-quality failure in `WeatherReport.issues`.
+
+Adapters accept explicitly synthetic overrides only. Their source interval,
+values and provenance remain unchanged when conditions carry over. Real/live
+evidence is never extended this way. An absent override retains the route's
+baseline fixture; the V2-8 integration layer owns that selection, combining
+reports, Live/Demo switching and reset. V2-7 owns the controls and summaries.
+The live/demo providers are not yet wired into the V1 `app.py` screen.
+
+### Trip-day temperature reminder
+
+The team-requested advisory threshold is inclusive at 28°C, configured in
+`config/weather.json`. A known forecast temperature at or above it displays a
+reminder to refresh weather on the trip day and recheck the plan before departure.
+It names the affected leg and the actual candidate journey date in UTC. Hourly
+means are labelled as means; simulated maxima are labelled as simulated.
+Unknown or nonfinite temperatures do not become known heat warnings.
+
+The existing comparison screen shows this reminder beside the inspected current
+plan. V2-7 can reuse `src/treatment_planner/ui/weather_advisories.py` beside the
+recommended/confirmed plan; the logic is in
+`src/treatment_planner/weather_advisories.py`.
+
+This is an advisory only: it is separate from `WeatherReport.issues`, does not
+change the existing bicycle maximum-temperature eligibility rule or recommendation
+scores, and does not mark a route At risk under the existing ranking definitions.
+It does not schedule a future refresh. Unsupported maxima and stale/missing
+coverage remain unknown independently of whether a reminder is shown.

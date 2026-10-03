@@ -54,6 +54,11 @@ if chapter == 'Plan':
 request = fixture_request()
 environment = fixture_environment('Low water')
 plans = FixtureComparator('Low water').compare(request, environment, fixture_settings('Low water'))
+if state.get('warm'):
+    from dataclasses import replace
+    environment = replace(environment, weather=replace(environment.weather,
+        windows=tuple(replace(w, maximum_temperature_c=29.)
+                      for w in environment.weather.windows)))
 eligible = tuple(p for p in plans if p.status == ResultStatus.CONFIRMED)
 scores = tuple(RecommendationScore(p.plan_id, limiting_margin=timedelta(hours=6),
                                   at_risk_routes=0) for p in eligible)
@@ -234,3 +239,18 @@ def test_invalid_demo_interval_does_not_apply_a_route_edit():
     assert not screen.exception
     assert screen.session_state["overrides"].sample is None
     assert any("end time must be after" in message.value for message in screen.error)
+
+
+def test_integrated_trip_day_advisory_is_visible_and_does_not_change_confirmation():
+    screen = app()
+    screen.session_state["warm"] = True
+    screen.run()
+    reminders = [
+        message.value for message in screen.warning if "warning threshold" in message.value
+    ]
+    assert reminders
+    assert any("08.11.2026 UTC" in message for message in reminders)
+    assert not any("2026-11-08" in message for message in reminders)
+    assert not button(screen, "Confirm plan").disabled
+    button(screen, "Confirm plan").click().run()
+    assert screen.session_state["confirmed_id"] == "postpone"
