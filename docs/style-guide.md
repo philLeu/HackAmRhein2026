@@ -45,6 +45,23 @@ captions, timeline axes and tooltips. Date inputs use `DD.MM.YYYY` and time inpu
 use 24-hour time with UTC in the label. Missing timestamps say `Unknown`.
 Machine timestamps remain timezone-aware ISO values for chart positioning.
 
+## V2 guided components
+
+The V2 components follow [the approved screen sketch](v2/ui-sketch.md) and
+[its style addendum](v2/style-guide.md). Goal and recommendation lead the Plan
+chapter, followed by three concise route cards. Full material-flow diagrams,
+evidence, alternatives and timelines remain expandable even after confirmation.
+Each route uses a transport icon, the shared route drawing and a written status;
+unknown delay remains “Delay unknown”. Demo carry-over is a small visible note
+with old/new intervals in details. The original baseline is a separate reference,
+while the coordinator's confirmed plan has an explicit acknowledgement.
+
+These are reusable UI components awaiting V2-8 application wiring; the current
+V1 entry point retains its existing comparison flow. `route.card_width` controls
+native wrapping of V2 route cards; `route.label_font_size` keeps the shared SVG
+labels readable. Both values live in the existing theme file. Demo buttons use
+native wrapping containers so full route names remain visible on narrow screens.
+
 ## Readability
 
 Primary and secondary text must have at least 4.5:1 contrast against the dark

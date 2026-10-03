@@ -1,4 +1,8 @@
 # Control-room demo theme; all visual values live here.
+[route]
+card_width = 360
+label_font_size = 18
+
 [theme]
 base = "dark"
 backgroundColor = "#0E1726"
