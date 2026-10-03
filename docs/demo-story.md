@@ -3,7 +3,7 @@
 English speaker notes for the integrated treatment material-flow planner.
 The coordinator and treatment below are invented. This is a proposed story,
 not evidence of a real hospital workflow or a measured operational benefit.
-Speaker: @fhuelin. A teammate clicks; the team still needs to choose the operator.
+Speaker: @leuphil. A teammate clicks; the team still needs to choose the operator.
 
 ## Prepare the screen
 
@@ -121,8 +121,8 @@ opening its timeline, and show provider limits from the slide.
 
 | Human rehearsal | Presenter / operator (GitHub usernames only) | Total | Adjustment |
 |---|---|---|---|
-| Run 1 | @fhuelin / operator to choose | Not measured | Pending |
-| Run 2 | @fhuelin / operator to choose | Not measured | Pending |
+| Run 1 | @leuphil / operator to choose | Not measured | Pending |
+| Run 2 | @leuphil / operator to choose | Not measured | Pending |
 
 Coordinate fallback screenshots or recording with T10, which owns offline
 readiness. If the app is unavailable, use the two slide texts and the verified

@@ -9,7 +9,7 @@ decisions, the open-data contribution and all simulated assumptions.
 ## State
 T9 is merged. English speaker notes, exact operator cues, two slide texts and
 jury answers are drafted in docs/demo-story.md. The story follows the integrated
-app rather than obsolete authored fixture results. @fhuelin speaks and a teammate
+app rather than obsolete authored fixture results. @leuphil speaks and a teammate
 clicks. Operator choice and two timed human rehearsals remain pending; dry runs are not
 misrepresented as spoken rehearsals.
 
@@ -19,12 +19,12 @@ misrepresented as spoken rehearsals.
   hot-return mixed car plan and original unconfirmed provider-replay plan.
 - Two automated screen dry runs passed; timings and their limits are recorded.
 - Prepared source attribution, synthetic assumptions and concise jury answers.
-- @fhuelin chose to speak while a teammate operates the app.
+- @fhuelin assigned @leuphil to speak while a teammate operates the app.
 - Nine existing integration checks and strict documentation-path checks passed.
 
 ## Next
 1. Review the draft with @fhuelin and choose the teammate click operator.
-2. Perform two timed spoken rehearsals and record the actual times.
+2. Perform two timed spoken rehearsals with @leuphil and record the actual times.
 3. Coordinate fallback assets with T10; teammate review and explicit approval
    are required before merging the T11 PR.
 
@@ -37,6 +37,9 @@ misrepresented as spoken rehearsals.
 GitHub whole-history privacy checks fail on a personal email in a historical
 commit already on main. T11 must not weaken the guard or rewrite shared history
 without team agreement. Keep any screenshots with private data outside Git.
+
+## Pull request
+https://github.com/philLeu/HackAmRhein2026/pull/14
 
 ## Resume prompt
 Continue T11 on docs/t11-demo-story. Read docs/demo-story.md and this handoff.
