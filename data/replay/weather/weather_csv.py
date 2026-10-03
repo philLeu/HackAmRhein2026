@@ -7,7 +7,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "src"))
 
 from treatment_planner.data.weather_csv import (  # noqa: E402
+    DAILY_MAXIMUM,
     LOCAL_TIMEZONE,
+    OPTIONAL_PARAMETERS,
     PARAMETERS,
     SNOW_CODE_MAPPING,
     UTC,
@@ -28,6 +30,8 @@ from treatment_planner.data.weather_csv import (  # noqa: E402
 
 __all__ = [
     "LOCAL_TIMEZONE",
+    "DAILY_MAXIMUM",
+    "OPTIONAL_PARAMETERS",
     "PARAMETERS",
     "SNOW_CODE_MAPPING",
     "UTC",

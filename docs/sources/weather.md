@@ -15,6 +15,7 @@ Actual available intervals must be inspected in each capture.
 | Parameter | Meaning | Unit | Validity interval |
 |---|---|---|---|
 | `tre200h0` | Air temperature at 2 m, hourly mean | °C, checked against metadata | Preceding hour |
+| `tre200px` | Daily maximum air temperature | °C, checked against metadata | Local calendar day |
 | `jww003i0` | Numeric MeteoSwiss weather type | Provider code | Preceding three hours |
 
 The timestamp is the **end** of each interval, in UTC. A shared timestamp does not
@@ -24,14 +25,18 @@ the applicable UTC offset. Hourly mean temperature is not an hourly maximum.
 [Provider specification](https://opendatadocs.meteoswiss.ch/e-forecast-data/e4-local-forecast-data).
 The official notebook shows the timestamp header as `Date`. The parser matches
 headers without case sensitivity and trims surrounding spaces. Selected-input
-CSV headers are normalized to lowercase; original-download hashes are retained.
+CSV headers are normalized to lowercase; original-download hashes are retained. `tre200px`
+is optional: when present, its daily value applies across the local calendar day
+for the trip-day reminder. It is not an hourly measurement.
 
 ## Location and retrieval
 
-The default postcode is 4056, matching the
-[campus address](https://www.campus.novartis.com/en/inside-our-campus/getting-here).
-This is a candidate forecast point for local courier journeys, not evidence of
-weather everywhere on a route or along the Rotterdam–Basel shipment.
+The model calls postcode 4056 the **PulseShift production site**. Its MeteoSwiss
+physical reference is the [Novartis Campus](https://www.campus.novartis.com/en/inside-our-campus/getting-here);
+the demo assumes PulseShift is located there. The other endpoint is postcode
+4031, the [University Hospital Basel](https://wwwprod.usb.ch/en/kontakt). Both
+points are used for each local courier journey. They are endpoint forecasts, not
+evidence of weather at every point along a route or along the Rotterdam–Basel shipment.
 
 The utility looks up the real `point_id` in location metadata; it never assumes
 that the ID equals a postcode. It selects postcode type `point_type_id=2` and
@@ -129,9 +134,11 @@ required because the team has not approved a shared age limit. The adapter emits
 separate journey windows, and reports missing intervals, unknown values, stale
 forecasts and requests outside the capture horizon as issues. For the source's
 `tre200h0` hourly mean it fills `hourly_mean_temperature_c`; it leaves
-`maximum_temperature_c` unknown because the provider does not supply an hourly
-maximum. Therefore this source alone cannot confirm the maximum-temperature
-eligibility check until the team changes the rule or uses a source with maxima.
+`maximum_temperature_c` unknown when the optional daily maximum is absent. Live
+planning uses snowfall for bicycle eligibility and shows a separate recheck
+reminder when the daily maximum forecast is at least 28°C. Current overview
+temperatures are MeteoSwiss hourly means, not live thermometer readings. Weather
+symbols are derived from MeteoSwiss weather codes; proprietary artwork is not used.
 
 Existing snow on the actual route remains the separate coordinator input defined
 in [the team's decisions](../decisions.md). This helper does not choose transport,
@@ -203,25 +210,24 @@ Adapters accept explicitly synthetic overrides only. Their source interval,
 values and provenance remain unchanged when conditions carry over. Real/live
 evidence is never extended this way. An absent override retains the route's
 baseline fixture; the V2-8 integration layer owns that selection, combining
-reports, Live/Demo switching and reset. V2-7 owns the controls and summaries.
-The live/demo providers are not yet wired into the V1 `app.py` screen.
+reports, Live/Demo switching and reset. V2-8 wires the live/demo providers into
+the guided application.
 
 ### Trip-day temperature reminder
 
 The team-requested advisory threshold is inclusive at 28°C, configured in
-`config/weather.json`. A known forecast temperature at or above it displays a
-reminder to refresh weather on the trip day and recheck the plan before departure.
-It names the affected leg and the actual candidate journey date in UTC. Hourly
-means are labelled as means; simulated maxima are labelled as simulated.
-Unknown or nonfinite temperatures do not become known heat warnings.
+`config/weather.json`. In Live mode, MeteoSwiss `tre200px` supplies the daily
+maximum when available; it displays a reminder to refresh weather on the trip
+day and recheck the plan before departure. The overview labels hourly mean
+temperature separately. Unknown or nonfinite temperatures do not become known
+heat warnings.
 
-The existing comparison screen shows this reminder beside the inspected current
-plan. V2-7 can reuse `src/treatment_planner/ui/weather_advisories.py` beside the
-recommended/confirmed plan; the logic is in
-`src/treatment_planner/weather_advisories.py`.
+The comparison screen shows this reminder beside the inspected current plan.
+The logic is in `src/treatment_planner/weather_advisories.py`.
 
 This is an advisory only: it is separate from `WeatherReport.issues`, does not
-change the existing bicycle maximum-temperature eligibility rule or recommendation
-scores, and does not mark a route At risk under the existing ranking definitions.
+change the Live snowfall-based bicycle eligibility rule or recommendation
+scores. A displayed reminder can mark the route summary At risk for coordinator
+review, but does not block the bicycle.
 It does not schedule a future refresh. Unsupported maxima and stale/missing
 coverage remain unknown independently of whether a reminder is shown.

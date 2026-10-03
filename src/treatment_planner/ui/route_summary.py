@@ -8,9 +8,9 @@ from treatment_planner.interfaces import RouteId, RouteStatus, RouteSummary, Tra
 from treatment_planner.ui.formatting import format_timestamp
 
 ROUTES = {
-    RouteId.INGREDIENTS: ("Ingredients", "Rotterdam", "Production"),
-    RouteId.SAMPLE: ("Sample", "Hospital", "Production"),
-    RouteId.TREATMENT: ("Finished treatment", "Production", "Hospital"),
+    RouteId.INGREDIENTS: ("Ingredients", "Rotterdam", "PulseShift Basel"),
+    RouteId.SAMPLE: ("Sample", "University Hospital Basel", "PulseShift Basel"),
+    RouteId.TREATMENT: ("Finished treatment", "PulseShift Basel", "University Hospital Basel"),
 }
 TRANSPORT_ICONS = {
     TransportMode.SHIP: "🚢",
@@ -44,8 +44,11 @@ def render_route_diagram(
             "Refrigerated truck": ("Refrigerated", "truck"),
             "Sample + ingredients": ("Sample +", "ingredients"),
             "Treatment ready": ("Treatment", "ready"),
+            "PulseShift Basel": ("PulseShift", "Basel"),
+            "University Hospital Basel": ("University", "Hospital", "Basel"),
+            "University Hospital": ("University", "Hospital"),
         }.get(text, (text,))
-        first = 50 if len(lines) > 1 else 59
+        first = 43 if len(lines) == 3 else 50 if len(lines) == 2 else 59
         spans = "".join(
             f'<tspan x="{center}" y="{first + i * 16}">{escape(line)}</tspan>'
             for i, line in enumerate(lines)

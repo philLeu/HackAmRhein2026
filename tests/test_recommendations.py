@@ -113,17 +113,17 @@ def summary(plan, route=RouteId.SAMPLE, status=RouteStatus.NORMAL):
     )
 
 
-def test_protocol_and_baseline_ties(engine, settings):
+def test_protocol_and_baseline_modes_resolve_equal_goal_scores(engine, settings):
     assert isinstance(engine, RecommendationEngine)
     plans = PlanningComparator(t4_replay=True).compare(fixture_request(), environment(), settings)
     result = engine.recommend(plans, INJECTION, ORDER + 165 * H, ())
-    assert len(result.winner_plan_ids) > 1
+    assert result.winner_plan_ids == ("SHIP-BICYCLE-BICYCLE-0",)
     assert all(
         s.injection_penalty_minutes == 0
         for s in result.scores
         if s.plan_id in result.winner_plan_ids
     )
-    assert "no automatic preselection" in result.reason
+    assert "Route-mode tie-break applied" in result.reason
     assert result == engine.recommend(tuple(reversed(plans)), INJECTION, ORDER + 165 * H, ())
 
 
@@ -157,6 +157,59 @@ def test_equal_weighted_penalties_remain_tied_even_on_opposite_sides(engine, bas
     assert result.winner_plan_ids == ("A", "B")
     assert [s.injection_penalty_minutes for s in result.scores] == [30, 30]
     assert "example tied winner" in result.reason
+
+
+def test_equal_goal_scores_apply_ship_and_bicycle_mode_preferences(engine, baseline):
+    preferred = replace(baseline, plan_id="ship-bike-bike")
+    less_preferred = replace(
+        baseline,
+        plan_id="truck-car-car",
+        ingredient_mode=TransportMode.TRUCK,
+        outbound_mode=TransportMode.CAR,
+        return_mode=TransportMode.CAR,
+    )
+
+    result = engine.recommend((less_preferred, preferred), INJECTION, ORDER + 165 * H, ())
+
+    assert result.winner_plan_ids == ("ship-bike-bike",)
+    assert "Route-mode tie-break applied" in result.reason
+
+
+def test_ship_preference_comes_before_bicycle_count(engine, baseline):
+    ship_cars = replace(
+        baseline,
+        plan_id="ship-car-car",
+        outbound_mode=TransportMode.CAR,
+        return_mode=TransportMode.CAR,
+    )
+    truck_bicycles = replace(
+        baseline,
+        plan_id="truck-bike-bike",
+        ingredient_mode=TransportMode.TRUCK,
+    )
+
+    result = engine.recommend((ship_cars, truck_bicycles), INJECTION, ORDER + 165 * H, ())
+
+    assert result.winner_plan_ids == ("ship-car-car",)
+    assert "Route-mode tie-break applied" in result.reason
+
+
+def test_equal_ship_and_bicycle_count_preserves_tie(engine, baseline):
+    outbound_bicycle = replace(
+        baseline,
+        plan_id="outbound-bike",
+        return_mode=TransportMode.CAR,
+    )
+    return_bicycle = replace(
+        baseline,
+        plan_id="return-bike",
+        outbound_mode=TransportMode.CAR,
+    )
+
+    result = engine.recommend((outbound_bicycle, return_bicycle), INJECTION, ORDER + 165 * H, ())
+
+    assert result.winner_plan_ids == ("outbound-bike", "return-bike")
+    assert "2 equal winners remain" in result.reason
 
 
 def test_risk_margin_precedes_warning_count_and_excludes_preparation(engine, baseline):

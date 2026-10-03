@@ -21,8 +21,8 @@ class WeatherReplayProvider:
     """Adapt one saved forecast capture without network access or scheduling rules.
 
     ``maximum_forecast_age`` is required because the team has not approved a
-    default freshness policy. Temperature is preserved as hourly mean evidence;
-    maximum temperature stays unknown because the source does not provide it.
+    default freshness policy. Hourly means and the daily maximum are preserved
+    as separate statistics with their distinct validity intervals.
     """
 
     def __init__(self, capture_directory: Path | str, maximum_forecast_age: timedelta):

@@ -22,6 +22,7 @@ from treatment_planner.interfaces import (
     RouteId,
     RouteStatus,
     RouteSummary,
+    TransportMode,
 )
 
 DEADLINES = ("Ingredient arrival", "Sample arrival", "Production completion", "Injection")
@@ -84,14 +85,33 @@ class GoalRecommendationEngine:
                 scores.append(score)
         scores.sort(key=lambda score: (self._key(score, goal), score.plan_id))
         ordered = tuple(scores)
-        winners = tuple(
+        if not ordered:
+            reason = self._explanation(plans, goal, ordered, (), target_injection)
+            if exclusions:
+                reason += "\nExcluded from ranking:\n- " + "\n- ".join(sorted(exclusions))
+            return RecommendationResult(goal, (), (), reason)
+        primary_winners = tuple(
             score.plan_id
             for score in ordered
             if self._key(score, goal) == self._key(ordered[0], goal)
         )
-        reason = self._explanation(plans, goal, ordered, winners, target_injection)
+        primary_plans = {plan.plan_id: plan for plan in plans if plan.plan_id in primary_winners}
+        best_mode_preference = max(self._mode_preference(plan) for plan in primary_plans.values())
+        winners = tuple(
+            plan_id
+            for plan_id in primary_winners
+            if self._mode_preference(primary_plans[plan_id]) == best_mode_preference
+        )
+        reason = self._explanation(
+            plans,
+            goal,
+            ordered,
+            winners,
+            target_injection,
+            mode_tiebreak=len(winners) < len(primary_winners),
+        )
         if exclusions:
-            reason += " Excluded from ranking: " + "; ".join(sorted(exclusions)) + "."
+            reason += "\nExcluded from ranking:\n- " + "\n- ".join(sorted(exclusions))
         return RecommendationResult(goal, winners, ordered, reason)
 
     @staticmethod
@@ -148,13 +168,22 @@ class GoalRecommendationEngine:
             return (score.ingredient_arrival,)
         return (-score.limiting_margin, score.at_risk_routes)
 
-    def _explanation(self, plans, goal, scores, winners, target) -> str:
+    @staticmethod
+    def _mode_preference(plan: CandidatePlan) -> tuple[int, int]:
+        """Prefer ship before comparing the number of bicycle legs to car legs."""
+        return (
+            int(plan.ingredient_mode == TransportMode.SHIP),
+            int(plan.outbound_mode == TransportMode.BICYCLE)
+            + int(plan.return_mode == TransportMode.BICYCLE),
+        )
+
+    def _explanation(self, plans, goal, scores, winners, target, *, mode_tiebreak=False) -> str:
         if not scores:
             return (
                 f"No recommendation for {goal.value}: "
                 "no confirmed alternative has usable score inputs."
             )
-        best = scores[0]
+        best = next(score for score in scores if score.plan_id == winners[0])
         plan = next(p for p in plans if p.plan_id == best.plan_id)
         checks = {check.constraint: check for check in plan.checks}
         example = "example tied winner: " if len(winners) > 1 else ""
@@ -188,6 +217,11 @@ class GoalRecommendationEngine:
                     " Tie-break: fewer evidence-backed At risk local routes "
                     f"({best.at_risk_routes})."
                 )
+        if mode_tiebreak:
+            reason += (
+                " Route-mode tie-break applied: prefer Rhine ship to truck first, "
+                "then prefer more bicycle legs over car legs."
+            )
         if len(winners) > 1:
-            reason += f" {len(winners)} equal winners; no automatic preselection."
+            reason += f" {len(winners)} equal winners remain; no automatic preselection."
         return reason

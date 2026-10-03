@@ -1,4 +1,6 @@
-"""PulseShift application entry point for guided treatment planning."""
+"""V2 guided treatment-material planning demo and integration entry point."""
+
+from __future__ import annotations
 
 from dataclasses import replace
 from datetime import UTC, datetime, timedelta
@@ -6,185 +8,395 @@ from pathlib import Path
 
 import streamlit as st
 
-from treatment_planner.data.weather import WeatherLiveProvider
-from treatment_planner.demo import ORDER
+from treatment_planner.data.weather_live import WeatherLiveProvider
+from treatment_planner.demo import ORDER, fixture_request
 from treatment_planner.interfaces import (
     DemoOverrides,
+    EnvironmentInputs,
     EvidenceMode,
     PlanningGoal,
-    TransportMode,
+    TimeWindow,
+    TreatmentRequest,
 )
 from treatment_planner.planning import load_settings
 from treatment_planner.recommendations import GoalRecommendationEngine
-from treatment_planner.ui.comparison import render_comparison, render_route_inputs
-from treatment_planner.ui.comparison import render_sources as render_evidence_sources
+from treatment_planner.rhine_demo import RhineRouteEvidence, load_live_rhine_evidence
+from treatment_planner.route_summaries import build_route_summaries
+from treatment_planner.ui.comparison import render_comparison, render_sources
 from treatment_planner.ui.demo_controls import render_demo_controls
 from treatment_planner.ui.navigation import render_evidence_mode, render_navigation
 from treatment_planner.ui.presentation import apply_theme
 from treatment_planner.ui.recommendation import render_goal
 from treatment_planner.ui.rhine import render_rhine_conditions
+from treatment_planner.ui.route_inputs import render_route_inputs
 from treatment_planner.ui.route_summary import render_route_summaries
-from treatment_planner.v2_flow import FORECAST_AGE, baseline_overrides, build_flow, live_request
+from treatment_planner.v2_flow import (
+    DEFAULT_INJECTION_OFFSET,
+    LIVE_RHINE_LOCATION,
+    LIVE_WEATHER_POINTS,
+    _baseline_plan,
+    _demo_baseline_templates,
+    _demo_environment,
+    _live_environment,
+    _live_request,
+    _request_with_demo_routes,
+    _target_for,
+)
 
 ROOT = Path(__file__).resolve().parent
+THEME_PATH = ROOT / "config" / "theme.toml"
+LIVE_WEATHER_MAX_AGE = timedelta(hours=24)
 
 
-def render_sources(mode: EvidenceMode) -> None:
-    """Keep provider attribution and deliberate simplifications visible."""
-    with st.expander("Sources and demo limits", expanded=True):
-        st.markdown(
-            "[Source: MeteoSwiss · CC BY 4.0]"
-            "(https://opendatadocs.meteoswiss.ch/general/terms-of-use) · "
-            "[FOEN/BAFU via Open Data Basel-Stadt · CC0 1.0]"
-            "(https://data.bs.ch/explore/dataset/100089/)"
+@st.cache_data(ttl=300, show_spinner=False)
+def _cached_live_rhine(interval: TimeWindow, evaluated_at: datetime) -> RhineRouteEvidence:
+    """Keep one explicit live evidence snapshot stable across page reruns."""
+    return load_live_rhine_evidence(interval, evaluated_at=evaluated_at)
+
+
+def _clear_confirmation_state() -> None:
+    """Clear V2 selection state without changing navigation."""
+    for key in list(st.session_state):
+        if key.startswith(("comparison", "v2-recommendation")):
+            st.session_state.pop(key, None)
+
+
+def _clear_demo_reset_state() -> None:
+    for key in list(st.session_state):
+        if key.startswith(("v2-goal", "comparison", "v2-demo-fields-")):
+            st.session_state.pop(key, None)
+
+
+def _render_sources_chapter(
+    request: TreatmentRequest,
+    environment: EnvironmentInputs,
+    mode: EvidenceMode,
+    rhine: RhineRouteEvidence | None,
+    theme: dict,
+) -> None:
+    render_sources(request, environment)
+    st.markdown("### Data sources and limits")
+    st.markdown(
+        "- [MeteoSwiss forecast · CC BY 4.0](https://opendatadocs.meteoschweiz.ch/general/terms-of-use)\n"
+        "- [Basel Rhine observations · CC0 1.0](https://data.bs.ch/explore/dataset/100089/)\n"
+        "- [FOEN/BAFU forecast · free use with recommended attribution](https://www.hydrodaten.admin.ch/en/questions)"
+    )
+    st.write(
+        "Treatment timings, vehicle durations and disruption effects are synthetic. "
+        "The Basel gauge is a route-wide model proxy, not proof of Rotterdam–Basel "
+        "navigability or a measured delivery time. MeteoSwiss hourly mean and daily "
+        "maximum are separate forecast values. The planner does not book transport "
+        "or make clinical decisions."
+    )
+    if mode == EvidenceMode.LIVE and rhine is not None:
+        coverage = rhine.covered_until.isoformat() if rhine.covered_until else "unknown"
+        st.caption(
+            f"BAFU station-chart forecast coverage through {coverage} "
+            f"({rhine.state.value}); shipping uses the current Basel gauge proxy."
         )
-        st.write(
-            "Invented treatment and transport/process durations. Rhine delays are synthetic "
-            "scenario inputs, never inferred from the Basel gauge or proof of route navigability. "
-            "The finite alternative set is goal-ranked but is not exhaustive optimisation."
+    with st.expander("Basel station chart · supporting evidence"):
+        st.caption(
+            "This chart is a station view for inspection. It does not change the "
+            "ingredient-route evidence or simulated shipping delay."
         )
-        if mode == EvidenceMode.DEMO:
-            st.write(
-                "Demo mode uses a fixed clock and simulated Rhine, weather and route inputs. "
-                "The low-water-to-delay rule is illustrative; clear synthetic route checks "
-                "are assumed renewed at dispatch."
+        render_rhine_conditions(ROOT, theme)
+
+
+def _weather_icon(code: int | None, snowfall: bool | None) -> str:
+    if snowfall is True:
+        return "❄️"
+    if code is None:
+        return "❔"
+    if code == 133:
+        return "❔"
+    if code in {
+        8,
+        11,
+        16,
+        19,
+        22,
+        30,
+        34,
+        37,
+        39,
+        42,
+        108,
+        111,
+        116,
+        119,
+        122,
+        130,
+        134,
+        137,
+        139,
+        142,
+    }:
+        return "❄️"
+    if code in {7, 10, 15, 18, 21, 31, 107, 110, 115, 118, 121, 131}:
+        return "🌨️"
+    if code in {6, 9, 14, 17, 20, 29, 32, 33, 38, 106, 109, 114, 117, 120, 129, 132, 138}:
+        return "🌧️"
+    if code in {12, 13, 23, 24, 25, 36, 40, 41, 112, 113, 123, 124, 125, 136, 140, 141}:
+        return "⛈️"
+    if code in {27, 28, 127, 128}:
+        return "🌫️"
+    return "🌤️" if code % 100 < 20 else "☁️"
+
+
+def _render_live_conditions(environment: EnvironmentInputs, settings) -> None:
+    st.subheader("Live conditions at both Basel sites")
+    weather_columns = st.columns(2)
+    for column, location in zip(
+        weather_columns,
+        ("PulseShift production site, Basel", "University Hospital Basel"),
+        strict=True,
+    ):
+        current = next(
+            (window for window in environment.weather.windows if window.location == location),
+            None,
+        )
+        with column:
+            st.markdown(f"**{location}**")
+            if current is None:
+                st.metric("Current forecast", "Unavailable")
+                issues = [issue for issue in environment.weather.issues if location in issue]
+                for issue in issues:
+                    st.caption(issue)
+                continue
+            temperature = current.hourly_mean_temperature_c
+            label = f"{temperature:.1f} °C" if temperature is not None else "Unknown"
+            icon = _weather_icon(current.weather_code, current.snowfall)
+            st.metric("Temperature · current forecast", f"{icon} {label}")
+            maximum = current.maximum_temperature_c
+            maximum_label = f"Daily maximum: {maximum:.1f} °C" if maximum is not None else "Unknown"
+            st.caption(maximum_label)
+            st.caption(
+                "Snowfall indicated"
+                if current.snowfall is True
+                else "No snowfall indicated"
+                if current.snowfall is False
+                else "Snowfall status unknown"
             )
+            st.caption(f"Source: {current.provenance.source}")
+
+    st.markdown("**Basel Rhine gauge · route-wide model proxy**")
+    if environment.river.observations:
+        observation = max(environment.river.observations, key=lambda item: item.observed_at)
+        level_m = observation.water_level_m
+        if level_m is None:
+            st.info("Current gauge height is unavailable.")
         else:
-            st.write(
-                "Live evidence comes from current public provider responses. MeteoSwiss "
-                "hourly mean temperature is never treated as a journey maximum. Future "
-                "manual route checks remain unknown until renewed. Provider failures and "
-                "coverage gaps do not trigger a simulated fallback."
+            st.progress(min(max(level_m / 10, 0.0), 1.0), text=f"{level_m:.2f} / 10 m")
+            st.caption(
+                f"Gauge height {level_m:.3f} m · "
+                f"observed {observation.observed_at:%Y-%m-%d %H:%M UTC}. "
+                "Model assumption: Basel level applies along the whole ship route."
             )
+            st.caption(
+                f"Simplified shipping delay model: "
+                f"{settings.river_delay.total_seconds() / 3600:g} h. "
+                "This is a model output, not a measured delivery time."
+            )
+            if environment.river.issues:
+                st.warning("; ".join(environment.river.issues))
+    else:
+        st.info("Current Rhine gauge reading unavailable; ship timing remains unconfirmed.")
 
 
 def main() -> None:
-    """Present V2 planning with explicit live evidence and a fixed demo clock."""
-    st.set_page_config(page_title="PulseShift · Treatment planner", layout="wide")
-    theme = apply_theme()
-    st.caption("OPERATIONS PREVIEW / MATERIAL FLOW")
-    st.title("Treatment planner")
-    st.markdown(
-        "**Synthetic treatment demo** · Planning choices only; no transport or treatment booked."
-    )
+    st.set_page_config(page_title="Treatment material-flow planner", layout="wide")
+    theme = apply_theme(THEME_PATH)
+    st.title("Treatment material-flow planner")
+    st.caption("Compare ingredient, sample and treatment routes before confirming a plan.")
+    st.warning("Planning preview only. No treatment or transport is booked.")
+
     state = st.session_state
-    chapter = render_navigation()
-    mode = render_evidence_mode(state.get("v2-mode-value", EvidenceMode.LIVE))
-    previous_mode = state.get("v2-mode-value")
-    if previous_mode is not None and mode != previous_mode:
-        state["v2-overrides"] = DemoOverrides()
-        state.pop("v2-live-flow", None)
-        state.pop("v2-live-request", None)
-        state.pop("comparison-v2-confirmed", None)
-        state["v2-confirmed-id"] = None
-    state["v2-mode-value"] = mode
     settings = load_settings(ROOT / "config" / "planning.json")
-    baseline = baseline_overrides(settings)
-    overrides = state.get("v2-overrides", DemoOverrides())
-    overrides, reset = render_demo_controls(
-        mode,
-        overrides,
-        baseline,
-        clock=ORDER,
-        station_label="Basel Rhine gauge (station level)",
+    chapter = render_navigation()
+    previous_mode = state.get("v2-active-mode")
+    selected_mode = render_evidence_mode(
+        previous_mode or EvidenceMode.LIVE,
+        key="v2-mode",
     )
-    if reset:
-        overrides = DemoOverrides()
-        state["v2-goal-value"] = PlanningGoal.LOWER_DISRUPTION_RISK
-        state["v2-target-value"] = datetime(2026, 11, 8, 5, tzinfo=UTC)
+    if previous_mode is None:
+        state["v2-active-mode"] = selected_mode
+    elif selected_mode != previous_mode:
+        state["v2-active-mode"] = selected_mode
+        state["v2-overrides"] = DemoOverrides()
         state["v2-reset-generation"] = state.get("v2-reset-generation", 0) + 1
-        for name in tuple(state):
-            if name.startswith(("v2-goal", "comparison-v2", "v2-demo-fields-")):
-                state.pop(name, None)
-        state["v2-confirmed-id"] = None
-    if overrides != state.get("v2-overrides"):
-        state["v2-overrides"] = overrides
-        state["v2-confirmed-id"] = None
-        state.pop("comparison-v2-confirmed", None)
-    goal = state.get("v2-goal-value", PlanningGoal.LOWER_DISRUPTION_RISK)
-    target = state.get("v2-target-value", datetime(2026, 11, 8, 5, tzinfo=UTC))
-    if chapter == "Plan":
-        goal, target = render_goal(goal, target)
-        state["v2-goal-value"], state["v2-target-value"] = goal, target
-    if mode == EvidenceMode.DEMO:
-        flow = build_flow(mode, settings, overrides, baseline)
+        _clear_confirmation_state()
+        for key in list(state):
+            if key.startswith("v2-goal"):
+                state.pop(key, None)
+
+        if selected_mode == EvidenceMode.DEMO:
+            state["v2-goal-value"] = PlanningGoal.LOWER_DISRUPTION_RISK
+            state["v2-target"] = ORDER + DEFAULT_INJECTION_OFFSET
+            state["v2-demo-clock"] = ORDER
+        state["v2-inputs-changed"] = True
+
+    demo_clock = state.get("v2-demo-clock", ORDER)
+    baseline_templates = _demo_baseline_templates(settings)
+    overrides = state.get("v2-overrides", DemoOverrides())
+    new_overrides, reset_requested = render_demo_controls(
+        selected_mode,
+        overrides,
+        baseline_templates,
+        clock=demo_clock,
+        station_label=LIVE_RHINE_LOCATION,
+        key="v2-demo",
+    )
+    if reset_requested:
+        state["v2-overrides"] = DemoOverrides()
+        state["v2-goal-value"] = PlanningGoal.LOWER_DISRUPTION_RISK
+        state.pop("v2-goal", None)
+        state["v2-target"] = ORDER + DEFAULT_INJECTION_OFFSET
+        state["v2-target-mode"] = EvidenceMode.DEMO
+        state["v2-demo-clock"] = ORDER
+        state["v2-reset-generation"] = state.get("v2-reset-generation", 0) + 1
+        _clear_demo_reset_state()
+        state["v2-inputs-changed"] = True
+        st.rerun()
+    if new_overrides != overrides:
+        state["v2-overrides"] = new_overrides
+        state["v2-reset-generation"] = state.get("v2-reset-generation", 0) + 1
+        st.rerun()
+    overrides = state.get("v2-overrides", DemoOverrides())
+
+    if selected_mode == EvidenceMode.LIVE:
+        if st.button("Refresh live evidence", key="v2-refresh-live"):
+            state["v2-live-as-of"] = datetime.now(UTC)
+            state["v2-reset-generation"] = state.get("v2-reset-generation", 0) + 1
+            providers = state.get("v2-weather-providers", {})
+            for provider in providers.values():
+                provider.refresh()
+            _cached_live_rhine.clear()
+            st.rerun()
+        now = state.setdefault("v2-live-as-of", datetime.now(UTC))
+        request = state.get("v2-live-request")
+        if request is None or request.decision_time != now:
+            previous_routes = request.routes if request is not None else None
+            request = _live_request(now)
+            if previous_routes is not None:
+                request = replace(request, routes=previous_routes)
+            state["v2-live-request"] = request
+        request = render_route_inputs(request, key="v2-live-routes", live_mode=True)
+        state["v2-live-request"] = request
+        providers = state.get("v2-weather-providers")
+        if providers is None:
+            providers = {
+                postcode: WeatherLiveProvider(LIVE_WEATHER_MAX_AGE, postal_code=postcode)
+                for postcode in LIVE_WEATHER_POINTS
+            }
+            state["v2-weather-providers"] = providers
+        with st.spinner("Loading Rhine and endpoint weather evidence…"):
+            environment, settings_for_run, plans, rhine = _live_environment(
+                request, settings, now, providers, _cached_live_rhine
+            )
+        _render_live_conditions(environment, settings_for_run)
     else:
-        if "v2-live-request" not in state:
-            state["v2-live-request"] = live_request(datetime.now(UTC))
-        request = render_route_inputs(state["v2-live-request"])
-        if request != state["v2-live-request"]:
-            state["v2-live-request"] = request
-            state.pop("v2-live-flow", None)
-        if st.button("Refresh live evidence"):
-            request = replace(request, decision_time=datetime.now(UTC))
-            state["v2-live-request"] = request
-            state.pop("v2-live-flow", None)
-            state.pop("v2-live-weather", None)
-        if "v2-live-weather" not in state:
-            state["v2-live-weather"] = WeatherLiveProvider(FORECAST_AGE)
-        if "v2-live-flow" not in state:
-            with st.spinner("Loading current Rhine and weather evidence"):
-                state["v2-live-flow"] = build_flow(
-                    mode,
-                    settings,
-                    DemoOverrides(),
-                    baseline,
-                    request=request,
-                    weather=state["v2-live-weather"],
-                )
-        flow = state["v2-live-flow"]
-        if flow.environment.river.issues or flow.environment.weather.issues:
-            st.info("Live evidence has gaps or limits. Switch to Demo for an offline walkthrough.")
+        state.pop("v2-live-request", None)
+        request = fixture_request()
+        request = _request_with_demo_routes(request, overrides)
+        environment, settings_for_run, plans = _demo_environment(
+            request, settings, overrides, baseline_templates
+        )
+        rhine = None
+
+    summaries = build_route_summaries(
+        plans,
+        request,
+        environment,
+        selected_mode,
+        settings_for_run,
+        overrides=overrides if selected_mode == EvidenceMode.DEMO else DemoOverrides(),
+        baseline=baseline_templates if selected_mode == EvidenceMode.DEMO else DemoOverrides(),
+        rhine=rhine,
+    )
+    goal = state.get("v2-goal-value", PlanningGoal.LOWER_DISRUPTION_RISK)
+    default_target = (
+        ORDER + DEFAULT_INJECTION_OFFSET
+        if selected_mode == EvidenceMode.DEMO
+        else _target_for(request)
+    )
+    if state.get("v2-target-mode") != selected_mode:
+        state["v2-target"] = default_target
+        state["v2-target-mode"] = selected_mode
+    target = state.get(
+        "v2-target",
+        default_target,
+    )
+    if chapter == "Plan":
+        goal, target = render_goal(goal, target, key="v2-goal")
+        state["v2-goal-value"], state["v2-target"] = goal, target
+
+    recommendation = GoalRecommendationEngine().recommend(plans, goal, target, summaries)
+    baseline_plan = _baseline_plan(plans)
     context = (
+        selected_mode,
         goal,
         target,
-        mode,
-        overrides,
-        flow.request,
-        flow.environment,
+        overrides if selected_mode == EvidenceMode.DEMO else request.routes,
+        environment,
         state.get("v2-reset-generation", 0),
     )
-    if state.get("v2-confirmation-context") != context:
-        state["v2-confirmation-context"] = context
-        state["v2-confirmed-id"] = None
-        state.pop("comparison-v2-confirmed", None)
-    recommendation = GoalRecommendationEngine().recommend(flow.plans, goal, target, flow.summaries)
-    baseline_plan = next(
-        (
-            plan
-            for plan in flow.plans
-            if plan.ingredient_mode == TransportMode.SHIP
-            and plan.outbound_mode == plan.return_mode == TransportMode.BICYCLE
-            and plan.collection_shift == timedelta()
-        ),
-        None,
-    )
+    previous_context = state.get("v2-planning-context")
+    if previous_context is not None and previous_context != context:
+        _clear_confirmation_state()
+        state["v2-inputs-changed"] = True
+    state["v2-planning-context"] = context
+
     if chapter == "Plan":
+        if state.pop("v2-inputs-changed", False):
+            st.info(
+                "Planning inputs or evidence changed. Review and confirm the updated plan again."
+            )
+        st.subheader("Planning goal and recommendation")
         selected = render_comparison(
-            flow.plans,
-            request=flow.request,
-            environment=flow.environment,
-            compared_request=flow.request,
-            compared_environment=flow.environment,
+            plans,
+            request=request,
+            environment=environment,
+            compared_request=request,
+            compared_environment=environment,
+            key="comparison",
+            theme_path=THEME_PATH,
             recommendation=recommendation,
-            route_summaries=flow.summaries,
+            route_summaries=summaries,
             confirmation_context=context,
             baseline_plan=baseline_plan,
         )
-        state["v2-confirmed-id"] = selected.plan_id if selected else None
+        state["v2-confirmed-plan"] = selected.plan_id if selected else None
     elif chapter == "Routes & conditions":
-        plan_id = state.get("v2-confirmed-id") or state.get("comparison-v2-picked")
-        if plan_id:
-            render_route_summaries(flow.summaries, plan_id, theme)
-        else:
-            st.info("Choose a plan on the Plan chapter to inspect its routes.")
+        st.subheader("Inspect a route for an alternative")
+        plan_ids = [plan.plan_id for plan in plans]
+        winner_ids = recommendation.winner_plan_ids
+        default_plan = (
+            winner_ids[0]
+            if len(winner_ids) == 1
+            else (
+                state.get("v2-route-plan")
+                if state.get("v2-route-plan") in plan_ids
+                else plan_ids[0]
+            )
+        )
+        route_plan = st.selectbox(
+            "Alternative",
+            plan_ids,
+            index=plan_ids.index(default_plan) if default_plan in plan_ids else 0,
+            format_func=lambda plan_id: next(
+                f"{plan.title} · {plan.status.value}" for plan in plans if plan.plan_id == plan_id
+            ),
+            key="v2-route-plan",
+        )
+        render_route_summaries(summaries, route_plan, theme, key="v2-route-details")
+        if selected_mode == EvidenceMode.LIVE:
+            st.caption(
+                "Manual route and vehicle checks are coordinator inputs; "
+                "snowfall blocks bicycles. Cars are always available and need one hour "
+                "of preparation. A 28°C forecast prompts a weather recheck on the trip day."
+            )
     else:
-        render_evidence_sources(flow.request, flow.environment)
-        render_sources(mode)
-        render_rhine_conditions(ROOT, theme)
-    st.caption(
-        "Planning preview only. No patient records, clinical decisions or transport bookings."
-    )
+        _render_sources_chapter(request, environment, selected_mode, rhine, theme)
 
 
 if __name__ == "__main__":

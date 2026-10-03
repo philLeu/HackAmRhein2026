@@ -1,22 +1,18 @@
-"""Compose V2 evidence, planner output and route verdicts for the screen."""
-
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import replace
 from datetime import datetime, timedelta
 
-from treatment_planner.data.weather import WeatherLiveProvider
+from treatment_planner.data.weather_live import WeatherLiveProvider
 from treatment_planner.demo import EVIDENCE, ORDER, fixture_request
 from treatment_planner.interfaces import (
     Availability,
     CandidatePlan,
     CheckStatus,
-    ConstraintResult,
     CourierLeg,
     DemoOverrides,
     EnvironmentInputs,
     EvidenceKind,
-    EvidenceMode,
     IngredientRouteOverride,
     LocalRouteInput,
     LocalRouteOverride,
@@ -26,8 +22,6 @@ from treatment_planner.interfaces import (
     RiverReport,
     RouteId,
     RouteSnow,
-    RouteStatus,
-    RouteSummary,
     TimeWindow,
     TransportMode,
     TreatmentRequest,
@@ -35,293 +29,275 @@ from treatment_planner.interfaces import (
 )
 from treatment_planner.planning import PlanningComparator
 from treatment_planner.rhine_demo import (
+    OBSERVATION_MAX_AGE,
+    RhineRouteEvidence,
     apply_demo_rhine_delay,
     demo_rhine_delay,
-    load_live_rhine_evidence,
 )
-from treatment_planner.weather_demo import DemoWeatherProvider, demo_carry_over, demo_route_input
+from treatment_planner.weather_demo import DemoWeatherProvider, demo_route_input
 
-LOCATION = "Basel 4056 forecast point"
-FORECAST_AGE = timedelta(hours=24)  # Inspection value; no approved operational policy.
-
-
-@dataclass(frozen=True)
-class PlanningFlow:
-    """One consistent comparison snapshot, including its evidence."""
-
-    request: TreatmentRequest
-    environment: EnvironmentInputs
-    plans: tuple[CandidatePlan, ...]
-    summaries: tuple[RouteSummary, ...]
+DEFAULT_INJECTION_OFFSET = timedelta(hours=165)
+LIVE_RHINE_LOCATION = "Basel gauge (FOEN 2289)"
+LIVE_WEATHER_POINTS = {
+    "4056": "PulseShift production site, Basel",
+    "4031": "University Hospital Basel",
+}
+LOCAL_ROUTE_EVENTS = {
+    CourierLeg.OUTBOUND: ("sample", RouteId.SAMPLE, "Outbound"),
+    CourierLeg.RETURN: ("return", RouteId.TREATMENT, "Return"),
+}
 
 
-def live_request(now: datetime) -> TreatmentRequest:
-    """Move synthetic process clocks to now; require new manual route checks."""
-    original = fixture_request()
+def _live_request(now: datetime) -> TreatmentRequest:
+    """Anchor the invented T4 schedule to the actual live planning clock."""
+    template = fixture_request()
     offset = now - ORDER
     routes = tuple(
         LocalRouteInput(
-            leg,
-            RouteSnow.UNKNOWN,
-            None,
-            Availability.UNKNOWN,
-            Provenance("Coordinator route status not entered", EvidenceKind.MANUAL, now, now),
+            leg=route.leg,
+            snow=RouteSnow.UNKNOWN,
+            checked_at=None,
+            car_availability=Availability.AVAILABLE,
+            provenance=Provenance(
+                "Awaiting coordinator route check",
+                EvidenceKind.MANUAL,
+                now,
+                now,
+            ),
         )
-        for leg in CourierLeg
+        for route in template.routes
     )
     return replace(
-        original,
-        order_time=now,
+        template,
+        order_time=template.order_time + offset,
+        original_collection=template.original_collection + offset,
+        nominal_departure=template.nominal_departure + offset,
         decision_time=now,
-        original_collection=original.original_collection + offset,
-        nominal_departure=original.nominal_departure + offset,
         routes=routes,
     )
 
 
-def baseline_overrides(settings: PlanningSettings) -> DemoOverrides:
-    """Give each demo button an independent initial journey interval."""
-    request = fixture_request()
-    probe = PlanningComparator(t4_replay=True).compare(
-        request, EnvironmentInputs(RiverReport(()), WeatherReport(())), settings
-    )
-    baseline = next(
-        p
-        for p in probe
-        if p.ingredient_mode == TransportMode.SHIP
-        and p.outbound_mode == p.return_mode == TransportMode.BICYCLE
-        and p.collection_shift == timedelta()
-    )
-    intervals = {event.event_id: event.interval for event in baseline.events}
-    return DemoOverrides(
-        IngredientRouteOverride(500.0, intervals["ingredients"], EVIDENCE),
-        LocalRouteOverride(
-            CourierLeg.OUTBOUND,
-            intervals["sample"],
-            20.0,
-            False,
-            RouteSnow.CLEAR,
-            Availability.AVAILABLE,
-            EVIDENCE,
-        ),
-        LocalRouteOverride(
-            CourierLeg.RETURN,
-            intervals["return"],
-            20.0,
-            False,
-            RouteSnow.CLEAR,
-            Availability.AVAILABLE,
-            EVIDENCE,
-        ),
+def _event(plan: CandidatePlan, event_id: str):
+    return next((event for event in plan.events if event.event_id == event_id), None)
+
+
+def _journey_envelope(plans: tuple[CandidatePlan, ...], event_id: str) -> TimeWindow | None:
+    intervals = [event.interval for plan in plans if (event := _event(plan, event_id)) is not None]
+    if not intervals:
+        return None
+    return TimeWindow(
+        min(interval.start for interval in intervals),
+        max(interval.end for interval in intervals),
     )
 
 
-def _journey_envelopes(plans: tuple[CandidatePlan, ...]) -> dict[str, TimeWindow]:
-    envelopes = {}
-    for event_id in ("ingredients", "sample", "return"):
-        journeys = [e.interval for p in plans for e in p.events if e.event_id == event_id]
-        envelopes[event_id] = TimeWindow(
-            min(w.start for w in journeys), max(w.end for w in journeys)
-        )
-    return envelopes
-
-
-def _demo_inputs(
-    settings: PlanningSettings, overrides: DemoOverrides, baseline: DemoOverrides
-) -> tuple[TreatmentRequest, PlanningSettings, EnvironmentInputs]:
-    effective = DemoOverrides(
-        overrides.ingredients or baseline.ingredients,
-        overrides.sample or baseline.sample,
-        overrides.treatment or baseline.treatment,
-    )
-    request = replace(
-        fixture_request(),
-        routes=(demo_route_input(effective.sample), demo_route_input(effective.treatment)),
-    )
-    adjusted = apply_demo_rhine_delay(settings, effective.ingredients)
-    if adjusted is None:
-        # No level cannot prove a zero delay; ship plans remain unconfirmed.
-        river = RiverReport(
-            (), ("Simulated Rhine gauge height is unknown; delivery delay unknown.",)
-        )
-        adjusted = settings
-    else:
-        river = RiverReport(())
-    probe = PlanningComparator(t4_replay=True).compare(
-        request, EnvironmentInputs(river, WeatherReport(())), adjusted
-    )
-    envelopes = _journey_envelopes(probe)
-    reports = (
-        DemoWeatherProvider(effective.sample).load(CourierLeg.OUTBOUND.value, envelopes["sample"]),
-        DemoWeatherProvider(effective.treatment).load(CourierLeg.RETURN.value, envelopes["return"]),
-    )
-    weather = WeatherReport(tuple(w for report in reports for w in report.windows))
-    return request, adjusted, EnvironmentInputs(river, weather)
-
-
-def _live_inputs(
-    request: TreatmentRequest, settings: PlanningSettings, weather: WeatherLiveProvider
-) -> EnvironmentInputs:
-    probe = PlanningComparator(weather_location=LOCATION).compare(
-        request, EnvironmentInputs(RiverReport(()), WeatherReport(())), settings
-    )
-    envelopes = _journey_envelopes(probe)
-    rhine = load_live_rhine_evidence(envelopes["ingredients"], evaluated_at=request.decision_time)
-    reports = (
-        weather.load(CourierLeg.OUTBOUND.value, envelopes["sample"]),
-        weather.load(CourierLeg.RETURN.value, envelopes["return"]),
-    )
-    return EnvironmentInputs(
-        RiverReport(rhine.history.observations, rhine.issues),
-        WeatherReport(
-            tuple(w for report in reports for w in report.windows),
-            tuple(dict.fromkeys(issue for report in reports for issue in report.issues)),
-        ),
-    )
-
-
-def _route_summary(
-    plan: CandidatePlan,
+def _probe_plans(
     request: TreatmentRequest,
-    route: RouteId,
-    mode: EvidenceMode,
-    overrides: DemoOverrides,
-    baseline: DemoOverrides,
-    environment: EnvironmentInputs,
-) -> RouteSummary:
-    event_id, transport, checks = {
-        RouteId.INGREDIENTS: (
-            "ingredients",
-            plan.ingredient_mode,
-            ("Rhine evidence", "Rhine delay", "Ingredient arrival"),
-        ),
-        RouteId.SAMPLE: (
-            "sample",
-            plan.outbound_mode,
-            ("Outbound weather", "Outbound route snow", "Outbound car availability"),
-        ),
-        RouteId.TREATMENT: (
-            "return",
-            plan.return_mode,
-            ("Return weather", "Return route snow", "Return car availability"),
-        ),
-    }[route]
-    interval = next(e.interval for e in plan.events if e.event_id == event_id)
-    relevant = tuple(c for c in plan.checks if c.constraint in checks)
-    if any(c.status == CheckStatus.FAIL for c in relevant):
-        status = RouteStatus.BLOCKED
-    elif any(c.status == CheckStatus.UNKNOWN for c in relevant):
-        status = RouteStatus.UNKNOWN
-    elif (
-        route == RouteId.INGREDIENTS
-        and mode == EvidenceMode.DEMO
-        and plan.ingredient_mode == TransportMode.SHIP
-        and (demo_rhine_delay(overrides.ingredients or baseline.ingredients) or timedelta())
-        > timedelta()
-    ):
-        status = RouteStatus.AT_RISK
-    else:
-        status = RouteStatus.NORMAL
-    reason = "; ".join(c.reason for c in relevant if c.status != CheckStatus.PASS)
-    if not reason:
-        if status == RouteStatus.AT_RISK:
-            reason = "Simulated low-water delivery delay; station level is not route navigability"
-        else:
-            reason = (
-                "Synthetic route condition applied"
-                if mode == EvidenceMode.DEMO
-                else "Available checks pass"
-            )
-    if route == RouteId.INGREDIENTS:
-        source = overrides.ingredients or baseline.ingredients
-        evidence = (
-            (source.provenance,)
-            if mode == EvidenceMode.DEMO
-            else tuple(o.provenance for o in environment.river.observations)
-        )
-        carried = (
-            source.interval if mode == EvidenceMode.DEMO and source.interval != interval else None
-        )
-    else:
-        leg = CourierLeg.OUTBOUND if route == RouteId.SAMPLE else CourierLeg.RETURN
-        source = (
-            (overrides.sample or baseline.sample)
-            if route == RouteId.SAMPLE
-            else (overrides.treatment or baseline.treatment)
-        )
-        evidence = (
-            (source.provenance,)
-            if mode == EvidenceMode.DEMO
-            else (
-                next(r.provenance for r in request.routes if r.leg == leg),
-                *(w.provenance for w in environment.weather.windows if w.location == leg.value),
-            )
-        )
-        carried = demo_carry_over(source, interval) if mode == EvidenceMode.DEMO else None
-    delay = None
-    if status == RouteStatus.NORMAL:
-        delay = timedelta()
-    elif status == RouteStatus.AT_RISK and route == RouteId.INGREDIENTS:
-        delay = demo_rhine_delay(overrides.ingredients or baseline.ingredients)
-    return RouteSummary(
-        plan.plan_id,
-        route,
-        interval,
-        transport,
-        mode,
-        status,
-        reason,
-        tuple(dict.fromkeys(evidence)),
-        delay,
-        (),
-        carried,
+    settings: PlanningSettings,
+    *,
+    demo: bool,
+) -> tuple[CandidatePlan, ...]:
+    comparator = PlanningComparator(
+        weather_location="Invented Basel route",
+        t4_replay=demo,
+    )
+    return comparator.compare(
+        request,
+        EnvironmentInputs(RiverReport(()), WeatherReport(())),
+        settings,
     )
 
 
-def build_flow(
-    mode: EvidenceMode,
+def _demo_baseline_templates(settings: PlanningSettings) -> DemoOverrides:
+    """Build deterministic controls from the original synthetic baseline."""
+    request = fixture_request()
+    baseline_plan = next(
+        plan
+        for plan in _probe_plans(request, settings, demo=True)
+        if plan.ingredient_mode == TransportMode.SHIP
+        and plan.outbound_mode == TransportMode.BICYCLE
+        and plan.return_mode == TransportMode.BICYCLE
+        and plan.collection_shift == timedelta(0)
+    )
+    ingredient_event = _event(baseline_plan, "ingredients")
+    outbound_event = _event(baseline_plan, "sample")
+    return_event = _event(baseline_plan, "return")
+    assert ingredient_event and outbound_event and return_event
+    return DemoOverrides(
+        ingredients=IngredientRouteOverride(480.0, ingredient_event.interval, EVIDENCE),
+        sample=LocalRouteOverride(
+            CourierLeg.OUTBOUND,
+            outbound_event.interval,
+            20.0,
+            False,
+            RouteSnow.CLEAR,
+            Availability.AVAILABLE,
+            EVIDENCE,
+        ),
+        treatment=LocalRouteOverride(
+            CourierLeg.RETURN,
+            return_event.interval,
+            20.0,
+            False,
+            RouteSnow.CLEAR,
+            Availability.AVAILABLE,
+            EVIDENCE,
+        ),
+    )
+
+
+def _request_with_demo_routes(
+    request: TreatmentRequest,
+    overrides: DemoOverrides,
+) -> TreatmentRequest:
+    by_leg = {
+        CourierLeg.OUTBOUND: overrides.sample,
+        CourierLeg.RETURN: overrides.treatment,
+    }
+    routes = tuple(
+        demo_route_input(by_leg[route.leg]) if by_leg[route.leg] else route
+        for route in request.routes
+    )
+    return replace(request, routes=routes)
+
+
+def _demo_environment(
+    request: TreatmentRequest,
     settings: PlanningSettings,
     overrides: DemoOverrides,
     baseline: DemoOverrides,
-    *,
-    request: TreatmentRequest | None = None,
-    weather: WeatherLiveProvider | None = None,
-) -> PlanningFlow:
-    """Compute every candidate and matching route summary from one snapshot."""
-    if mode == EvidenceMode.DEMO:
-        request, settings, environment = _demo_inputs(settings, overrides, baseline)
-    else:
-        if request is None or weather is None:
-            raise ValueError("Live mode needs a current request and weather provider.")
-        environment = _live_inputs(request, settings, weather)
-    plans = PlanningComparator(
-        weather_location=LOCATION, t4_replay=mode == EvidenceMode.DEMO
-    ).compare(request, environment, settings)
-    if (
-        mode == EvidenceMode.DEMO
-        and demo_rhine_delay(overrides.ingredients or baseline.ingredients) is None
-    ):
+) -> tuple[EnvironmentInputs, PlanningSettings, tuple[CandidatePlan, ...]]:
+    """Apply typed Demo controls to the planner and per-leg weather evidence."""
+    settings_for_run = settings
+    river_issues = ("Demo mode: Rhine evidence and any delay are simulated.",)
+    if overrides.ingredients is not None:
+        applied = apply_demo_rhine_delay(settings, overrides.ingredients)
+        if applied is not None:
+            settings_for_run = applied
+        else:
+            river_issues += ("Demo Rhine gauge is unknown; the shipping delay is unknown.",)
+    river = RiverReport((), river_issues)
+    comparator = PlanningComparator("Invented Basel route", t4_replay=True)
+    probe = comparator.compare(
+        request, EnvironmentInputs(river, WeatherReport(())), settings_for_run
+    )
+    windows, issues = [], []
+    for leg, (event_id, _, _) in LOCAL_ROUTE_EVENTS.items():
+        envelope = _journey_envelope(probe, event_id)
+        if envelope is None:
+            continue
+        override = (overrides.sample if leg == CourierLeg.OUTBOUND else overrides.treatment) or (
+            baseline.sample if leg == CourierLeg.OUTBOUND else baseline.treatment
+        )
+        if override is None:
+            issues.append(f"Missing simulated conditions for {leg.value}.")
+            continue
+        report = DemoWeatherProvider(override).load(leg.value, envelope)
+        windows.extend(report.windows)
+        issues.extend(report.issues)
+    environment = EnvironmentInputs(river, WeatherReport(tuple(windows), tuple(issues)))
+    plans = comparator.compare(request, environment, settings_for_run)
+    if overrides.ingredients is not None and overrides.ingredients.gauge_height_cm is None:
+        reason = "Demo Rhine gauge is unknown; the shipping delay cannot be checked."
         plans = tuple(
             replace(
                 plan,
                 status=ResultStatus.UNCONFIRMED,
-                checks=plan.checks
-                + (
-                    ConstraintResult(
-                        "Rhine delay",
-                        CheckStatus.UNKNOWN,
-                        "Simulated gauge height is unknown; "
-                        "ship delivery delay cannot be evaluated.",
-                    ),
+                checks=tuple(
+                    replace(check, status=CheckStatus.UNKNOWN, reason=reason)
+                    if check.constraint == "Rhine evidence"
+                    else check
+                    for check in plan.checks
                 ),
             )
-            if plan.ingredient_mode == TransportMode.SHIP
+            if plan.ingredient_mode == TransportMode.SHIP and plan.status != ResultStatus.INFEASIBLE
             else plan
             for plan in plans
         )
-    summaries = tuple(
-        _route_summary(plan, request, route, mode, overrides, baseline, environment)
-        for plan in plans
-        for route in RouteId
+    return environment, settings_for_run, plans
+
+
+def _live_environment(
+    request: TreatmentRequest,
+    settings: PlanningSettings,
+    now: datetime,
+    weather_providers: dict[str, WeatherLiveProvider],
+    rhine_loader,
+) -> tuple[EnvironmentInputs, PlanningSettings, tuple[CandidatePlan, ...], RhineRouteEvidence]:
+    """Load only live sources; keep missing and unsupported evidence explicit."""
+    comparator = PlanningComparator(
+        "Invented Basel route",
+        t4_replay=False,
+        check_temperature=False,
+        require_dispatch_route_check=False,
     )
-    return PlanningFlow(request, environment, plans, summaries)
+    settings = replace(settings, car_preparation=timedelta(hours=1))
+    probe = _probe_plans(request, settings, demo=False)
+    ingredient_end = request.order_time + settings.river_order_to_arrival + settings.river_delay
+    ingredient_window = TimeWindow(
+        request.nominal_departure,
+        max(ingredient_end, request.nominal_departure + timedelta(minutes=1)),
+    )
+    rhine = rhine_loader(ingredient_window, now)
+    readings = [
+        observation
+        for observation in rhine.history.observations
+        if observation.observed_at <= now
+        and observation.water_level_m is not None
+        and now - observation.observed_at <= OBSERVATION_MAX_AGE
+    ]
+    latest = max(readings, key=lambda observation: observation.observed_at, default=None)
+    if latest is None:
+        river = RiverReport((), ("A current Basel water-level observation is unavailable.",))
+        settings_for_run = settings
+    else:
+        delay = demo_rhine_delay(
+            IngredientRouteOverride(
+                latest.water_level_m * 100,
+                ingredient_window,
+                latest.provenance,
+            )
+        )
+        settings_for_run = replace(settings, river_delay=delay or timedelta(0))
+        river = RiverReport((latest,), ())
+
+    windows, issues = [], []
+    current_window = TimeWindow(now, now + timedelta(hours=1))
+    for postcode, provider in weather_providers.items():
+        report = provider.load(LIVE_WEATHER_POINTS[postcode], current_window)
+        windows.extend(report.windows)
+        issues.extend(f"{LIVE_WEATHER_POINTS[postcode]}: {issue}" for issue in report.issues)
+    for leg, (event_id, _, _) in LOCAL_ROUTE_EVENTS.items():
+        envelope = _journey_envelope(probe, event_id)
+        if envelope is None:
+            continue
+        for postcode, provider in weather_providers.items():
+            report = provider.load(leg.value, envelope)
+            windows.extend(report.windows)
+            issues.extend(f"{LIVE_WEATHER_POINTS[postcode]}: {issue}" for issue in report.issues)
+    environment = EnvironmentInputs(
+        river,
+        WeatherReport(tuple(windows), tuple(dict.fromkeys(issues))),
+    )
+    plans = comparator.compare(request, environment, settings_for_run)
+    return environment, settings_for_run, plans, rhine
+
+
+def _baseline_plan(
+    plans: tuple[CandidatePlan, ...],
+) -> CandidatePlan | None:
+    return next(
+        (
+            plan
+            for plan in plans
+            if plan.ingredient_mode == TransportMode.SHIP
+            and plan.outbound_mode == TransportMode.BICYCLE
+            and plan.return_mode == TransportMode.BICYCLE
+            and plan.collection_shift == timedelta(0)
+        ),
+        None,
+    )
+
+
+def _target_for(request: TreatmentRequest) -> datetime:
+    return request.order_time + DEFAULT_INJECTION_OFFSET

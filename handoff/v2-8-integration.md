@@ -1,19 +1,9 @@
 # V2-8 integration handoff
 
-Status: implementation pushed through `369041b`; PR still needed · Branch: `feat/v2-8-integration` · Base: shared V2 commit `3458688`
+Status: merged into the shared `feat/v2-treatment-planner` branch at `61a5cfb`.
 
-## Done
+The shared branch integrated guided navigation, Live and Demo evidence, independent Demo controls, planning, recommendations, route summaries and explicit confirmation. Its implementation and automated checks are recorded in the branch history.
 
-- Connected the V2 navigation, Live/Demo switch, independent Demo route controls, planner, goal ranking, route summaries and explicit confirmation in `app.py`.
-- Added `v2_flow.py` to build consistent evidence, plan and summary snapshots. Live mode uses current Rhine and MeteoSwiss providers without a simulated fallback. Demo uses the fixed fixture clock and applies Rhine, outbound and return conditions to actual planner checks.
-- Unknown simulated Rhine height leaves ship alternatives unconfirmed. Material input, goal and mode changes invalidate confirmation. Navigation alone preserves it; Reset demo restores baseline.
-- Updated end-to-end tests, README, source index, style guide and release checklist.
-- Browser inspection confirmed default Live, explicit provider failures and offline Demo controls. The header was made compact so the goal is visible earlier, and long excluded-plan reasons now stay in optional checks.
-- Local verification after the presentation change: 210 tests passed and Ruff formatting and lint passed. The commit hook runs the final documentation and privacy checks.
+Jana's follow-up at `82b4279` extends this flow with two Basel weather endpoints, optional daily maximum forecasts, a Live Rhine gauge proxy, revised courier rules, richer route schedules and a transport-mode tie-break. The follow-up is prepared on `feat/integrate-jana-final-touch` for review against `feat/v2-treatment-planner`; the PulseShift header branding from the shared branch is retained.
 
-## Next
-
-1. Open a PR targeting `feat/v2-treatment-planner`. The Codex in-app GitHub browser still shows Sign in, so the PR has not been created there.
-2. Have one teammate check navigation, icons and narrow-screen layout in the running app. Merge only after explicit approval for that PR.
-
-Resume: Continue V2-8 from `handoff/v2-8-integration.md` on `feat/v2-8-integration`; finish checks and prepare the V2 task PR.
+The follow-up's product rules were confirmed in chat on 2026-10-03: adopt Jana's Live assumptions and ship-then-bicycle tie-break. See [the release checklist](../docs/v2/release-checklist.md) for checks and remaining review before the V2 branch merge. The later release into `main` is a separate step.

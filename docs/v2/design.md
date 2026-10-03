@@ -20,14 +20,14 @@ Sidebar chapters: Plan, Routes & conditions, Sources & assumptions. Keep the goa
 
 Show ingredient movement separately from sample/treatment movement:
 
-- Rotterdam -> ship or refrigerated truck -> Production.
+- Rotterdam -> ship or refrigerated truck -> PulseShift production site in Basel.
 - Hospital -> bicycle or car -> Production -> bicycle or car -> Hospital.
 
 Use ship, truck, bicycle, car, hospital and production-site icons, plus high/low Rhine and sun/snow/heat indicators. Pair every status icon and colour with text. Reuse code-native icons; do not require generated artwork.
 
 ## Live data and demo controls
 
-Live is the default. Integrate live weather in addition to existing live Rhine evidence. Source failures, stale inputs and outside-horizon journeys remain explicit. Offer Demo mode when live data fails; never silently substitute simulation.
+Live is the default. Show current forecast conditions for the modeled PulseShift production site (MeteoSwiss postcode 4056) and University Hospital Basel (4031), and request both points across candidate courier journeys. The provider's physical postcode 4056 reference is Novartis Campus Basel; the model treats it as the PulseShift site. The coordinator records road clearance for each leg. Snowfall blocks bicycles; cars are always available and need one hour of preparation. A daily maximum forecast of 28°C or higher is a trip-day recheck reminder, not an eligibility block. Source failures, stale inputs and outside-horizon journeys remain explicit. Offer Demo mode when live data fails; never silently substitute simulation.
 
 A Demo switch at the top reveals three buttons opening route controls:
 
@@ -37,7 +37,7 @@ A Demo switch at the top reveals three buttons opening route controls:
 
 Use a deterministic demo fixture and clock when Demo mode is active. Label all simulated evidence. Define reset behaviour and override validity windows in the screen sketch. Switching back to Live removes demo overrides and invalidates any confirmed demo plan.
 
-Demo controls must feed the planning flow, rather than changing only chart decoration. Rhine-level-to-delay mapping remains a documented simulation assumption: a Basel station level does not prove whole-route navigability. Separate forecast snowfall from existing route snow; the demo may offer both, but their meaning must be explicit. Do not treat hourly mean temperature as a measured maximum.
+Demo controls must feed the planning flow, rather than changing only chart decoration. For Live shipping, assume the Basel gauge level is uniform along the route and apply the existing illustrative low-water delay mapping; state that it is not a measured ETA. Display the current gauge on a 0–10 m scale. Separate forecast snowfall from existing route snow; their meaning must be explicit. Keep hourly mean and daily maximum temperature distinct.
 
 ## Recommendation rules
 
