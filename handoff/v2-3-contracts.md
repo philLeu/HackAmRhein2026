@@ -1,6 +1,6 @@
 # V2-3 shared contracts
 
-Status: implementation done; preparing PR for teammate review
+Status: implementation done; PR #18 open for teammate review
 
 ## Done
 
@@ -9,6 +9,7 @@ Status: implementation done; preparing PR for teammate review
 - Added per-plan route summaries with explicit evidence, possible delay and simulated carry-over interval.
 - Added score and recommendation result models that retain co-winners and support no-recommendation outcomes.
 - Added the recommendation engine protocol and contract checks; recorded the interface decision.
+- Opened PR #18 (https://github.com/philLeu/HackAmRhein2026/pull/18) from feat/v2-3-contracts into feat/v2-treatment-planner.
 
 ## Component boundaries
 
