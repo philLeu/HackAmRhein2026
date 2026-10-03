@@ -1,6 +1,7 @@
 # V2-7 guided UI handoff
 
 Status: approved by @fhuelin; awaiting teammate PR review · Owner: @fhuelin · Updated: 2026-10-03
+PR: https://github.com/philLeu/HackAmRhein2026/pull/22
 
 ## State
 Local branch feat/v2-7-guided-ui starts at shared V2 commit 428abbb.
@@ -15,10 +16,13 @@ demo controls. Preserve V1 callers; no app.py, adapter, ranking or shared
 contract edits. V2-8 owns wiring and whole-application mode/reset state.
 
 ## Next
-Open a task PR targeting feat/v2-treatment-planner under the updated V2
-workflow. @fhuelin approved integration; one other teammate's review remains
-required before merging. V2-8 performs app wiring. Append the queued decision
-below when integrating this task.
+PR #22 targets feat/v2-treatment-planner under the updated V2 workflow.
+@fhuelin approved integration; one other teammate's review remains required.
+GitHub guard checks failed; a local full-history audit finds a historical
+personal commit email. Staged and pre-push guards passed for this task.
+Resolve the inherited history issue through the team's privacy workflow;
+do not bypass checks or rewrite shared history without team agreement.
+V2-8 performs app wiring. Append the queued decision below when integrating.
 
 ## Implemented
 - navigation.py supplies chapters and explicit Live/Demo mode selection.
