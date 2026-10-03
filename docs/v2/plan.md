@@ -5,13 +5,12 @@ Based on [design.md](design.md). Owners are proposed from existing team responsi
 ## Branching and review
 
 - Shared release branch: `feat/v2-treatment-planner`, created from verified origin/main. Work in a separate worktree; leave the current main checkout unchanged.
-- All V2 documentation, code and tests reach GitHub only through this branch. Never push main or local task branches for V2 work.
-- Each teammate uses a separate working folder and a local task branch based on the latest V2 release branch, for example `feat/v2-recommendations`. These branches stay local. Different machines can exchange reviewed commits as Git patches or bundles, then have the integration owner apply them to the shared branch.
-- Proposed integration owner: @philLeu. Review each task with one teammate before integration. Apply reviewed commits, run appropriate checks and push only the shared V2 branch. Other teammates fetch and incorporate the latest V2 state before starting their next task.
+- Each teammate uses a separate working folder and a task branch based on the latest V2 release branch, for example `feat/v2-recommendations`. Push the task branch and open a PR targeting `feat/v2-treatment-planner` for teammate review. Never push V2 work directly to main.
+- Proposed integration owner: @philLeu. Review each task with one teammate before merging its PR into the V2 branch. Run appropriate checks and require explicit approval for that PR's merge. Other teammates fetch and incorporate the latest V2 state before starting their next task.
 - Never force-push or rebase shared history. Privacy guard and executable hooks remain mandatory before every commit and push.
 - Task dependencies are satisfied when their reviewed outputs are integrated into the V2 branch, not main. Reserve app.py for the integration owner; coordinate manifest and shared contract changes through that owner.
 - Parallel tasks queue their shared docs/decisions.md entries in their own handoff files; the integration owner appends them when integrating each task. Do not edit the shared decision log concurrently.
-- A release PR into main is deferred until V2 meets its acceptance checks. Merge only after explicit approval for that specific PR.
+- A release PR from the V2 branch into main is deferred until V2 meets its acceptance checks. Merge only after explicit approval for that specific PR.
 - Existing source branch `origin/fix/readable-comparison-main` is retained for review of @janaaaaaaaa's commit d5da04c. Adopt reviewed changes into the V2 branch through V2-0; do not merge that branch into main or push further V2 work to it. This planning update integrates no teammate code. Any PR merge still requires explicit approval for that PR.
 
 Status lives in task-specific handoff files, not this plan. Implementation file paths below are proposed outputs and may not exist yet. Split oversized tasks into one-chat subtasks before starting them.

@@ -1,6 +1,6 @@
 # V2-3 shared contracts
 
-Status: implementation done; awaiting teammate review and integration
+Status: implementation done; preparing PR for teammate review
 
 ## Done
 
@@ -21,9 +21,9 @@ Status: implementation done; awaiting teammate review and integration
 ## Next
 
 - Have one teammate review the contract and its meaning against the agreed V2-1 rules and V2-2 screen sketch.
-- Integrate this local task branch into feat/v2-treatment-planner after review. Only that shared branch is pushed.
+- Review the PR targeting feat/v2-treatment-planner with one teammate, then merge after explicit approval.
 - V2-4–V2-7 can then implement against these models. If a contract needs a further change, add its decision line in the same commit.
 
 ## Resume prompt
 
-Review V2-3 on local branch feat/v2-3-contracts against docs/v2/recommendation-rules.md and docs/v2/ui-sketch.md. Run contract checks, then integrate reviewed commits into the shared V2 branch.
+Review the feat/v2-3-contracts PR into feat/v2-treatment-planner against docs/v2/recommendation-rules.md and docs/v2/ui-sketch.md. Run contract checks, then seek explicit approval before merging.
