@@ -1,0 +1,12 @@
+# Decisions
+
+One line per decision, newest at the bottom. Never edit an old line; add a new one that says what it replaces.
+
+Format: `- <date> · <decision> · @<github-username> · Affects: <tasks or areas> · Why: <short> · Instead of: <alternative, why not>`
+
+- 2026-10-03 · Compare timeline alternatives for one individual treatment with per-treatment ingredients from Rotterdam and a production coordinator choosing the plan · @philLeu · Affects: design, planning, demo · Why: makes material-flow decisions and deadline effects visible · Instead of: multiple treatments or automatic replanning, broader scope and less coordinator control
+- 2026-10-03 · Allow sample collection postponement up to 24 hours and refrigerated-truck substitution only before Rotterdam departure with 6 hours approval/preparation · @philLeu · Affects: planning, demo · Why: incorporates the team's operational constraints · Instead of: unrestricted rescheduling or instant/in-transit transport switching
+- 2026-10-03 · Block each bicycle leg for snow or temperatures above 30°C; allow a car with separate 8-hour preparation for each leg, including advance preparation based on forecasts · @philLeu · Affects: local logistics, weather, planning · Why: forecasts can preserve the sample and injection deadlines · Instead of: starting car preparation only after bicycle travel is blocked
+- 2026-10-03 · Include configurable hospital handling inside the 8-hour production-to-injection deadline, defaulting to 1 hour · @philLeu · Affects: planning, comparison · Why: delivery alone does not complete the demo treatment cycle · Instead of: assuming immediate injection upon arrival
+- 2026-10-03 · Either forecast snowfall during a courier journey or snow already on the route blocks bicycle transport · @philLeu · Affects: weather, local logistics, planning · Why: covers both developing and existing disruption · Instead of: checking only forecast snowfall or only existing snow
+- 2026-10-03 · Use coordinator-entered clear / snow present / unknown status for existing snow on each courier route in the demo · @philLeu · Affects: data inputs, local logistics, UI · Why: forecasts do not establish actual route snow conditions · Instead of: adding another data integration before the first demo
