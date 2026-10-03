@@ -12,3 +12,7 @@ Domain terms used in the code and docs, one line each. Code names use these word
 | Deadline margin | Deadline minus actual completion or arrival time; zero passes, negative fails | ConstraintResult |
 | Unconfirmed | No demonstrated failure, but insufficient evidence to confirm a plan | ResultStatus |
 | Fixture | Authored synthetic example with fixed expected results | demo.py |
+
+| Gauge height | Water height above a station datum, distinct from channel depth | RiverAssessment |
+| Ensemble forecast | Median plus optional percentile and extreme model bounds | RiverForecastPoint |
+| Watch | Within the notebook's proximity margin without a higher crossed-threshold class | RiverStatus |

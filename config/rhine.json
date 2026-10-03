@@ -1,0 +1,15 @@
+{
+  "source_note": "Notebook rules from Rhein_water_first_try.ipynb; verification and limitations in docs/sources/rhine.md. Draft/load rules and 5 cm margin are research assumptions.",
+  "draft_offset_cm": 246,
+  "margin_cm": 5,
+  "high_thresholds": [
+    {"limit": 790, "severity": "critical", "label": "Marke 2", "consequence": "no navigation allowed under the notebook rule"},
+    {"limit": 700, "severity": "warning", "label": "level 3 (Marke 1)", "consequence": "limited navigation"},
+    {"limit": 670, "severity": "warning", "label": "level 2", "consequence": "boat length limited to 135 m"},
+    {"limit": 620, "severity": "warning", "label": "level 1", "consequence": "boat length limited to 125 m"}
+  ],
+  "low_thresholds": [
+    {"limit": 230, "severity": "critical", "label": "uneconomical", "consequence": "less than 50% load for the 350 cm draft reference boat"},
+    {"limit": 350, "severity": "warning", "label": "reduced load", "consequence": "max load not possible for the 350 cm draft reference boat"}
+  ]
+}

@@ -1,8 +1,7 @@
 # T2: Rhine source investigation
 
 Converted from @luapreta-cloud's `Rhein_water_first_try.ipynb` on 2026-10-03.
-The notebook was read as JSON, never executed or edited. This is research for
-T6; it does not implement an adapter or a transport decision.
+The notebook was read as JSON without executing or editing it. The dashboard now reuses its classifications and BAFU ensemble forecast through dedicated modules; the evidence does not establish a transport decision.
 
 ## Selected observation source
 
@@ -40,14 +39,19 @@ optional environment-based authentication. No credential is needed in the
 sample or documentation. Confirm HTTP status, response shape, numeric values,
 offset-aware timestamps and duplicate/missing records in T6.
 
-Its saved output reports **573 rows**, from 2026-10-01 09:10 UTC to
-2026-10-03 08:50 UTC. Only the last five rows are present as saved tabular
-output; the full dataframe is not embedded. Those five displayed rows are
-preserved in `data/replay/rhine/observations.csv`, at their displayed precision.
-The notebook's original request time is unknown. The manifest records that
-explicitly; conversion and metadata verification times are not measurement
-or original retrieval times. Do not claim the saved output is a complete
-two-day series or silently fill its gaps.
+The original T2 capture preserves only five displayed observations in
+`data/replay/rhine/observations.csv`; its original retrieval time is unknown.
+That limited sample remains the planning engine's historical observation evidence.
+The updated notebook contains a newer saved two-day result and chart; it is not
+itself a complete, reusable observation archive.
+
+The new chart replay in `data/replay/rhine/forecast-capture/` was fetched directly
+from the public sources. `observations.json` contains 576 five-minute records
+from 2026-10-01 11:30 UTC through 2026-10-03 11:25 UTC, ending before the existing
+11:30 UTC demo evaluation clock. `manifest.json` records actual retrieval times,
+source URLs and the historical evaluation window. These downloads happened after
+the evaluation instant; replay means historical source evidence inspected later,
+not proof of the exact API response available at that historical instant.
 
 ## Forecast investigation (separate from observations)
 
@@ -60,17 +64,14 @@ The level endpoint was checked on 2026-10-03. Its median has 118 hourly points
 from **2026-10-03 11:00+02:00 to 2026-10-08 08:00+02:00**, with the issue
 annotation “Forecast as of 03.10.26 11:00”. It also contains two min/max traces,
 a closed 25th–75th percentile polygon and a measured trace. This is one
-verified run's coverage, not a guaranteed API horizon. No forecast output is
-saved in the original notebook and no forecast replay is included here.
+verified run's coverage, not a guaranteed API horizon. The updated notebook saves a forecast summary and chart. The full source Plotly JSON is now preserved in `data/replay/rhine/forecast-capture/forecast.json`.
 FOEN's FAQ permits free use with recommended source citation; do not assume
 the Basel dataset's CC0 label applies to the separate forecast service.
 
-T6 should validate trace names, aligned times/lengths, finite values, bounds
-and issue time; normalize source offsets to UTC. Convert levels using the
+The forecast adapter validates trace names, aligned hourly times/lengths, finite values, ordered bounds, a closed percentile polygon and issue time; it normalizes source offsets to UTC. Convert levels using the
 verified 240 m datum. Keep median and uncertainty separate from observations.
 The notebook chooses the nearest forecast point and, when the requested
-horizon exceeds coverage, reports the last point. Production integration must
-instead return explicit outside-horizon/unknown coverage for that request.
+horizon exceeds coverage, reports the last point. Dashboard integration instead returns explicit outside-horizon/unknown coverage for that request.
 Missing issue times, missing measured traces, stale data, HTTP failures or a
 changed JSON shape must not become a normal river condition.
 
@@ -89,8 +90,7 @@ Verified high-water descriptions and the datum example come from
 [Port of Switzerland](https://port-of-switzerland.ch/hafenservice/pegel/),
 checked 2026-10-03. That page also distinguishes mark IIa at 820 cm. The
 notebook uses strict `>` / `<` comparisons; equality yields a watch state
-inside its 5 cm band. Its saved latest assessment is warning at 480.9 cm,
-with a derived draft of 234.9 cm. Preserve this as the notebook's calculation,
+inside its 5 cm band. The new chart replay assesses warning at 479.7 cm, with a derived draft of 233.7 cm. The saved forecast median first becomes critical after the evaluation clock at 2026-10-03 22:00 UTC. Preserve this as the notebook's calculation,
 not an official navigation assessment.
 
 ## Route usefulness and proposed synthetic disruption mapping
@@ -111,6 +111,25 @@ facts and coverage, never a shipment-delay recommendation. T4's agreed
 scenarios remain authoritative; this proposal does not change them.
 
 T2's inspectable, permitted observation sample and source documentation are
-complete. T6 remains responsible for the adapter, missing/stale-data handling,
-forecast integration and contract tests. T9 should link these notes from
-`docs/SOURCES.md` when integrating Rhine data.
+complete. T6 supplies the original observation adapter. T12/T13 add validated forecast loading, shared station assessments and the expandable chart; tests cover boundaries, missing/stale data, malformed traces and offline replay. `docs/SOURCES.md` links these notes.
+
+
+## Dashboard forecast integration
+
+The Rhine panel defaults to saved forecast replay and offers an explicit live
+mode with a five-minute cache. It remains separate from the selected synthetic
+planning scenario and does not change delivery delays or plan feasibility.
+Live mode fetches the last two days of observations and the latest BAFU level
+forecast. Network failures never trigger an implicit replay fallback.
+
+The summary uses the latest nonfuture observation and the worst future median
+class in the requested window. Missing/stale observations or missing/stale/future-
+issued forecasts give unknown assessments. Forecast freshness is inspected with
+a 24-hour maximum age; observation freshness uses six hours. These are demo
+inspection policies, not validated operational recommendations. Partial coverage
+shows the worst class within coverage and explicitly labels the remainder unknown.
+
+Classification thresholds and the independent 5 cm margin are sourced from the
+notebook and stored in `config/rhine.json`. Chart bands and written findings use
+the same assessment function. The chart preserves measured/forecast line styles,
+ensemble bands, near-limit texture and a full-scale restriction reference.

@@ -20,6 +20,7 @@ from treatment_planner.interfaces import (
 from treatment_planner.planning import PlanningComparator, load_settings
 from treatment_planner.ui.comparison import render_comparison, render_route_inputs
 from treatment_planner.ui.presentation import apply_theme
+from treatment_planner.ui.rhine import render_rhine_conditions
 
 ROOT = Path(__file__).resolve().parent
 SCENARIOS = ("Baseline", "Low water", "Hot return", "Snow", "Missing weather")
@@ -140,7 +141,7 @@ def render_sources(mode: str) -> None:
 
 def main() -> None:
     st.set_page_config(page_title="Treatment material-flow planner", layout="wide")
-    apply_theme()
+    theme = apply_theme()
     st.caption("OPERATIONS PREVIEW / MATERIAL FLOW")
     st.title("Treatment material-flow planner")
     st.write("Compare generated transport alternatives, inspect constraints and select a plan.")
@@ -173,6 +174,7 @@ def main() -> None:
     )
     plans = comparator.compare(request, environment, settings)
     render_sources(mode)
+    render_rhine_conditions(ROOT, theme)
     selected = render_comparison(
         plans,
         request=request,

@@ -90,7 +90,7 @@ source index, and the [design limits](design.md). Keep those links with the slid
 
 ### Slide: sources and contributions
 
-- **Rhine:** FOEN/BAFU observations via Open Data Basel-Stadt, CC0 1.0; saved Basel gauge sample.
+- **Rhine:** FOEN/BAFU observations via Open Data Basel-Stadt, CC0 1.0; saved Basel gauge sample. The expandable station chart also uses a BAFU ensemble forecast with separate free-use/source-citation terms; see [Rhine source notes](sources/rhine.md).
 - **Weather:** Source: MeteoSwiss, CC BY 4.0; saved forecast with issue time and coverage. No proprietary weather artwork.
 - **Synthetic inputs:** invented treatment, journey/process durations, availability, route checks and disruption effects; declared alongside results.
 - **Software:** Python; Streamlit (Apache-2.0), Altair (BSD-3-Clause), pytest/Ruff/setuptools/wheel (MIT). Dependency details are in [pyproject.toml](../pyproject.toml) and [requirements.txt](../requirements.txt).

@@ -36,6 +36,8 @@ Open http://localhost:8501. In **Synthetic walkthrough**, choose Baseline, Low w
 
 Choose **Saved provider replay** to inspect the archived Rhine and MeteoSwiss captures offline. The historical evaluation clock and adjustable freshness inspection controls are shown on screen. Provider issues remain visible; hourly mean temperature is never substituted for maximum temperature. Source attribution and synthetic assumptions appear in both modes.
 
+Above the plan comparison, click **Basel Rhine conditions** to expand the historical and predicted chart. The summary uses the notebook's classes and shows the worst future median class in the selected window. **Rhine chart evidence** defaults to saved forecast replay; choose **Live Rhine conditions** to fetch public observations and the BAFU forecast. This evidence has its own labelled clock and does not alter the synthetic planning delays. The chart shows uncertainty bands, restriction zones and near-threshold texture. Forecast dates beyond coverage remain unknown.
+
 ### Checks
 
 Windows:
