@@ -6,7 +6,7 @@ Status: in progress · Updated: 2026-10-03 · Branch: docs/t4-scenarios · Last 
 Provide baseline, low-water, hot return, snow and no-feasible-plan examples with expected outcomes and a simple screen sketch, reviewed by the team.
 
 ## State
-@fhuelin approved the scenario conventions and layout on 2026-10-03. The design and decision log reflect that approval. Teammate PR review remains before T4 is done and merge needs explicit approval for that PR. A fresh fetch confirmed T1 is absent from origin/main; T8 cannot yet use a shared interface. T11 depends on T9.
+@fhuelin approved the scenario conventions and layout on 2026-10-03. The design and decision log reflect that approval. [PR #2](https://github.com/philLeu/HackAmRhein2026/pull/2) is open for teammate review. That review remains before T4 is done and merge needs explicit approval for this PR. A fresh fetch confirmed T1 is absent from origin/main; T8 cannot yet use a shared interface. T11 depends on T9.
 
 ## Done
 - Read task ownership, agreed design and decisions.
@@ -14,12 +14,13 @@ Provide baseline, low-water, hot return, snow and no-feasible-plan examples with
 - Included strict temperature, collection shift, timing and uncertainty boundaries.
 - Drafted comparison layout, manual route/car inputs and selection behaviour.
 - Recorded owner approval and reconciled design and decision log.
-- Verified fixture arithmetic, documentation paths and draft privacy check; final approval changes will be checked before sharing.
+- Verified fixture arithmetic, whitespace and strict documentation paths; commit and push privacy checks passed for the approved documents.
+- Pushed the work branch and opened PR #2 for teammate review.
 
 ## Next
-1. Share the checked branch as a PR for teammate review of S1–S5 and the screen sketch.
+1. Obtain a teammate review on PR #2 of S1–S5 and the screen sketch.
 2. Address teammate feedback; mark T4 done once the teammate confirms the walkthrough and layout.
-3. Merge only after explicit approval for that PR; owner approval of the proposal is not merge approval.
+3. Merge only after explicit approval for PR #2; owner approval of the proposal is not merge approval.
 4. After T1 and T4 merge, start T8 in a fresh task branch using the actual shared interface. T11 waits for T9.
 
 ## Files
