@@ -62,6 +62,9 @@ class WeatherReplayProvider:
             return WeatherReport((), (f"Weather replay metadata or rows are invalid: {error}",))
 
         boundaries = {window.start, window.end}
+        fresh_until = issued_at + self.maximum_forecast_age
+        if window.start < fresh_until < window.end:
+            boundaries.add(fresh_until)
         for record in records:
             if record["end"] > window.start and record["start"] < window.end:
                 for interval_start, interval_end in (
@@ -90,7 +93,7 @@ class WeatherReplayProvider:
                 )
             if snowfall is None:
                 issues.add(_coverage_issue("snowfall", start, records, "snow_start", "snow_end"))
-            if start - issued_at > self.maximum_forecast_age:
+            if end - issued_at > self.maximum_forecast_age:
                 issues.add(
                     f"Stale weather forecast for journey interval starting {start.isoformat()}."
                 )
@@ -176,6 +179,8 @@ def _snowfall_for(records, start: datetime, end: datetime) -> bool | None:
 def _coverage_issue(
     parameter: str, start: datetime, records, start_key: str, end_key: str
 ) -> str:
-    covered = [record for record in records if record[start_key] <= start < record[end_key]]
-    label = "outside forecast horizon" if not covered else "unknown within forecast coverage"
+    starts = [record[start_key] for record in records]
+    ends = [record[end_key] for record in records]
+    within_horizon = bool(records) and min(starts) <= start < max(ends)
+    label = "unknown within forecast coverage" if within_horizon else "outside forecast horizon"
     return f"Weather {parameter} {label} at {start.isoformat()}."
