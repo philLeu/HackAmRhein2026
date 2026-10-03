@@ -1,0 +1,50 @@
+{
+  "kind": "observed_replay",
+  "source_dataset": "https://data.bs.ch/explore/dataset/100089/",
+  "records_endpoint": "https://data.bs.ch/api/explore/v2.1/catalog/datasets/100089/records",
+  "station": {
+    "id": "2289",
+    "name": "Rhein - Basel, Rheinhalle",
+    "gauge_datum_m_asl": 240.0
+  },
+  "licence": "CC0 1.0",
+  "licence_evidence": "source-metadata.json",
+  "attribution": "Bundesamt fuer Umwelt, Hydrologische Daten und Vorhersagen, via Open Data Basel-Stadt (2026-10-03)",
+  "original_retrieved_at_utc": null,
+  "original_retrieval_note": "Not recorded in notebook; latest measurement time is not retrieval time.",
+  "converted_at_utc": "2026-10-03T13:53:11.775594+00:00",
+  "extraction": {
+    "file": "Rhein_water_first_try.ipynb",
+    "sha256": "627e6b46018b5005754137253a920471bcb815353936ddc4ab37c9571fa033ab",
+    "cell_index": 1,
+    "method": "Saved text/plain dataframe tail; no notebook code executed",
+    "precision": "As displayed, not full original floating-point precision"
+  },
+  "sample": {
+    "file": "observations.csv",
+    "rows": 5,
+    "start_utc": "2026-10-03T08:30:00Z",
+    "end_utc": "2026-10-03T08:50:00Z",
+    "nominal_interval_seconds": 300,
+    "coverage": "Five displayed rows only; not a complete two-day dataset"
+  },
+  "notebook_reported_coverage": {
+    "rows": 573,
+    "start_utc": "2026-10-01T09:10:00Z",
+    "end_utc": "2026-10-03T08:50:00Z",
+    "full_series_available": false
+  },
+  "units": {
+    "timestamp_utc": "ISO 8601 UTC",
+    "abfluss_m3_s": "m3/s",
+    "pegelhoehe_cm": "cm above 240 m gauge datum",
+    "pegel_m_asl": "m above sea level (LN02)"
+  },
+  "forecast_included": false,
+  "synthetic_disruption_mapping_included": false,
+  "limitations": [
+    "Raw environmental observations, not validated navigation advice",
+    "Single station does not establish route-wide conditions",
+    "No delay or vessel-load field inferred from observations"
+  ]
+}

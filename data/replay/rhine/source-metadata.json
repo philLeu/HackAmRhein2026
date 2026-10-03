@@ -1,0 +1,38 @@
+{
+  "verified_at_utc": "2026-10-03T13:51:55.9572456Z",
+  "metadata_url": "https://data.bs.ch/api/explore/v2.1/catalog/datasets/100089",
+  "dataset_id": "100089",
+  "title": "Rhein Wasserstand, Pegel und Abfluss",
+  "publisher": "Bundesamt für Umwelt BAFU",
+  "attribution": [
+    "Bundesamt für Umwelt, Hydrologische Daten und Vorhersagen"
+  ],
+  "licence": "CC0 1.0",
+  "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "rights": "NonCommercialAllowed-CommercialAllowed-ReferenceNotRequired",
+  "station_reference": [
+    "https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2289"
+  ],
+  "fields": [
+    {
+      "description": "Datum und Uhrzeit",
+      "name": "timestamp",
+      "unit": null
+    },
+    {
+      "description": "Abfliessende Wassermenge in Kubikmetern pro Sekunde",
+      "name": "abfluss",
+      "unit": "m3/s"
+    },
+    {
+      "description": "Pegelstand in cm über dem Pegelnullstand von 240 m ü. M.",
+      "name": "pegelhoehe",
+      "unit": "cm"
+    },
+    {
+      "description": "Pegelstand in Metern über Meer",
+      "name": "pegel",
+      "unit": "m"
+    }
+  ]
+}
