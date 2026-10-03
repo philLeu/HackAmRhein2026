@@ -1,5 +1,6 @@
 """Display supplied recommendations and collect explicit plan confirmation."""
 
+from collections import defaultdict
 from collections.abc import Callable
 from datetime import UTC, datetime
 
@@ -14,6 +15,7 @@ from treatment_planner.interfaces import (
     RouteId,
     RouteStatus,
     RouteSummary,
+    TransportMode,
 )
 from treatment_planner.ui.formatting import DATE_INPUT_FORMAT, format_timestamp
 from treatment_planner.ui.route_summary import render_route_summaries
@@ -71,10 +73,116 @@ def render_goal(
 def _plan_label(plan: CandidatePlan) -> str:
     hours = plan.collection_shift.total_seconds() / 3600
     pickup = "original sample pickup" if hours == 0 else f"sample pickup {hours:g} h later"
-    return (
-        f"{plan.title} · {plan.ingredient_mode.value} · "
-        f"{plan.outbound_mode.value} outbound · {plan.return_mode.value} return · {pickup}"
+    ingredient = (
+        "Rhine ship" if plan.ingredient_mode == TransportMode.SHIP else "Refrigerated truck"
     )
+    return (
+        f"{ingredient} · {plan.outbound_mode.value} outbound · "
+        f"{plan.return_mode.value} return · {pickup}"
+    )
+
+
+def _mode_display(mode) -> tuple[str, str]:
+    labels = {
+        TransportMode.SHIP: ("🚢", "Rhine ship"),
+        TransportMode.TRUCK: ("🚚", "Refrigerated truck"),
+        TransportMode.BICYCLE: ("🚲", "Bicycle"),
+        TransportMode.CAR: ("🚗", "Car"),
+    }
+    return labels.get(mode, ("", mode.value.title()))
+
+
+def _render_plan_routes(plan: CandidatePlan) -> None:
+    routes = (
+        (
+            "INGREDIENTS",
+            "Rotterdam → PulseShift production site, Basel",
+            plan.ingredient_mode,
+        ),
+        (
+            "SAMPLE · OUTBOUND",
+            "University Hospital Basel → PulseShift production site",
+            plan.outbound_mode,
+        ),
+        (
+            "TREATMENT · RETURN",
+            "PulseShift production site → University Hospital Basel",
+            plan.return_mode,
+        ),
+    )
+    for column, (route, direction, mode) in zip(st.columns(3), routes, strict=True):
+        icon, label = _mode_display(mode)
+        with column.container(border=True):
+            st.caption(route)
+            st.write(direction)
+            st.markdown(f"### {icon} {label}")
+
+
+def _render_schedule(plan: CandidatePlan, original_collection: datetime | None) -> None:
+    events = {event.event_id: event for event in plan.events}
+    ingredients = events.get("ingredients")
+    sample = events.get("sample")
+    processing = events.get("processing")
+    returning = events.get("return")
+    handling = events.get("handling")
+    collection = (
+        original_collection + plan.collection_shift if original_collection is not None else None
+    )
+    ingredient_mode = _mode_display(plan.ingredient_mode)[1]
+    steps = (
+        (
+            f"{ingredient_mode} · ingredients",
+            "Departs Rotterdam",
+            ingredients.interval.start if ingredients else None,
+            "Arrives at PulseShift",
+            ingredients.interval.end if ingredients else None,
+        ),
+        (
+            "Sample",
+            "Collected at University Hospital",
+            collection,
+            "Arrives at PulseShift",
+            sample.interval.end if sample else None,
+        ),
+        (
+            "Production",
+            "Starts",
+            processing.interval.start if processing else None,
+            "Finished",
+            processing.interval.end if processing else None,
+        ),
+        (
+            f"Finished treatment · {plan.return_mode.value}",
+            "Leaves PulseShift",
+            returning.interval.start if returning else None,
+            "Arrives at University Hospital",
+            returning.interval.end if returning else None,
+        ),
+        (
+            "Patient",
+            "Treatment ready at hospital",
+            handling.interval.end if handling else None,
+            "",
+            None,
+        ),
+    )
+    st.markdown("**Schedule · all times UTC**")
+    st.caption(
+        "Uses configured demo travel durations. The Basel gauge can switch the Rhine "
+        "scenario between 0 h and 12 h delay; live feeds do not provide actual arrival estimates."
+    )
+    for step, from_label, start, to_label, end in steps:
+        first, origin, arrow, destination = st.columns([1.1, 1, 0.12, 1])
+        first.markdown(f"**{step}**")
+        origin.caption(from_label)
+        origin.write(format_timestamp(start))
+        if to_label:
+            arrow.markdown("→")
+            destination.caption(to_label)
+            destination.write(format_timestamp(end))
+    if processing is not None:
+        duration = processing.interval.end - processing.interval.start
+        st.caption(f"Production duration: {duration.total_seconds() / 3600:g} hours")
 
 
 def _route_details_ready(summaries: tuple[RouteSummary, ...], plan_id: str | None) -> bool:
@@ -122,7 +230,18 @@ def render_recommendation(
             st.info("Planning inputs or evidence changed. Confirm the updated plan again.")
     st.subheader("Recommended plan" if current else "Previous recommendation (inputs changed)")
     st.caption(f"Goal: {result.goal.value.title()}")
-    st.write(result.reason)
+    reason, separator, excluded_text = result.reason.partition("\nExcluded from ranking:\n")
+    st.write(reason)
+    if separator:
+        exclusions: dict[str, list[str]] = defaultdict(list)
+        for line in excluded_text.splitlines():
+            plan_id, delimiter, issue = line.removeprefix("- ").partition(": ")
+            if delimiter:
+                exclusions[issue].append(plan_id)
+        with st.expander(f"Excluded plans · {sum(map(len, exclusions.values()))}"):
+            for issue, plan_ids in sorted(exclusions.items()):
+                st.markdown(f"**{len(plan_ids)} plans · {issue}**")
+                st.caption(", ".join(plan_ids))
     if not current:
         st.warning("Inputs changed. Recompute the recommendation before confirming.")
     if not valid_result:
@@ -157,24 +276,9 @@ def render_recommendation(
         if current and render_advisories is not None:
             render_advisories(chosen)
         with st.container(border=True):
-            st.write(_plan_label(chosen))
-            events = {event.event_id: event.interval.end for event in chosen.events}
-            for column, (label, instant) in zip(
-                st.columns(3),
-                (
-                    (
-                        "Sample pickup",
-                        original_collection + chosen.collection_shift
-                        if original_collection is not None
-                        else None,
-                    ),
-                    ("Ingredient arrival", events.get("ingredients")),
-                    ("Injection", events.get("handling")),
-                ),
-                strict=True,
-            ):
-                column.caption(label)
-                column.write(format_timestamp(instant))
+            st.markdown("**Route and transport**")
+            _render_plan_routes(chosen)
+            _render_schedule(chosen, original_collection)
             for score in result.scores:
                 if score.plan_id != chosen.plan_id:
                     continue

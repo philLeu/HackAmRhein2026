@@ -5,7 +5,7 @@ import io
 import json
 import math
 import re
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, time, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -13,8 +13,11 @@ UTC = timezone.utc
 LOCAL_TIMEZONE = ZoneInfo("Europe/Zurich")
 # Provider aggregation intervals; see docs/sources/weather.md.
 PARAMETERS = {"tre200h0": timedelta(hours=1), "jww003i0": timedelta(hours=3)}
+OPTIONAL_PARAMETERS = {"tre200px"}
+REQUIRED_PARAMETERS = set(PARAMETERS)
+DAILY_MAXIMUM = "tre200px"
 TEMPERATURE_UNIT = "°C"
-ASSET_NAME = re.compile(r"^vnut12\.lssw\.(\d{12})\.(tre200h0|jww003i0)\.csv$")
+ASSET_NAME = re.compile(r"^vnut12\.lssw\.(\d{12})\.(tre200h0|jww003i0|tre200px)\.csv$")
 SNOW_CODE_MAPPING = json.loads(
     (Path(__file__).resolve().parents[3] / "data/replay/weather/snow_codes.json").read_text(
         encoding="utf-8"
@@ -71,11 +74,13 @@ def selected_point_csv(content, location):
     return stream.getvalue().encode("latin-1")
 
 
-def check_temperature_unit(rows):
-    """Reject a changed/missing unit rather than mislabelling a temperature."""
-    matches = [row for row in rows if row.get("parameter_shortname") == "tre200h0"]
-    if len(matches) != 1 or matches[0].get("parameter_unit") != TEMPERATURE_UNIT:
-        raise ValueError("Temperature metadata must specify tre200h0 in °C.")
+def check_temperature_unit(rows, *, optional_parameters=()):
+    """Reject changed units for available hourly and daily temperature values."""
+    available = ["tre200h0", *optional_parameters]
+    for parameter in available:
+        matches = [row for row in rows if row.get("parameter_shortname") == parameter]
+        if len(matches) != 1 or matches[0].get("parameter_unit") != TEMPERATURE_UNIT:
+            raise ValueError(f"Temperature metadata must specify {parameter} in °C.")
 
 
 def select_run(assets):
@@ -86,7 +91,7 @@ def select_run(assets):
         if match and asset.get("href"):
             run, parameter = match.groups()
             runs.setdefault(run, {})[parameter] = asset["href"]
-    complete = [run for run, files in runs.items() if set(files) == set(PARAMETERS)]
+    complete = [run for run, files in runs.items() if REQUIRED_PARAMETERS <= set(files)]
     if not complete:
         raise ValueError("No forecast run contains both temperature and weather type.")
     run = max(complete)
@@ -185,12 +190,23 @@ def measurements(rows, location, parameter):
 
 
 def normalized_rows(values, sample_kind):
-    """Keep the two aggregation intervals separate in the inspection table."""
-    timestamps = sorted(set().union(*(series.keys() for series in values.values())))
+    """Keep hourly conditions separate from the local-calendar daily maximum."""
+    timestamps = sorted(set().union(*(values[name].keys() for name in PARAMETERS)))
+    daily_maximum = {}
+    for timestamp, (temperature, status) in values.get(DAILY_MAXIMUM, {}).items():
+        local_day = timestamp.astimezone(LOCAL_TIMEZONE).date()
+        if local_day in daily_maximum:
+            raise ValueError(f"Duplicate daily maximum temperature date: {local_day}.")
+        start = datetime.combine(local_day, time.min, tzinfo=LOCAL_TIMEZONE)
+        end = datetime.combine(local_day + timedelta(days=1), time.min, tzinfo=LOCAL_TIMEZONE)
+        daily_maximum[local_day] = (temperature, status, start, end)
     result = []
     for end in timestamps:
         temperature, temperature_status = values["tre200h0"].get(end, ("", "missing"))
         code, code_status = values["jww003i0"].get(end, ("", "missing"))
+        maximum, maximum_status, maximum_start, maximum_end = daily_maximum.get(
+            end.astimezone(LOCAL_TIMEZONE).date(), ("", "missing", None, None)
+        )
         result.append(
             {
                 "sample_kind": sample_kind,
@@ -202,6 +218,18 @@ def normalized_rows(values, sample_kind):
                 "temperature_valid_start_local": (end - PARAMETERS["tre200h0"])
                 .astimezone(LOCAL_TIMEZONE)
                 .isoformat(),
+                "maximum_temperature_c": maximum,
+                "maximum_temperature_status": maximum_status,
+                "maximum_temperature_valid_start_utc": iso_time(maximum_start)
+                if maximum_start
+                else "",
+                "maximum_temperature_valid_end_utc": iso_time(maximum_end) if maximum_end else "",
+                "maximum_temperature_valid_start_local": maximum_start.isoformat()
+                if maximum_start
+                else "",
+                "maximum_temperature_valid_end_local": maximum_end.isoformat()
+                if maximum_end
+                else "",
                 "weather_code": code,
                 "weather_description_de": weather_description_de(code, code_status),
                 "weather_code_status": code_status,
@@ -219,6 +247,35 @@ def coverage(values):
     """Describe actual nonempty intervals and gaps, rather than promised horizon."""
     result = {}
     for parameter, series in values.items():
+        if parameter == DAILY_MAXIMUM:
+            days = sorted(
+                end.astimezone(LOCAL_TIMEZONE).date()
+                for end, (_, status) in series.items()
+                if status == "available"
+            )
+            intervals = [
+                (
+                    datetime.combine(day, time.min, tzinfo=LOCAL_TIMEZONE),
+                    datetime.combine(day + timedelta(days=1), time.min, tzinfo=LOCAL_TIMEZONE),
+                )
+                for day in days
+            ]
+            starts = [start for start, _ in intervals]
+            ends = [end for _, end in intervals]
+            gaps = [
+                {"start_utc": iso_time(previous_end), "end_utc": iso_time(next_start)}
+                for previous_end, next_start in zip(ends, starts[1:])
+                if next_start > previous_end
+            ]
+            result[parameter] = {
+                "available_records": len(days),
+                "start_utc": iso_time(starts[0]) if starts else None,
+                "end_utc": iso_time(ends[-1]) if ends else None,
+                "gaps": gaps,
+                "aggregation_seconds": None,
+                "aggregation": "local calendar day; DST-aware",
+            }
+            continue
         ends = sorted(end for end, (_, status) in series.items() if status == "available")
         gaps = []
         for previous, current in zip(ends, ends[1:]):

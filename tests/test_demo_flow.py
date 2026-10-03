@@ -1,238 +1,44 @@
-"""End-to-end acceptance of generated schedules and offline provider evidence."""
+"""End-to-end acceptance of the integrated offline V2 demo."""
 
-import importlib.util
-import socket
-from dataclasses import replace
-from datetime import timedelta
 from pathlib import Path
 
-import pytest
 from streamlit.testing.v1 import AppTest
 
-from treatment_planner.interfaces import (
-    Availability,
-    CheckStatus,
-    CourierLeg,
-    ResultStatus,
-    RouteSnow,
-    TransportMode,
-)
-from treatment_planner.ui.comparison import _key_options
+from treatment_planner.interfaces import EvidenceMode
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def screen():
-    return AppTest.from_file(ROOT / "app.py").run(timeout=20)
+def demo_screen():
+    screen = AppTest.from_file(ROOT / "app.py")
+    screen.session_state["v2-mode"] = EvidenceMode.DEMO
+    return screen.run(timeout=30)
 
 
-def widget(app, label):
-    return next(box for box in app.selectbox if box.label == label)
-
-
-def table(app, column):
-    return next(box.value for box in app.dataframe if column in box.value.columns)
-
-
-def inspect(app, *, ingredients="ship", outbound="bicycle", returning="bicycle", shift=0):
-    rows = table(app, "Ingredients")
-    matches = rows[
-        (rows["Ingredients"] == {"ship": "Rhine ship", "truck": "refrigerated truck"}[ingredients])
-        & (rows["Outbound"] == outbound)
-        & (rows["Return"] == returning)
-        & (
-            rows["Sample pickup"]
-            == (
-                "Original scheduled pickup time (0 h later)"
-                if shift == 0
-                else f"{shift} h later than scheduled"
-            )
-        )
-    ]
-    assert len(matches) == 1
-    widget(app, "Choose a plan for deadline checks and timeline").select(
-        int(matches.index[0])
-    ).run()
+def test_demo_opens_plan_with_recommendation_and_explicit_confirmation():
+    app = demo_screen()
     assert not app.exception
-    return table(app, "Constraint").set_index("Constraint")
+    assert any(button.label == "Confirm plan" for button in app.button)
+    assert any("Planning goal and recommendation" in item.value for item in app.subheader)
+    assert "v2-confirmed-plan" in app.session_state
 
 
-def test_baseline_deadlines_selection_and_timeline():
-    app = screen()
+def test_all_three_independent_route_controls_are_available():
+    app = demo_screen()
+    labels = {button.label for button in app.button}
+    assert "🚢 Rotterdam → Basel" in labels
+    assert "🚲 Hospital → Production" in labels
+    assert "🚲 Production → Hospital" in labels
+    assert "Reset demo" in labels
+
+
+def test_routes_and_sources_chapters_are_reachable_offline():
+    app = demo_screen()
+    app.radio(key="v2-navigation").set_value("Routes & conditions").run(timeout=30)
     assert not app.exception
-    checks = inspect(app)
-    for constraint, margin in [
-        ("Ingredient arrival", 96),
-        ("Sample arrival", 11),
-        ("Production completion", 6),
-        ("Injection", 6),
-    ]:
-        assert checks.loc[constraint, "Margin (h)"] == margin
-        assert checks.loc[constraint, "Check"] == "pass"
-        assert checks.loc[constraint, "Deadline (UTC)"] != "Unknown"
-    app.button[0].click().run()
-    first = app.session_state["selected_plan_id"]
-    assert first
-    events = table(app, "Event")
-    assert "Outbound bicycle" in events["Event"].tolist()
-    inspect(app, ingredients="truck", returning="car")
-    app.button[0].click().run()
-    assert app.session_state["selected_plan_id"] != first
-    assert "Return car preparation" in table(app, "Event")["Event"].tolist()
-    app.run()
-    assert app.session_state["selected_plan_id"]
-
-
-def test_rhine_delay_recovery_and_selection_invalidation():
-    app = screen()
-    app.button[0].click().run()
-    widget(app, "Scenario").select("Low water").run()
-    assert app.session_state["selected_plan_id"] is None
-    checks = inspect(app)
-    assert checks.loc["Production completion", "Margin (h)"] == -5
-    assert app.button[0].disabled
-    checks = inspect(app, shift=12)
-    assert checks.loc["Production completion", "Margin (h)"] == 6
-    assert not app.button[0].disabled
-    inspect(app, ingredients="truck")
-    assert not app.button[0].disabled
-    assert "Truck approval / preparation" in table(app, "Event")["Event"].tolist()
-
-
-@pytest.mark.parametrize("scenario", ["Hot return", "Snow"])
-def test_weather_disruptions_require_car_alternatives(scenario):
-    app = screen()
-    widget(app, "Scenario").select(scenario).run()
-    inspect(app)
-    assert app.button[0].disabled
-    assert any("snowfall or temperature" in message.value for message in app.error)
-    inspect(app, outbound="car" if scenario == "Snow" else "bicycle", returning="car")
-    assert not app.button[0].disabled
-    app.button[0].click().run()
-    assert app.session_state["selected_plan_id"]
-    events = table(app, "Event").set_index("Event")
-    assert (
-        events.loc["Return car preparation", "Start (UTC)"] < events.loc["Processing", "End (UTC)"]
+    assert any(select.label == "Alternative" for select in app.selectbox)
+    app.radio(key="v2-navigation").set_value("Sources & assumptions").run(timeout=30)
+    assert not app.exception
+    assert any(
+        expander.label == "Basel station chart · supporting evidence" for expander in app.expander
     )
-
-
-def test_route_edits_recompute_and_clear_selection():
-    app = screen()
-    app.button[0].click().run()
-    route = next(box for box in app.selectbox if box.label == "Route snow")
-    route.select("snow present").run()
-    assert not app.exception
-    assert app.session_state["selected_plan_id"] is None
-    checks = inspect(app)
-    assert checks.loc["Outbound route snow", "Check"] == "fail"
-    assert not any("Inputs changed" in w.value for w in app.warning)
-
-
-def test_missing_weather_is_unknown_and_no_confirmed_plan_is_distinct():
-    app = screen()
-    widget(app, "Scenario").select("Missing weather").run()
-    checks = inspect(app)
-    assert checks.loc["Outbound weather", "Check"] == "unknown"
-    assert app.button[0].disabled
-    # Cars can avoid missing bicycle weather, but unknown availability cannot confirm them.
-    for box in app.selectbox:
-        if box.label == "Car availability":
-            box.select("unknown")
-    app.run()
-    assert any("No confirmed plan yet" in w.value for w in app.warning)
-    assert not any("No feasible plan" in e.value for e in app.error)
-
-
-def test_saved_providers_work_without_network_and_expose_unknowns(monkeypatch):
-    original_connect = socket.socket.connect
-
-    def network_forbidden(connection, address):
-        if isinstance(address, tuple) and address[0] in ("127.0.0.1", "::1"):
-            return original_connect(connection, address)
-        raise AssertionError("Replay must not use the network")
-
-    monkeypatch.setattr(socket.socket, "connect", network_forbidden)
-    app = screen()
-    app.button[0].click().run()
-    widget(app, "Evidence mode").select("Saved provider replay").run()
-    assert not app.exception
-    assert app.session_state["selected_plan_id"] is None
-    checks = inspect(app)
-    assert checks.loc["Rhine evidence", "Check"] == "unknown"
-    assert checks.loc["Outbound weather", "Check"] == "unknown"
-    assert app.button[0].disabled
-    evidence = " ".join(w.value for w in app.warning) + " ".join(w.value for w in app.markdown)
-    assert "MeteoSwiss" in evidence and "Open Data Basel-Stadt" in evidence
-    assert "maximum temperature remains unknown" in evidence
-    assert "retrieval time" in evidence
-    assert "Stale weather" in evidence
-    assert "hourly mean" in evidence
-    # Both cars can avoid weather checks, but unresolved river evidence stays visible.
-    inspect(app, ingredients="truck", outbound="car", returning="car")
-    assert not app.exception
-
-
-def test_missing_replay_files_are_reported(tmp_path):
-    spec = importlib.util.spec_from_file_location("demo_app", ROOT / "app.py")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    request = module.demo_request(module.MODES[1])
-    settings = module.load_settings(ROOT / "config/planning.json")
-    env = module.provider_environment(
-        request, settings, timedelta(hours=24), timedelta(hours=6), replay_root=tmp_path
-    )
-    assert env.river.issues and env.weather.issues
-    assert not env.river.observations and not env.weather.windows
-    plans = module.PlanningComparator().compare(request, env, settings)
-    assert any(c.status == CheckStatus.UNKNOWN for plan in plans for c in plan.checks)
-
-
-def test_all_failed_alternatives_have_no_feasible_message():
-    app = screen()
-    widget(app, "Scenario").select("Snow").run()
-    for box in app.selectbox:
-        if box.label == "Car availability":
-            box.select("unavailable")
-    app.run()
-    assert not app.exception
-    assert (table(app, "Result")["Result"] == "infeasible").all()
-    assert any("No feasible plan" in message.value for message in app.error)
-    assert app.button[0].disabled
-
-
-def test_outbound_snow_and_unavailable_return_car_keep_real_confirmed_plan_in_shortlist():
-    spec = importlib.util.spec_from_file_location("demo_app", ROOT / "app.py")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    request = module.demo_request(module.MODES[0])
-    request = replace(
-        request,
-        routes=tuple(
-            replace(route, snow=RouteSnow.PRESENT)
-            if route.leg == CourierLeg.OUTBOUND
-            else replace(route, car_availability=Availability.UNAVAILABLE)
-            for route in request.routes
-        ),
-    )
-    settings = module.load_settings(ROOT / "config" / "planning.json")
-    environment = module.synthetic_environment("Baseline")
-    plans = module.PlanningComparator(
-        weather_location="Invented Basel route", t4_replay=True
-    ).compare(request, environment, settings)
-
-    confirmed = [plan for plan in plans if plan.status == ResultStatus.CONFIRMED]
-    shortlist = _key_options(plans)
-    fallback = next(
-        (
-            plan
-            for plan in shortlist
-            if plan.status == ResultStatus.CONFIRMED
-            and plan.outbound_mode == TransportMode.CAR
-            and plan.return_mode == TransportMode.BICYCLE
-        ),
-        None,
-    )
-
-    assert len(confirmed) == 4
-    assert fallback is not None
-    assert all(check.status == CheckStatus.PASS for check in fallback.checks)

@@ -203,10 +203,10 @@ def _render_material_flow(plan: CandidatePlan, theme: dict, diagram_prefix: str)
     sample = "bicycle" if plan.outbound_mode == TransportMode.BICYCLE else "car"
     treatment = "bicycle" if plan.return_mode == TransportMode.BICYCLE else "car"
     cards = (
-        ("1 · INGREDIENTS", "Rotterdam", ingredients, "Factory"),
-        ("2 · SAMPLE", "Hospital", sample, "Factory"),
+        ("1 · INGREDIENTS", "Rotterdam", ingredients, "PulseShift Basel"),
+        ("2 · SAMPLE", "University Hospital", sample, "PulseShift Basel"),
         ("3 · PRODUCTION", "Sample + ingredients", "Production", "Treatment ready"),
-        ("4 · TREATMENT", "Factory", treatment, "Hospital"),
+        ("4 · TREATMENT", "PulseShift Basel", treatment, "University Hospital"),
     )
     columns = st.columns(4)
     for column, (heading, source, vehicle, destination) in zip(columns, cards, strict=True):
@@ -224,7 +224,10 @@ def _render_material_flow(plan: CandidatePlan, theme: dict, diagram_prefix: str)
                 if heading.startswith("1") and plan.ingredient_mode == TransportMode.SHIP:
                     st.caption("Raw ingredients travel from Rotterdam by ship on the Rhine.")
                 elif heading.startswith("1"):
-                    st.caption("Raw ingredients travel from Rotterdam by refrigerated truck.")
+                    st.caption(
+                        "Raw ingredients travel from Rotterdam to PulseShift in Basel "
+                        "by refrigerated truck."
+                    )
                 elif heading.startswith("2"):
                     st.caption(f"Pickup: {_collection_timing_label(plan)}")
                 elif heading.startswith("3"):

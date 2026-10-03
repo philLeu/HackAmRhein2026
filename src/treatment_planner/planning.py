@@ -79,7 +79,7 @@ def _deadline(name, actual, deadline):
     )
 
 
-def _weather_check(report, location, journey, limit):
+def _weather_check(report, location, journey, limit, *, check_temperature=True):
     windows = [
         w
         for w in report.windows
@@ -90,9 +90,12 @@ def _weather_check(report, location, journey, limit):
     if any(
         w.snowfall is True
         or (
-            w.maximum_temperature_c is not None
-            and isfinite(w.maximum_temperature_c)
-            and w.maximum_temperature_c > limit
+            check_temperature
+            and (
+                w.maximum_temperature_c is not None
+                and isfinite(w.maximum_temperature_c)
+                and w.maximum_temperature_c > limit
+            )
         )
         for w in windows
     ):
@@ -104,22 +107,26 @@ def _weather_check(report, location, journey, limit):
     covered_until = journey.start
     unknown_values = False
     for window in sorted(windows, key=lambda w: w.interval.start):
-        if (
-            window.maximum_temperature_c is None
-            or window.snowfall is None
-            or not isfinite(window.maximum_temperature_c)
+        if window.snowfall is None or (
+            check_temperature
+            and (window.maximum_temperature_c is None or not isfinite(window.maximum_temperature_c))
         ):
             unknown_values = True
             continue
         if window.interval.start <= covered_until:
             covered_until = max(covered_until, window.interval.end)
-    if report.issues or unknown_values or covered_until < journey.end:
+    issues = tuple(
+        issue for issue in report.issues if check_temperature or "temperature" not in issue.lower()
+    )
+    if issues or unknown_values or covered_until < journey.end:
         return _check(
             "Weather",
             CheckStatus.UNKNOWN,
-            "Incomplete, unavailable or stale journey evidence. " + "; ".join(report.issues),
+            "Incomplete, unavailable or stale journey evidence. " + "; ".join(issues),
         )
-    return _check("Weather", CheckStatus.PASS, "Entire journey covered; no heat or snowfall block.")
+    return _check(
+        "Weather", CheckStatus.PASS, "Entire journey covered; no configured weather block."
+    )
 
 
 class PlanningComparator:
@@ -130,9 +137,18 @@ class PlanningComparator:
     No provider freshness threshold is invented here: adapter issues propagate.
     """
 
-    def __init__(self, weather_location: str = "Invented Basel route", *, t4_replay: bool = False):
+    def __init__(
+        self,
+        weather_location: str = "Invented Basel route",
+        *,
+        t4_replay: bool = False,
+        check_temperature: bool = True,
+        require_dispatch_route_check: bool = True,
+    ):
         self.weather_location = weather_location
         self.t4_replay = t4_replay
+        self.check_temperature = check_temperature
+        self.require_dispatch_route_check = require_dispatch_route_check
 
     def compare(
         self,
@@ -202,7 +218,11 @@ class PlanningComparator:
             else self.weather_location
         )
         weather = _weather_check(
-            environment.weather, location, journey, settings.bicycle_temperature_limit_c
+            environment.weather,
+            location,
+            journey,
+            settings.bicycle_temperature_limit_c,
+            check_temperature=self.check_temperature,
         )
         weather = ConstraintResult(f"{prefix} weather", weather.status, weather.reason)
         age = (request.decision_time - route.checked_at) if route.checked_at else None
@@ -215,7 +235,11 @@ class PlanningComparator:
             )
         elif route.snow == RouteSnow.PRESENT:
             status, reason = CheckStatus.FAIL, "Existing route snow blocks the bicycle."
-        elif journey.start > request.decision_time and not renewed:
+        elif (
+            self.require_dispatch_route_check
+            and journey.start > request.decision_time
+            and not renewed
+        ):
             status, reason = CheckStatus.UNKNOWN, "Future dispatch needs a renewed route check."
         else:
             status, reason = (
@@ -264,8 +288,13 @@ class PlanningComparator:
                 _check(
                     "Rhine evidence",
                     CheckStatus.PASS if replay or usable else CheckStatus.UNKNOWN,
-                    "Delay is an explicit synthetic scenario assumption, never a gauge conversion. "
-                    + ("Labelled T4 replay." if replay else "; ".join(river.issues)),
+                    (
+                        "Labelled T4 replay."
+                        if replay
+                        else "Fresh Basel gauge observation; route delay follows the configured "
+                        "simplified model. It is not a provider ETA."
+                    )
+                    + (" " + "; ".join(river.issues) if river.issues else ""),
                 )
             )
         checks.append(

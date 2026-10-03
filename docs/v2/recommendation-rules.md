@@ -21,11 +21,13 @@ plan with fewer local routes carrying a specific, evidence-backed,
 non-blocking risk warning. Count each affected route at most once. Do not
 invent points, likelihoods, source warnings or safety-buffer thresholds.
 
-All stated goal scores are compared only after the hard-check filter. Plans
-with the same best score remain tied: show all co-winners and do not preselect
-one unless the coordinator asks. Do not imply a unique optimum when the model
-returns a tie. The overview's preselection applies only when one confirmed
-plan is the unique winner; confirmation still requires the coordinator.
+All stated goal scores are compared only after the hard-check filter. If plans
+tie on the selected goal score (including the existing risk-warning tie-break),
+apply the route-mode preferences lexicographically: first prefer Rhine ship
+over truck; when ingredient modes tie, prefer the plan with more bicycle legs
+than car legs. If both shipment mode and bicycle count tie, keep the plans tied.
+The overview preselects only a unique winner after both ranking stages;
+confirmation still requires the coordinator.
 
 ## Route summaries
 
@@ -50,7 +52,8 @@ itself is Normal. Use text as well as colour and icons.
 
 Use the UTC fixture values in [scenarios.md](scenarios.md) and existing
 [T4 scenarios](../scenarios.md); none describes clinical or observed logistics.
-The recommendation reason names the primary objective and any tie-break used.
+The recommendation reason names the primary objective and any goal or route-mode
+tie-break used.
 
 - For the baseline fixture with the target set to its original injection time,
   schedules reaching that target score zero. Preserve equivalent co-winners.

@@ -2,7 +2,7 @@
 
 > Built at [HackAmRhein 2026](https://hackamrhein.dev) with Codex. First time in this repository? The setup guide is [HACKAMRHEIN.md](HACKAMRHEIN.md).
 
-A manufacturing-control prototype for a production coordinator managing one individual treatment. The integrated demo generates alternative schedules with the planning engine, editable route inputs and explicit plan selection. It runs offline with synthetic walkthroughs or saved provider evidence.
+A manufacturing-control prototype for a production coordinator managing one individual treatment. The integrated demo opens with live public evidence, compares alternatives with the planning engine, and requires an explicit plan confirmation. A separate offline demo mode provides three independent, clearly labelled synthetic disruption controls.
 
 ## The problem
 
@@ -32,11 +32,11 @@ python3.12 -m venv .venv
 .venv/bin/python -m streamlit run app.py --server.address 127.0.0.1
 ```
 
-Open http://localhost:8501. In **Synthetic walkthrough**, choose Baseline, Low water, Hot return, Snow or Missing weather. Inspect an alternative, check its reasons and margins, then select a confirmed plan. Full and treatment-period timelines include preparations and deadline markers. Route edits automatically recompute alternatives and clear selection.
+Open http://localhost:8501. The app opens in **Live** mode and loads public weather and Rhine station evidence. Select **Demo** to work offline with the fixed walkthrough. The three controls independently change Rhine conditions, outbound journey conditions, and return journey conditions. Choose a planning goal, inspect the recommended alternative and its route sketches, expand details when needed, then explicitly confirm a plan. Any material input change clears confirmation.
 
-Choose **Saved provider replay** to inspect the archived Rhine and MeteoSwiss captures offline. The historical evaluation clock and adjustable freshness inspection controls are shown on screen. Provider issues remain visible; hourly mean temperature is never substituted for maximum temperature. Source attribution and synthetic assumptions appear in both modes.
+Use **Routes & conditions** to inspect the three routes and their evidence. In Live mode, enter whether each road is cleared. MeteoSwiss snowfall at the PulseShift production site or University Hospital Basel blocks bicycle travel; cars are always available and need one hour of preparation. **Sources & assumptions** explains source attribution, coverage and model limits. **Refresh live evidence** is an explicit action; switching pages does not silently request new data.
 
-Above the plan comparison, click **Basel Rhine conditions** to expand the historical and predicted chart. The summary uses the notebook's classes and shows the worst future median class in the selected window. **Rhine chart evidence** defaults to saved forecast replay; choose **Live Rhine conditions** to fetch public observations and the BAFU forecast. This evidence has its own labelled clock and does not alter the synthetic planning delays. The chart shows uncertainty bands, restriction zones and near-threshold texture. Forecast dates beyond coverage remain unknown.
+The Live overview shows forecast temperature and a weather symbol at the PulseShift production site and University Hospital Basel, plus the Basel gauge on a 0–10 m scale. For the ship route, the planner assumes the Basel level applies along the whole Rhine route and uses the existing illustrative low-water rule to add zero or 12 hours. This is a model output, not a measured delivery time. A forecast at or above 28°C asks the coordinator to recheck the weather on the trip day; it does not block a bicycle. The optional **Basel station chart** remains supporting evidence.
 
 ### Checks
 
@@ -56,7 +56,7 @@ See [docs/SOURCES.md](docs/SOURCES.md).
 
 ## Limits
 
-Treatment timings, transport durations, availability and disruption effects are demo assumptions. The synthetic walkthrough explicitly assumes renewed route checks at dispatch for unedited synthetic entries. Edited manual entries retain their evidence limits. Saved-provider replay uses a historical clock, requires renewed future route checks and preserves missing/stale/outside-horizon data. Freshness controls are for inspection; no operational policy is claimed. Weather issues across candidate journey envelopes conservatively affect bicycle alternatives. The finite alternative set is unranked and is not exhaustive optimisation. There is no live weather integration or automatic network fallback. The prototype does not make clinical decisions, book transport or process patient records.
+Treatment timings, transport durations and disruption effects are model assumptions. Public data covers stations and forecast periods, not the full shipping route or every transport route. Live mode does not fall back to synthetic or replay data. The finite alternative set is not exhaustive optimisation. The prototype does not make clinical decisions, book transport or process patient records. More detail is in [docs/SOURCES.md](docs/SOURCES.md).
 
 ## Team
 
