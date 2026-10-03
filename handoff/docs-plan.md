@@ -1,4 +1,4 @@
-# Plan proposal handoff
+# Plan handoff
 
 Status: in progress · Updated: 2026-10-03 · Branch: docs/plan · Last owner: @philLeu
 
@@ -6,7 +6,7 @@ Status: in progress · Updated: 2026-10-03 · Branch: docs/plan · Last owner: @
 Propose work that four teammates can undertake without duplicating the ongoing Rhine investigation or editing the same files in parallel.
 
 ## State
-docs/plan.md proposes T1–T11 with owners, file boundaries, dependencies and checks. Initial repository commit b684d22 is verified on GitHub main. No application code yet. All new task assignments and the Python/Streamlit choice await agreement.
+The team accepted T1–T11 owners, file boundaries, dependencies and the Python/Streamlit approach. Initial repository commit b684d22 is verified on GitHub main. No application code yet. Plan publication is on docs/plan; PR creation and merge remain pending. The latest remote inspection found no pull-request head refs. Do not treat the question about whether to merge as authorisation for an agent to merge.
 
 ## Done
 - Added @janaaaaaaaa to TEAM.md, docs/design.md and README.md.
@@ -15,9 +15,9 @@ docs/plan.md proposes T1–T11 with owners, file boundaries, dependencies and ch
 - Left unaccepted synthetic durations and technical choices explicitly pending.
 
 ## Next
-1. Confirm proposed owners and Python/Streamlit, or adjust the proposal.
-2. Agree review policy and resolve T4's scenario assumptions before engine implementation.
-3. Review and merge the plan PR only after explicit approval for it.
+1. Create the docs/plan pull request; browser authentication was unavailable to the assistant.
+2. One teammate reviews the plan; merge only after explicit approval for the identified PR.
+3. Resolve T4's scenario assumptions before engine implementation. Review policy is one teammate review plus explicit approval.
 4. Each owner opens a fresh task chat and observes the Needs and file ownership in docs/plan.md.
 
 ## Files
