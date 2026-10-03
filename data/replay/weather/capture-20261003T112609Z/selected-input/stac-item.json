@@ -1,0 +1,2763 @@
+{
+  "id": "20261003-ch",
+  "collection": "ch.meteoschweiz.ogd-local-forecasting",
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          5.96,
+          47.81
+        ],
+        [
+          10.49,
+          47.81
+        ],
+        [
+          10.49,
+          45.82
+        ],
+        [
+          5.96,
+          45.82
+        ],
+        [
+          5.96,
+          47.81
+        ]
+      ]
+    ]
+  },
+  "bbox": [
+    5.96,
+    45.82,
+    10.49,
+    47.81
+  ],
+  "properties": {
+    "datetime": "2026-10-03T04:00:25.375251Z",
+    "title": "CH at 03.10.2026",
+    "created": "2026-10-02T04:00:49.592318Z",
+    "updated": "2026-10-03T11:05:04.935512Z",
+    "expires": "2026-10-06T00:10:00Z"
+  },
+  "stac_extensions": [
+    "https://stac-extensions.github.io/timestamps/v1.1.0/schema.json"
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://data.geo.admin.ch/api/stac/v1/collections/ch.meteoschweiz.ogd-local-forecasting/items/20261003-ch"
+    },
+    {
+      "rel": "root",
+      "href": "https://data.geo.admin.ch/api/stac/v1/"
+    },
+    {
+      "rel": "parent",
+      "href": "https://data.geo.admin.ch/api/stac/v1/collections/ch.meteoschweiz.ogd-local-forecasting"
+    },
+    {
+      "rel": "collection",
+      "href": "https://data.geo.admin.ch/api/stac/v1/collections/ch.meteoschweiz.ogd-local-forecasting"
+    },
+    {
+      "rel": "alternate",
+      "title": "STAC Browser",
+      "type": "text/html",
+      "href": "https://data.geo.admin.ch/browser/index.html#/collections/ch.meteoschweiz.ogd-local-forecasting/items/20261003-ch"
+    }
+  ],
+  "assets": {
+    "vnut12.lssw.202610030000.dkl010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.dkl010h0.csv",
+      "created": "2026-10-03T00:02:40.751748Z",
+      "updated": "2026-10-03T00:02:43.283546Z",
+      "file:checksum": "12200abb5bb4af234de394d0765f8185fe69bd31f2ba4ab1dafe8d394b096e085a64"
+    },
+    "vnut12.lssw.202610030000.fu3010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.fu3010h0.csv",
+      "created": "2026-10-03T00:02:40.715699Z",
+      "updated": "2026-10-03T00:02:43.196746Z",
+      "file:checksum": "1220ce133ab4276a9d8e143be41eb31410fe952557929028243722d522b839fa63ac"
+    },
+    "vnut12.lssw.202610030000.fu3010h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.fu3010h1.csv",
+      "created": "2026-10-03T00:02:36.180728Z",
+      "updated": "2026-10-03T00:02:37.599229Z",
+      "file:checksum": "12206038f44d4509f44cc3661d1ab6120b2a03a826e4bd2180f277d9484bee6809fc"
+    },
+    "vnut12.lssw.202610030000.fu3q10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.fu3q10h0.csv",
+      "created": "2026-10-03T00:02:40.748964Z",
+      "updated": "2026-10-03T00:02:43.278887Z",
+      "file:checksum": "122005b282258e8f2ba6ad2ff4b76c68070e3a2d1efaed3f0219d485161530bc509d"
+    },
+    "vnut12.lssw.202610030000.fu3q10h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.fu3q10h1.csv",
+      "created": "2026-10-03T00:02:40.743104Z",
+      "updated": "2026-10-03T00:02:43.377368Z",
+      "file:checksum": "1220dce8765d996365efc93e193a8ff9f185975162126cfe72fa7cf7c99ddf46d554"
+    },
+    "vnut12.lssw.202610030000.fu3q90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.fu3q90h0.csv",
+      "created": "2026-10-03T00:02:40.821010Z",
+      "updated": "2026-10-03T00:02:43.394813Z",
+      "file:checksum": "1220aaaa6dbec20c84873d9935d1ae75aa58312ffd99f18c7e44720789adc44b493f"
+    },
+    "vnut12.lssw.202610030000.fu3q90h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.fu3q90h1.csv",
+      "created": "2026-10-03T00:02:40.845545Z",
+      "updated": "2026-10-03T00:02:43.271041Z",
+      "file:checksum": "12201d52e1c399d00916ebd2928da6893da826bfa67443b101772e506a4cb542b8d2"
+    },
+    "vnut12.lssw.202610030000.gre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.gre000h0.csv",
+      "created": "2026-10-03T00:04:23.766728Z",
+      "updated": "2026-10-03T00:04:24.981999Z",
+      "file:checksum": "1220b5712d66d9fd73a96c7a8d20ec5779fb1168bfba1abddd7071d4220866c8704b"
+    },
+    "vnut12.lssw.202610030000.jp2000d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.jp2000d0.csv",
+      "created": "2026-10-03T00:04:23.568960Z",
+      "updated": "2026-10-03T00:04:24.518148Z",
+      "file:checksum": "1220ab81a2b6164e938db235d5b3cd7613ece80ff828f71b40e76d9f66d4d8b468a2"
+    },
+    "vnut12.lssw.202610030000.jww003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.jww003i0.csv",
+      "created": "2026-10-03T00:04:24.457119Z",
+      "updated": "2026-10-03T00:04:25.604070Z",
+      "file:checksum": "1220689f4e93c1f489ff50b1ea1d80c5dd11071a5a59447f71444cbeeefde9b880eb"
+    },
+    "vnut12.lssw.202610030000.nprohihs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.nprohihs.csv",
+      "created": "2026-10-03T00:02:39.541331Z",
+      "updated": "2026-10-03T00:02:41.011119Z",
+      "file:checksum": "1220f19233b27ac279f507a81c7a57cb0fc842dd07d0afda044a4f89ead7065c77d4"
+    },
+    "vnut12.lssw.202610030000.nprolohs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.nprolohs.csv",
+      "created": "2026-10-03T00:02:35.712781Z",
+      "updated": "2026-10-03T00:02:37.618905Z",
+      "file:checksum": "1220d761b11baf772321a6b99b5b8013f9c5531bbdf6c0c7c0c556a8d143dd4fddaa"
+    },
+    "vnut12.lssw.202610030000.npromths.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.npromths.csv",
+      "created": "2026-10-03T00:02:35.710367Z",
+      "updated": "2026-10-03T00:02:37.684889Z",
+      "file:checksum": "12207f439d3ee5570d5ef95912d28a794daf30034bb0955dbada18d13771fb13d118"
+    },
+    "vnut12.lssw.202610030000.ods000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.ods000h0.csv",
+      "created": "2026-10-03T00:04:25.024226Z",
+      "updated": "2026-10-03T00:04:26.601662Z",
+      "file:checksum": "1220c00e6f23629ac30c1e762de98c509b84858ea065bdeb21856960964247385e29"
+    },
+    "vnut12.lssw.202610030000.rka150d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.rka150d0.csv",
+      "created": "2026-10-03T00:04:23.563505Z",
+      "updated": "2026-10-03T00:04:24.419009Z",
+      "file:checksum": "1220b4c1e77be5f84ea6d4b34875d78c1c2c7e16a555e5b93d767463f9bab522d12a"
+    },
+    "vnut12.lssw.202610030000.rka150p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.rka150p0.csv",
+      "created": "2026-10-03T00:02:28.371034Z",
+      "updated": "2026-10-03T00:02:30.038366Z",
+      "file:checksum": "1220e8fc132e18e6882bcb6b3d233762a65c2524017c07c6d6e8d0d422aca28ca2cf"
+    },
+    "vnut12.lssw.202610030000.rp0003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.rp0003i0.csv",
+      "created": "2026-10-03T00:04:24.484523Z",
+      "updated": "2026-10-03T00:04:25.700159Z",
+      "file:checksum": "12205045a57405d5db51b8dcaadd74aec497f1c790aabcadc97385afaad7d00ec8b5"
+    },
+    "vnut12.lssw.202610030000.rre003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.rre003i0.csv",
+      "created": "2026-10-03T00:02:40.656609Z",
+      "updated": "2026-10-03T00:02:43.161045Z",
+      "file:checksum": "1220c5be888ab147d7d9bbfaa3f744e0deed13f6bfc05720f4ba6f89be7b2a0a5ae2"
+    },
+    "vnut12.lssw.202610030000.rre150h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.rre150h0.csv",
+      "created": "2026-10-03T00:02:40.795487Z",
+      "updated": "2026-10-03T00:02:43.312636Z",
+      "file:checksum": "12204e380258c268659a478138143c0c3b7591aa21b18d95b45aae512fd3bfc611cb"
+    },
+    "vnut12.lssw.202610030000.rreq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.rreq10h0.csv",
+      "created": "2026-10-03T00:02:35.676709Z",
+      "updated": "2026-10-03T00:02:37.666829Z",
+      "file:checksum": "1220b4a2cced713e13695b34f1bfceaa83c7c3efef5a882206de02c6f721104695fc"
+    },
+    "vnut12.lssw.202610030000.rreq10p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.rreq10p0.csv",
+      "created": "2026-10-03T00:02:28.959091Z",
+      "updated": "2026-10-03T00:02:30.132658Z",
+      "file:checksum": "12206158f18e82118b4effb901ec53bc3534fbbe3caedbe6ae5cd2412770252552f4"
+    },
+    "vnut12.lssw.202610030000.rreq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.rreq90h0.csv",
+      "created": "2026-10-03T00:02:35.717997Z",
+      "updated": "2026-10-03T00:02:37.598656Z",
+      "file:checksum": "1220773b7f39f4f9b6f6ea9785fe624767d6358a951d2380d9aff1dff958fbd66ecf"
+    },
+    "vnut12.lssw.202610030000.rreq90p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.rreq90p0.csv",
+      "created": "2026-10-03T00:02:36.204565Z",
+      "updated": "2026-10-03T00:02:36.994281Z",
+      "file:checksum": "12201cc77c570527b530aa3235af65dd5b733ff729e1dcf229c7077593c0220e7887"
+    },
+    "vnut12.lssw.202610030000.sre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.sre000h0.csv",
+      "created": "2026-10-03T00:02:40.459509Z",
+      "updated": "2026-10-03T00:02:41.855356Z",
+      "file:checksum": "1220e2a212f2508ee93aeeceed5e69c10da6630c096b7b52cfddcd727768efeb0900"
+    },
+    "vnut12.lssw.202610030000.tre200dn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.tre200dn.csv",
+      "created": "2026-10-03T00:02:38.023910Z",
+      "updated": "2026-10-03T00:02:39.384997Z",
+      "file:checksum": "122027602657b66de0f20c98f500cf7ebeb0c5f0dc33ebc81647c7a07c15725e1493"
+    },
+    "vnut12.lssw.202610030000.tre200dx.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.tre200dx.csv",
+      "created": "2026-10-03T00:02:40.098432Z",
+      "updated": "2026-10-03T00:02:40.679004Z",
+      "file:checksum": "122033063af24dfc34a327ed1ec6f61111a516d49abaeb965ba4490de0138f49f5f1"
+    },
+    "vnut12.lssw.202610030000.tre200h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.tre200h0.csv",
+      "created": "2026-10-03T00:02:41.560719Z",
+      "updated": "2026-10-03T00:02:43.367250Z",
+      "file:checksum": "12203c070bee250915e972b84f48bc65ce3e6586e2eb33ff4a71545c121708d14e18"
+    },
+    "vnut12.lssw.202610030000.tre200pn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.tre200pn.csv",
+      "created": "2026-10-03T00:02:40.126440Z",
+      "updated": "2026-10-03T00:02:40.762020Z",
+      "file:checksum": "12203033db344cd8b7196b46bc3688b7ad24b1c241ea37480134d208e879148d8036"
+    },
+    "vnut12.lssw.202610030000.tre200px.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.tre200px.csv",
+      "created": "2026-10-03T00:02:40.083988Z",
+      "updated": "2026-10-03T00:02:40.731314Z",
+      "file:checksum": "12207887a82db6248a948676574ebe4667493ec3b78b103f979c45a14b9ce0ce25fc"
+    },
+    "vnut12.lssw.202610030000.treq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.treq10h0.csv",
+      "created": "2026-10-03T00:02:40.663702Z",
+      "updated": "2026-10-03T00:02:43.261794Z",
+      "file:checksum": "1220bc1fe7f0169535491ff6a9d5878503f773569d01e83d473e7bc027567accb4e0"
+    },
+    "vnut12.lssw.202610030000.treq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.treq90h0.csv",
+      "created": "2026-10-03T00:02:41.870338Z",
+      "updated": "2026-10-03T00:02:43.635361Z",
+      "file:checksum": "122093f674f8ebbe19d958ab2e6183b20cc1e08999aab00ae3c150b72e026c11722d"
+    },
+    "vnut12.lssw.202610030000.zprfr0hs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030000.zprfr0hs.csv",
+      "created": "2026-10-03T00:02:42.978900Z",
+      "updated": "2026-10-03T00:02:44.032401Z",
+      "file:checksum": "1220bfde49a650aa501c143fa05404dbaf8668c9df59626e0c26f1475cf8e176fa90"
+    },
+    "vnut12.lssw.202610030100.dkl010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.dkl010h0.csv",
+      "created": "2026-10-03T01:02:34.167319Z",
+      "updated": "2026-10-03T01:02:43.809858Z",
+      "file:checksum": "1220c5590f66a6c836185aa13e1bdfea551f41e28739661d51267589c3978f78792c"
+    },
+    "vnut12.lssw.202610030100.fu3010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.fu3010h0.csv",
+      "created": "2026-10-03T01:02:33.594405Z",
+      "updated": "2026-10-03T01:02:44.048605Z",
+      "file:checksum": "1220bef65268818ce38f178abc8ed418da0b8b0895de7f96ad1810fa3284cb35cdc6"
+    },
+    "vnut12.lssw.202610030100.fu3010h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.fu3010h1.csv",
+      "created": "2026-10-03T01:02:37.718399Z",
+      "updated": "2026-10-03T01:02:43.806739Z",
+      "file:checksum": "12204062257565c1ec55151aed5f0cb01d29a126706c61c2abf396faba12034f4f8d"
+    },
+    "vnut12.lssw.202610030100.fu3q10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.fu3q10h0.csv",
+      "created": "2026-10-03T01:02:34.995045Z",
+      "updated": "2026-10-03T01:02:43.696483Z",
+      "file:checksum": "1220c877a94fcd588074eb9d50f89173b34bec7ff27a6cd4473cc039d058146a0d2b"
+    },
+    "vnut12.lssw.202610030100.fu3q10h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.fu3q10h1.csv",
+      "created": "2026-10-03T01:02:40.783341Z",
+      "updated": "2026-10-03T01:02:43.990461Z",
+      "file:checksum": "122047707287965262b3cc8269aa3766df51d22a1708fa0511a1dfb38b8480b41dfe"
+    },
+    "vnut12.lssw.202610030100.fu3q90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.fu3q90h0.csv",
+      "created": "2026-10-03T01:02:42.576739Z",
+      "updated": "2026-10-03T01:02:45.836028Z",
+      "file:checksum": "12200fd7c5567686e1713518c23c48d8be4c488c5848ae1218daca25498104c9f481"
+    },
+    "vnut12.lssw.202610030100.fu3q90h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.fu3q90h1.csv",
+      "created": "2026-10-03T01:02:49.787679Z",
+      "updated": "2026-10-03T01:02:54.579837Z",
+      "file:checksum": "12202dc27a24f8fb00a336b7b45332b4e2d916268a95f03713d17660b63033a558f7"
+    },
+    "vnut12.lssw.202610030100.gre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.gre000h0.csv",
+      "created": "2026-10-03T01:04:15.710732Z",
+      "updated": "2026-10-03T01:04:16.852876Z",
+      "file:checksum": "1220b5712d66d9fd73a96c7a8d20ec5779fb1168bfba1abddd7071d4220866c8704b"
+    },
+    "vnut12.lssw.202610030100.jp2000d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.jp2000d0.csv",
+      "created": "2026-10-03T01:04:15.591285Z",
+      "updated": "2026-10-03T01:04:16.335305Z",
+      "file:checksum": "12208c1e547008e1de7a818b7f1dcba4c00a41efa5560e92bb794a8442f73a990b4f"
+    },
+    "vnut12.lssw.202610030100.jww003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.jww003i0.csv",
+      "created": "2026-10-03T01:04:16.486357Z",
+      "updated": "2026-10-03T01:04:17.472825Z",
+      "file:checksum": "122040c15d2da8fb883c9fefd5e61e05571e3e362f05c760c563b161015315532d26"
+    },
+    "vnut12.lssw.202610030100.nprohihs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.nprohihs.csv",
+      "created": "2026-10-03T01:02:49.551139Z",
+      "updated": "2026-10-03T01:02:54.453512Z",
+      "file:checksum": "12207f7345aa016a4ffa9bd10aa0eadd4e14df9bd29acc1874b786d8eceeb42653a9"
+    },
+    "vnut12.lssw.202610030100.nprolohs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.nprolohs.csv",
+      "created": "2026-10-03T01:02:49.813969Z",
+      "updated": "2026-10-03T01:02:54.579551Z",
+      "file:checksum": "1220ba3647170c2b1911ff4974418053dae93b8726f580fbbb05a01838bb1fdad6c3"
+    },
+    "vnut12.lssw.202610030100.npromths.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.npromths.csv",
+      "created": "2026-10-03T01:02:49.770922Z",
+      "updated": "2026-10-03T01:02:54.530748Z",
+      "file:checksum": "122088dc4c7a8049148241f9718bd808a296f88d14542a2e4d123d44ee947b6fbe71"
+    },
+    "vnut12.lssw.202610030100.ods000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.ods000h0.csv",
+      "created": "2026-10-03T01:04:15.728193Z",
+      "updated": "2026-10-03T01:04:16.690138Z",
+      "file:checksum": "1220c00e6f23629ac30c1e762de98c509b84858ea065bdeb21856960964247385e29"
+    },
+    "vnut12.lssw.202610030100.rka150d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.rka150d0.csv",
+      "created": "2026-10-03T01:02:35.695712Z",
+      "updated": "2026-10-03T01:02:36.927736Z",
+      "file:checksum": "122006f9788a13fde55c2f2e1b0c38eee277842c6d3e514881b3adf4c7f5cb7d0e48"
+    },
+    "vnut12.lssw.202610030100.rka150p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.rka150p0.csv",
+      "created": "2026-10-03T01:02:35.173936Z",
+      "updated": "2026-10-03T01:02:36.199077Z",
+      "file:checksum": "122086b5b0b2f4537d39176529465964aee6f20f09a012d7c81e1fcbfbad6b1eaa7d"
+    },
+    "vnut12.lssw.202610030100.rp0003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.rp0003i0.csv",
+      "created": "2026-10-03T01:02:47.400521Z",
+      "updated": "2026-10-03T01:02:54.239778Z",
+      "file:checksum": "12207a7f960c2b0720175ac65676becee593b27552d8081cfb6febac9ebcdb30f7cd"
+    },
+    "vnut12.lssw.202610030100.rre003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.rre003i0.csv",
+      "created": "2026-10-03T01:02:47.172458Z",
+      "updated": "2026-10-03T01:02:54.217622Z",
+      "file:checksum": "1220ee5ee5315350748a28737d7ff067882555f82ada114dd02b6d4a5b0b3720fea8"
+    },
+    "vnut12.lssw.202610030100.rre150h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.rre150h0.csv",
+      "created": "2026-10-03T01:02:49.788931Z",
+      "updated": "2026-10-03T01:02:54.564186Z",
+      "file:checksum": "12209831f0e1f10bc6706a374836b4021ef13a74789a008fb06e4139b6a1916371e6"
+    },
+    "vnut12.lssw.202610030100.rreq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.rreq10h0.csv",
+      "created": "2026-10-03T01:02:49.893490Z",
+      "updated": "2026-10-03T01:02:54.514615Z",
+      "file:checksum": "1220ff4c8f9ee4a3a2137497660017d95fd5ddbb1434d98f2a931148f1820ea012af"
+    },
+    "vnut12.lssw.202610030100.rreq10p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.rreq10p0.csv",
+      "created": "2026-10-03T01:02:44.221141Z",
+      "updated": "2026-10-03T01:02:45.502233Z",
+      "file:checksum": "1220a33fa3a81cc0891f15cf1189837502e6ac9e5d4afbfdea032fa4a00db78f53ec"
+    },
+    "vnut12.lssw.202610030100.rreq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.rreq90h0.csv",
+      "created": "2026-10-03T01:02:50.045704Z",
+      "updated": "2026-10-03T01:02:54.358103Z",
+      "file:checksum": "1220acd72da91276a5fabfb195418d4ce17c14d0109b4cbf9ede0e6ddc341b1a8805"
+    },
+    "vnut12.lssw.202610030100.rreq90p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.rreq90p0.csv",
+      "created": "2026-10-03T01:02:49.557293Z",
+      "updated": "2026-10-03T01:02:51.341958Z",
+      "file:checksum": "1220b57d06a848fd200c67035ee292f9cd06eeccce931fbdbf372b8f01c8b76c9dfd"
+    },
+    "vnut12.lssw.202610030100.sre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.sre000h0.csv",
+      "created": "2026-10-03T01:02:52.047963Z",
+      "updated": "2026-10-03T01:02:54.811460Z",
+      "file:checksum": "1220f863cf9e329c985d5e35156acc299c1ac2873d5ad63ce459ee10723ed4c7d99e"
+    },
+    "vnut12.lssw.202610030100.tre200dn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.tre200dn.csv",
+      "created": "2026-10-03T01:02:50.333207Z",
+      "updated": "2026-10-03T01:02:51.340524Z",
+      "file:checksum": "1220d623269999027a97b003c6952e84a76d94809a8701b064af663d467338b070bc"
+    },
+    "vnut12.lssw.202610030100.tre200dx.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.tre200dx.csv",
+      "created": "2026-10-03T01:02:50.332294Z",
+      "updated": "2026-10-03T01:02:51.109398Z",
+      "file:checksum": "122033063af24dfc34a327ed1ec6f61111a516d49abaeb965ba4490de0138f49f5f1"
+    },
+    "vnut12.lssw.202610030100.tre200h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.tre200h0.csv",
+      "created": "2026-10-03T01:02:53.772269Z",
+      "updated": "2026-10-03T01:02:55.850483Z",
+      "file:checksum": "12200018f69fbf8b8a51323ba02557cd98d8916e732e242dd6772f6774bf5c4aef04"
+    },
+    "vnut12.lssw.202610030100.tre200pn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.tre200pn.csv",
+      "created": "2026-10-03T01:02:53.557042Z",
+      "updated": "2026-10-03T01:02:54.319707Z",
+      "file:checksum": "12205be44cddaa43b0c490e31ef86702273e64730708d03af08bf1672c4e2c6fc7f1"
+    },
+    "vnut12.lssw.202610030100.tre200px.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.tre200px.csv",
+      "created": "2026-10-03T01:02:52.337235Z",
+      "updated": "2026-10-03T01:02:53.297781Z",
+      "file:checksum": "12207887a82db6248a948676574ebe4667493ec3b78b103f979c45a14b9ce0ce25fc"
+    },
+    "vnut12.lssw.202610030100.treq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.treq10h0.csv",
+      "created": "2026-10-03T01:02:56.931426Z",
+      "updated": "2026-10-03T01:02:57.933994Z",
+      "file:checksum": "1220ae01550d57e1725579123007e35baf24cf526e6f4534fe3abd6394b716491dd4"
+    },
+    "vnut12.lssw.202610030100.treq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.treq90h0.csv",
+      "created": "2026-10-03T01:02:56.433426Z",
+      "updated": "2026-10-03T01:02:57.565117Z",
+      "file:checksum": "1220fdeac7681d62a99e433f770974b42f23945a0640839b4b2b1646bf7e28806f7d"
+    },
+    "vnut12.lssw.202610030100.zprfr0hs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030100.zprfr0hs.csv",
+      "created": "2026-10-03T01:02:57.061162Z",
+      "updated": "2026-10-03T01:02:58.044481Z",
+      "file:checksum": "1220a6da1d9ad0c33155d4767b7e2bb95f8d6a2a42b97d1f1fd9dd030408623e1197"
+    },
+    "vnut12.lssw.202610030200.dkl010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.dkl010h0.csv",
+      "created": "2026-10-03T02:03:29.890159Z",
+      "updated": "2026-10-03T02:03:30.927360Z",
+      "file:checksum": "122080e84b6d184bcdf3aad87b6f674d96b3eff860c5adb75cc3b1e763a7bdf4eaf6"
+    },
+    "vnut12.lssw.202610030200.fu3010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.fu3010h0.csv",
+      "created": "2026-10-03T02:03:29.945937Z",
+      "updated": "2026-10-03T02:03:31.610768Z",
+      "file:checksum": "122056839747db8101a134c4a7f1bb5343a56990556bb9a842255a0c2431d0882ec8"
+    },
+    "vnut12.lssw.202610030200.fu3010h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.fu3010h1.csv",
+      "created": "2026-10-03T02:03:22.530689Z",
+      "updated": "2026-10-03T02:03:24.121402Z",
+      "file:checksum": "12204ba4be971fc0a45707b423b98c49465653738ac5e8f19dc2e31bcd9725f3c444"
+    },
+    "vnut12.lssw.202610030200.fu3q10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.fu3q10h0.csv",
+      "created": "2026-10-03T02:03:22.393600Z",
+      "updated": "2026-10-03T02:03:24.119637Z",
+      "file:checksum": "12202a2477e093f64212742fba9da91400329f418c26e93b3cfd5a0c614ad3f43968"
+    },
+    "vnut12.lssw.202610030200.fu3q10h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.fu3q10h1.csv",
+      "created": "2026-10-03T02:03:29.829768Z",
+      "updated": "2026-10-03T02:03:30.985004Z",
+      "file:checksum": "12207b9d511df628952299983032754fc899719d9648d7c1040ca970d7ce3f07afa1"
+    },
+    "vnut12.lssw.202610030200.fu3q90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.fu3q90h0.csv",
+      "created": "2026-10-03T02:03:29.937728Z",
+      "updated": "2026-10-03T02:03:31.872165Z",
+      "file:checksum": "12203e00ac46e38fc929646d1bfab9208f7b10a42abc33e87940bb9126086f826de5"
+    },
+    "vnut12.lssw.202610030200.fu3q90h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.fu3q90h1.csv",
+      "created": "2026-10-03T02:03:22.463155Z",
+      "updated": "2026-10-03T02:03:24.426153Z",
+      "file:checksum": "1220c12270a8befea0ceeb6488abbbb623f579cafa6044de50af3a00bde11e386bdc"
+    },
+    "vnut12.lssw.202610030200.gre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.gre000h0.csv",
+      "created": "2026-10-03T02:03:29.565577Z",
+      "updated": "2026-10-03T02:03:31.040196Z",
+      "file:checksum": "1220b5712d66d9fd73a96c7a8d20ec5779fb1168bfba1abddd7071d4220866c8704b"
+    },
+    "vnut12.lssw.202610030200.jp2000d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.jp2000d0.csv",
+      "created": "2026-10-03T02:03:21.275259Z",
+      "updated": "2026-10-03T02:03:22.296127Z",
+      "file:checksum": "1220208b977f7e7cd811b182d694b9b67c0d16269d00ad9c68d596797b899678c445"
+    },
+    "vnut12.lssw.202610030200.jww003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.jww003i0.csv",
+      "created": "2026-10-03T02:03:29.705934Z",
+      "updated": "2026-10-03T02:03:30.874584Z",
+      "file:checksum": "1220ac2b4e7b90aafc727bac6e1f615937b7d27e7e75b841ab509e0c7ada063aa2ed"
+    },
+    "vnut12.lssw.202610030200.nprohihs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.nprohihs.csv",
+      "created": "2026-10-03T02:03:30.000971Z",
+      "updated": "2026-10-03T02:03:32.370076Z",
+      "file:checksum": "1220112a6e8a33ffef01db4b76914eda797a7b00ac906b426608e9aa096b1acb81c2"
+    },
+    "vnut12.lssw.202610030200.nprolohs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.nprolohs.csv",
+      "created": "2026-10-03T02:03:29.968955Z",
+      "updated": "2026-10-03T02:03:31.961885Z",
+      "file:checksum": "12204263be4e4738bb46eb8dc6ef7acddd9da375b5871fdcc058270d11a78a881791"
+    },
+    "vnut12.lssw.202610030200.npromths.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.npromths.csv",
+      "created": "2026-10-03T02:03:22.345793Z",
+      "updated": "2026-10-03T02:03:23.843653Z",
+      "file:checksum": "12207d2444c5f63fa0882e2b2b4f513c4d62cdf0025c0f00c56fcf457fece0b25c46"
+    },
+    "vnut12.lssw.202610030200.ods000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.ods000h0.csv",
+      "created": "2026-10-03T02:03:29.564489Z",
+      "updated": "2026-10-03T02:03:30.708614Z",
+      "file:checksum": "1220c00e6f23629ac30c1e762de98c509b84858ea065bdeb21856960964247385e29"
+    },
+    "vnut12.lssw.202610030200.rka150d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.rka150d0.csv",
+      "created": "2026-10-03T02:03:21.182958Z",
+      "updated": "2026-10-03T02:03:22.354134Z",
+      "file:checksum": "12201d23d68715d28fe3d5296523919d352142143489614d24f34029b20d263d4740"
+    },
+    "vnut12.lssw.202610030200.rka150p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.rka150p0.csv",
+      "created": "2026-10-03T02:03:21.201680Z",
+      "updated": "2026-10-03T02:03:22.716558Z",
+      "file:checksum": "1220851e20a77bf13605543ece69003ded990bccb909bc77c5137a00c8a97ab83e35"
+    },
+    "vnut12.lssw.202610030200.rp0003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.rp0003i0.csv",
+      "created": "2026-10-03T02:03:30.336905Z",
+      "updated": "2026-10-03T02:03:32.538072Z",
+      "file:checksum": "122070162221a4db69c9b8b9e234fb17dc6b44ca71190fc60cf07174a705cf46a79e"
+    },
+    "vnut12.lssw.202610030200.rre003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.rre003i0.csv",
+      "created": "2026-10-03T02:03:30.467673Z",
+      "updated": "2026-10-03T02:03:33.248202Z",
+      "file:checksum": "12202b7a8de7f38aed27fd24f5cc3a3503a51dc73d41f46eef4490d23cc7766b8cb7"
+    },
+    "vnut12.lssw.202610030200.rre150h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.rre150h0.csv",
+      "created": "2026-10-03T02:03:30.491234Z",
+      "updated": "2026-10-03T02:03:33.150364Z",
+      "file:checksum": "122087ed3b269ad896d9f21fb2af7054cd50876635a85fb3c764d14761c8ea72c10b"
+    },
+    "vnut12.lssw.202610030200.rreq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.rreq10h0.csv",
+      "created": "2026-10-03T02:03:25.731225Z",
+      "updated": "2026-10-03T02:03:26.728783Z",
+      "file:checksum": "1220b99288759cb36416bdb9a06ee0097cd183e2594f710953fad9564dd9af3b9a2b"
+    },
+    "vnut12.lssw.202610030200.rreq10p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.rreq10p0.csv",
+      "created": "2026-10-03T02:03:26.022888Z",
+      "updated": "2026-10-03T02:03:27.315686Z",
+      "file:checksum": "1220357c02a939d714942b65cba92300a29fdad7c26e42d2ba2c87ae23a297641a2e"
+    },
+    "vnut12.lssw.202610030200.rreq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.rreq90h0.csv",
+      "created": "2026-10-03T02:03:30.864331Z",
+      "updated": "2026-10-03T02:03:33.135891Z",
+      "file:checksum": "12205b8ed045b6e330d786b1f4ee4bb4ea764e23ca02933d7c706101068b057a5e8d"
+    },
+    "vnut12.lssw.202610030200.rreq90p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.rreq90p0.csv",
+      "created": "2026-10-03T02:03:26.413204Z",
+      "updated": "2026-10-03T02:03:27.152679Z",
+      "file:checksum": "1220669cc2157de5342492eabccf2679d71f600638b04b52b35ba76b443de9af4a04"
+    },
+    "vnut12.lssw.202610030200.sre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.sre000h0.csv",
+      "created": "2026-10-03T02:03:30.938373Z",
+      "updated": "2026-10-03T02:03:33.157030Z",
+      "file:checksum": "1220eab24c85a080b45abac0d2e51be20618c56ac11a9562b17024e9be15cb31912a"
+    },
+    "vnut12.lssw.202610030200.tre200dn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.tre200dn.csv",
+      "created": "2026-10-03T02:03:29.655065Z",
+      "updated": "2026-10-03T02:03:30.266946Z",
+      "file:checksum": "1220a63558f36464f00f4fc368730dcc52ab50ef79c3123285180561f1abb7df3478"
+    },
+    "vnut12.lssw.202610030200.tre200dx.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.tre200dx.csv",
+      "created": "2026-10-03T02:03:29.724352Z",
+      "updated": "2026-10-03T02:03:30.327165Z",
+      "file:checksum": "122033063af24dfc34a327ed1ec6f61111a516d49abaeb965ba4490de0138f49f5f1"
+    },
+    "vnut12.lssw.202610030200.tre200h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.tre200h0.csv",
+      "created": "2026-10-03T02:03:33.617075Z",
+      "updated": "2026-10-03T02:03:34.606469Z",
+      "file:checksum": "1220788517c0872f11f0b873f07b9029f6bfbf2f9c5d969ba238a5ae47f6c4702639"
+    },
+    "vnut12.lssw.202610030200.tre200pn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.tre200pn.csv",
+      "created": "2026-10-03T02:03:32.793368Z",
+      "updated": "2026-10-03T02:03:33.857571Z",
+      "file:checksum": "12200d875784ab0474165782bd70c2bb80106ab2c641cd6234c8d4eb04e18a667c38"
+    },
+    "vnut12.lssw.202610030200.tre200px.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.tre200px.csv",
+      "created": "2026-10-03T02:03:33.234803Z",
+      "updated": "2026-10-03T02:03:33.911878Z",
+      "file:checksum": "12207887a82db6248a948676574ebe4667493ec3b78b103f979c45a14b9ce0ce25fc"
+    },
+    "vnut12.lssw.202610030200.treq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.treq10h0.csv",
+      "created": "2026-10-03T02:03:33.730328Z",
+      "updated": "2026-10-03T02:03:34.755859Z",
+      "file:checksum": "122093b923bbeacff8f79f8677bb1a77d65d27260c88d1cc2b06b2e5cc37a5267e21"
+    },
+    "vnut12.lssw.202610030200.treq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.treq90h0.csv",
+      "created": "2026-10-03T02:03:34.162096Z",
+      "updated": "2026-10-03T02:03:35.047375Z",
+      "file:checksum": "12205f1acbc2ba62280a13d659aa6974edf8b01318946913b722121ec7fb86d7693d"
+    },
+    "vnut12.lssw.202610030200.zprfr0hs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030200.zprfr0hs.csv",
+      "created": "2026-10-03T02:03:33.719411Z",
+      "updated": "2026-10-03T02:03:34.622588Z",
+      "file:checksum": "1220f071884e5259701e2cdf33dadb107b7137b9858eebe0d30bc406b358bc607211"
+    },
+    "vnut12.lssw.202610030300.dkl010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.dkl010h0.csv",
+      "created": "2026-10-03T03:03:03.604943Z",
+      "updated": "2026-10-03T03:03:09.729464Z",
+      "file:checksum": "1220791d60e8ea483a70171ab865d52c36ebd3921162a8ca32a70db3fa77c8c7d83f"
+    },
+    "vnut12.lssw.202610030300.fu3010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.fu3010h0.csv",
+      "created": "2026-10-03T03:03:06.456675Z",
+      "updated": "2026-10-03T03:03:10.205822Z",
+      "file:checksum": "122002005d3826760ca0058ea6eba5c90829eaa5755fbdf4a21bc23e26fd18d186b2"
+    },
+    "vnut12.lssw.202610030300.fu3010h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.fu3010h1.csv",
+      "created": "2026-10-03T03:03:07.165427Z",
+      "updated": "2026-10-03T03:03:10.118486Z",
+      "file:checksum": "1220a37a96cf18c4fe593386bca9bd2af8fb2608f80aa4e834d0690a19780fd9df50"
+    },
+    "vnut12.lssw.202610030300.fu3q10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.fu3q10h0.csv",
+      "created": "2026-10-03T03:03:14.345399Z",
+      "updated": "2026-10-03T03:03:17.315576Z",
+      "file:checksum": "1220309ccf5a4a465d3c305b20962126d86417b32221c6c559f4bfa9e0d62b6ca54a"
+    },
+    "vnut12.lssw.202610030300.fu3q10h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.fu3q10h1.csv",
+      "created": "2026-10-03T03:03:09.320330Z",
+      "updated": "2026-10-03T03:03:10.857427Z",
+      "file:checksum": "122035e738493b0a23d3f8a3c7e988522a8437ed6ae940d38ca333f6f2b706205f4d"
+    },
+    "vnut12.lssw.202610030300.fu3q90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.fu3q90h0.csv",
+      "created": "2026-10-03T03:03:13.331194Z",
+      "updated": "2026-10-03T03:03:15.279788Z",
+      "file:checksum": "1220d49e4a7d2298dd07215adb9a1b9962ec9a73b184921f556a3e5d1963c038f57e"
+    },
+    "vnut12.lssw.202610030300.fu3q90h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.fu3q90h1.csv",
+      "created": "2026-10-03T03:03:08.636439Z",
+      "updated": "2026-10-03T03:03:10.855919Z",
+      "file:checksum": "12203546fde54822c9fd529c4dfa77aa8d7b1db55e2ca65ab1e3b5eee7b0d22d785d"
+    },
+    "vnut12.lssw.202610030300.gre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.gre000h0.csv",
+      "created": "2026-10-03T03:03:12.807491Z",
+      "updated": "2026-10-03T03:03:14.060437Z",
+      "file:checksum": "122012c3a11864341cc5620525027535d5391e1ef1dec9e6388eaeade94b5fbc84a5"
+    },
+    "vnut12.lssw.202610030300.jp2000d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.jp2000d0.csv",
+      "created": "2026-10-03T03:04:53.956545Z",
+      "updated": "2026-10-03T03:04:54.749193Z",
+      "file:checksum": "1220f79730e5e3bb31a3dc464c0328f15d4506044e55e87b8d47423ce9156b83bd6f"
+    },
+    "vnut12.lssw.202610030300.jww003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.jww003i0.csv",
+      "created": "2026-10-03T03:03:14.147854Z",
+      "updated": "2026-10-03T03:03:17.144077Z",
+      "file:checksum": "1220071a438f86ccb650525294006827f6b4ca2448c03dc64094ee99e21d99f1fa7a"
+    },
+    "vnut12.lssw.202610030300.nprohihs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.nprohihs.csv",
+      "created": "2026-10-03T03:03:12.582870Z",
+      "updated": "2026-10-03T03:03:14.276257Z",
+      "file:checksum": "1220a0ba05f862e60cc42a2f84c8ab4edd7c50b9115bca6a3091a3dd279ed022a4d3"
+    },
+    "vnut12.lssw.202610030300.nprolohs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.nprolohs.csv",
+      "created": "2026-10-03T03:03:09.370607Z",
+      "updated": "2026-10-03T03:03:11.111287Z",
+      "file:checksum": "1220af0bc645a882f51dd4eba30fa4cf30bd38bae294c894bd2baa75ee0f599d2375"
+    },
+    "vnut12.lssw.202610030300.npromths.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.npromths.csv",
+      "created": "2026-10-03T03:03:14.478967Z",
+      "updated": "2026-10-03T03:03:18.113565Z",
+      "file:checksum": "1220f50f3c06759afe8a10c7c277707b172e7c4e2458f3a6fee9a5fce52a242e93aa"
+    },
+    "vnut12.lssw.202610030300.ods000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.ods000h0.csv",
+      "created": "2026-10-03T03:03:12.749820Z",
+      "updated": "2026-10-03T03:03:14.052760Z",
+      "file:checksum": "1220ac03a1d577a1851903c62998442e9bb494e569ebf232b57ef860dd1a93f74da7"
+    },
+    "vnut12.lssw.202610030300.rka150d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.rka150d0.csv",
+      "created": "2026-10-03T03:03:06.296218Z",
+      "updated": "2026-10-03T03:03:07.050201Z",
+      "file:checksum": "12201ccceaa3adf8a7324a666aba20bd12ebcf4e3452edf1923fdf4b7796004a245f"
+    },
+    "vnut12.lssw.202610030300.rka150p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.rka150p0.csv",
+      "created": "2026-10-03T03:03:07.846389Z",
+      "updated": "2026-10-03T03:03:09.413296Z",
+      "file:checksum": "122055682994333580d587b3a1e4d07234f06faaf03af84fb11906deedddb737bb66"
+    },
+    "vnut12.lssw.202610030300.rp0003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.rp0003i0.csv",
+      "created": "2026-10-03T03:03:14.282351Z",
+      "updated": "2026-10-03T03:03:17.551271Z",
+      "file:checksum": "1220001bd1eb4886841cf1b10209e5ead1ee4423ba1f97503818813680d332b51582"
+    },
+    "vnut12.lssw.202610030300.rre003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.rre003i0.csv",
+      "created": "2026-10-03T03:03:15.149961Z",
+      "updated": "2026-10-03T03:03:18.410681Z",
+      "file:checksum": "1220a969d7a122a2a2f11159ad4e027e1f3742dde67f2070429161cbc22ddc7170f0"
+    },
+    "vnut12.lssw.202610030300.rre150h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.rre150h0.csv",
+      "created": "2026-10-03T03:03:15.752174Z",
+      "updated": "2026-10-03T03:03:18.547646Z",
+      "file:checksum": "12204317d1ed31052a410152861d8edc5fbf0ed93c94b82e500492db564e734539f2"
+    },
+    "vnut12.lssw.202610030300.rreq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.rreq10h0.csv",
+      "created": "2026-10-03T03:03:15.723987Z",
+      "updated": "2026-10-03T03:03:18.507621Z",
+      "file:checksum": "12204c44e616dcaca95e7244b2217e095d8811dcdbb9bfb9b6451b908f7c21e0a501"
+    },
+    "vnut12.lssw.202610030300.rreq10p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.rreq10p0.csv",
+      "created": "2026-10-03T03:03:12.043065Z",
+      "updated": "2026-10-03T03:03:12.704512Z",
+      "file:checksum": "1220351fc390588cd9372b8b0b0860bed9a5454b2d6ec42938298c648da247940089"
+    },
+    "vnut12.lssw.202610030300.rreq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.rreq90h0.csv",
+      "created": "2026-10-03T03:03:16.287374Z",
+      "updated": "2026-10-03T03:03:19.662888Z",
+      "file:checksum": "12209bbd5c80ada92edac3511f1d398747d7bf56acc524607410de7ff2db479ac9f6"
+    },
+    "vnut12.lssw.202610030300.rreq90p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.rreq90p0.csv",
+      "created": "2026-10-03T03:03:12.524095Z",
+      "updated": "2026-10-03T03:03:13.457120Z",
+      "file:checksum": "122041f1b455161b61d76d0972885ae213d9a64efaad9c047680e07b4e7e9a54d9b1"
+    },
+    "vnut12.lssw.202610030300.sre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.sre000h0.csv",
+      "created": "2026-10-03T03:03:16.196627Z",
+      "updated": "2026-10-03T03:03:20.695775Z",
+      "file:checksum": "1220679c9c4e005e7091e7f496be710880cc2f47647ed2aaf36e4f1642337531160a"
+    },
+    "vnut12.lssw.202610030300.tre200dn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.tre200dn.csv",
+      "created": "2026-10-03T03:03:13.258443Z",
+      "updated": "2026-10-03T03:03:13.813499Z",
+      "file:checksum": "122026f710d70faaa0bbd76e6d97fea63dfb23ea757fb0315ae5b2f8aba7790991d0"
+    },
+    "vnut12.lssw.202610030300.tre200dx.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.tre200dx.csv",
+      "created": "2026-10-03T03:03:13.877041Z",
+      "updated": "2026-10-03T03:03:14.459840Z",
+      "file:checksum": "122017e34537bc22e4cc31ba6301921b70bb87e9b7ad917962b7a656d227483327ce"
+    },
+    "vnut12.lssw.202610030300.tre200h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.tre200h0.csv",
+      "created": "2026-10-03T03:03:16.564459Z",
+      "updated": "2026-10-03T03:03:18.688611Z",
+      "file:checksum": "1220eab766bccfa8562b6da5cccc3f988418981eec2ba79b95f384966d69865a4fd7"
+    },
+    "vnut12.lssw.202610030300.tre200pn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.tre200pn.csv",
+      "created": "2026-10-03T03:03:15.362483Z",
+      "updated": "2026-10-03T03:03:16.091074Z",
+      "file:checksum": "122095885138fa44a1fb270408046c259670b22254c15f47e99d3d865f024827d9ca"
+    },
+    "vnut12.lssw.202610030300.tre200px.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.tre200px.csv",
+      "created": "2026-10-03T03:03:16.098665Z",
+      "updated": "2026-10-03T03:03:16.758504Z",
+      "file:checksum": "1220ba40da2bba0d8964b16a5bdf20c45c0440324bc085ab9f0ba7a09ef4fb6f924a"
+    },
+    "vnut12.lssw.202610030300.treq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.treq10h0.csv",
+      "created": "2026-10-03T03:03:20.358844Z",
+      "updated": "2026-10-03T03:03:21.602556Z",
+      "file:checksum": "12200d66605762fe62aef5abcc3086cfe6f3ad5f10ae93e31e4e42dffc68fb070f59"
+    },
+    "vnut12.lssw.202610030300.treq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.treq90h0.csv",
+      "created": "2026-10-03T03:03:20.790579Z",
+      "updated": "2026-10-03T03:03:21.936655Z",
+      "file:checksum": "122073c94fd1c2bf7888aa49c72912308b6fdfc3edd638c870fd318fa75e39b76b9a"
+    },
+    "vnut12.lssw.202610030300.zprfr0hs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030300.zprfr0hs.csv",
+      "created": "2026-10-03T03:03:20.732133Z",
+      "updated": "2026-10-03T03:03:21.980114Z",
+      "file:checksum": "12206a600ba0ea99355ecb61f2ea6bfafc930e02f164a7841eb7b7b82392ef0059fb"
+    },
+    "vnut12.lssw.202610030400.dkl010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.dkl010h0.csv",
+      "created": "2026-10-03T04:02:55.616231Z",
+      "updated": "2026-10-03T04:02:57.367771Z",
+      "file:checksum": "12207ec2c9d0d772bd804e0273070e65ab8e23f85c1c018eba9a75e2714eb46bf954"
+    },
+    "vnut12.lssw.202610030400.fu3010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.fu3010h0.csv",
+      "created": "2026-10-03T04:02:49.698808Z",
+      "updated": "2026-10-03T04:02:50.962367Z",
+      "file:checksum": "1220bf29e75bb24001d370b2c49918ea864e52e388cb25a1b4e0d103adadd85ffbc5"
+    },
+    "vnut12.lssw.202610030400.fu3010h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.fu3010h1.csv",
+      "created": "2026-10-03T04:02:55.848126Z",
+      "updated": "2026-10-03T04:02:58.642366Z",
+      "file:checksum": "1220df5bac9db80e33a4c261a15d4701716747c3ce29943ad69e9ee940eecb90b673"
+    },
+    "vnut12.lssw.202610030400.fu3q10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.fu3q10h0.csv",
+      "created": "2026-10-03T04:02:55.799907Z",
+      "updated": "2026-10-03T04:02:58.441753Z",
+      "file:checksum": "12209d6b715db19027b9019e23737eebaaa9946f267a6b9047c7a47b59567346708c"
+    },
+    "vnut12.lssw.202610030400.fu3q10h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.fu3q10h1.csv",
+      "created": "2026-10-03T04:02:55.823549Z",
+      "updated": "2026-10-03T04:02:58.505045Z",
+      "file:checksum": "1220d1a1ba6851e98412fc1b87fb380c17f67d8d1aabf9a99cf1be5cd5992ddce88e"
+    },
+    "vnut12.lssw.202610030400.fu3q90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.fu3q90h0.csv",
+      "created": "2026-10-03T04:02:55.849382Z",
+      "updated": "2026-10-03T04:02:58.602183Z",
+      "file:checksum": "12202237ebe2d8efc9456fed59a9eaabebdb11ec3d9e7107e59f45926f806ddd8ca0"
+    },
+    "vnut12.lssw.202610030400.fu3q90h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.fu3q90h1.csv",
+      "created": "2026-10-03T04:02:56.073242Z",
+      "updated": "2026-10-03T04:02:58.335607Z",
+      "file:checksum": "1220a8f718eb1ea6b25b2e3291b6957300e26580c21ff28c26c8438beb6d6a3f69bb"
+    },
+    "vnut12.lssw.202610030400.gre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.gre000h0.csv",
+      "created": "2026-10-03T04:02:55.509419Z",
+      "updated": "2026-10-03T04:02:57.357426Z",
+      "file:checksum": "12205ebe38b827809c08aab30cff7bd903652bc04a420e9fd4851eff04b3427013f0"
+    },
+    "vnut12.lssw.202610030400.jp2000d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.jp2000d0.csv",
+      "created": "2026-10-03T04:04:43.371737Z",
+      "updated": "2026-10-03T04:04:44.167509Z",
+      "file:checksum": "1220d412263ab351a543bdb2a2bdf26ffe47504521660dc03679fc191ca9e32997a6"
+    },
+    "vnut12.lssw.202610030400.jww003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.jww003i0.csv",
+      "created": "2026-10-03T04:04:43.828970Z",
+      "updated": "2026-10-03T04:04:44.876630Z",
+      "file:checksum": "12206126c03fe9353ae788bc174dff5e54e7cb6b9db5c69bceffe1ccdddf2fb75853"
+    },
+    "vnut12.lssw.202610030400.nprohihs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.nprohihs.csv",
+      "created": "2026-10-03T04:02:56.000842Z",
+      "updated": "2026-10-03T04:02:58.571576Z",
+      "file:checksum": "1220dac0c9247011bb600646dbbe2dd7eed1e1af3cb989db04375dbdff3b7882c07c"
+    },
+    "vnut12.lssw.202610030400.nprolohs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.nprolohs.csv",
+      "created": "2026-10-03T04:02:49.718980Z",
+      "updated": "2026-10-03T04:02:51.057209Z",
+      "file:checksum": "12204ad826dab7a5cdadc9c3e3a255a4456feecf78bfa22f00c8201944fb6410a890"
+    },
+    "vnut12.lssw.202610030400.npromths.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.npromths.csv",
+      "created": "2026-10-03T04:02:49.745838Z",
+      "updated": "2026-10-03T04:02:50.921353Z",
+      "file:checksum": "122091e25436ebc8d93a1cd727c448f2f2ba0d00ef1b561991926991e5b24db1f923"
+    },
+    "vnut12.lssw.202610030400.ods000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.ods000h0.csv",
+      "created": "2026-10-03T04:02:55.368158Z",
+      "updated": "2026-10-03T04:02:56.731858Z",
+      "file:checksum": "1220ea69b84d8a0b3fe2956509db1659079e55bbac1043796e9409079790fa1ab0b9"
+    },
+    "vnut12.lssw.202610030400.rka150d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.rka150d0.csv",
+      "created": "2026-10-03T04:02:47.373950Z",
+      "updated": "2026-10-03T04:02:48.048528Z",
+      "file:checksum": "1220cbc5b01077ec44a9b4df9c7e9f14719242966852ff44dca16b79cd7f42bc7406"
+    },
+    "vnut12.lssw.202610030400.rka150p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.rka150p0.csv",
+      "created": "2026-10-03T04:02:47.233799Z",
+      "updated": "2026-10-03T04:02:48.095483Z",
+      "file:checksum": "12205a9c258fa85640b7b01d798064538e70f9c3b39de8c0b5b686a6ae700a6e1d4d"
+    },
+    "vnut12.lssw.202610030400.rp0003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.rp0003i0.csv",
+      "created": "2026-10-03T04:02:49.760326Z",
+      "updated": "2026-10-03T04:02:51.156038Z",
+      "file:checksum": "122000ad93a5d84cec27f36bf7f63b97a2614e78afe6e89061116346d10acdeef1e1"
+    },
+    "vnut12.lssw.202610030400.rre003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.rre003i0.csv",
+      "created": "2026-10-03T04:02:49.690833Z",
+      "updated": "2026-10-03T04:02:51.089882Z",
+      "file:checksum": "122074b721d1ce364c6b9d7908161d683c22161009380c529f5b050e919379467a3c"
+    },
+    "vnut12.lssw.202610030400.rre150h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.rre150h0.csv",
+      "created": "2026-10-03T04:02:56.177824Z",
+      "updated": "2026-10-03T04:02:58.439639Z",
+      "file:checksum": "1220c759da242608a99b06a79232c40c1f4261bdf0c5c6a549f900ce49b3f5f5ff38"
+    },
+    "vnut12.lssw.202610030400.rreq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.rreq10h0.csv",
+      "created": "2026-10-03T04:02:56.123244Z",
+      "updated": "2026-10-03T04:02:58.757925Z",
+      "file:checksum": "12204c44e616dcaca95e7244b2217e095d8811dcdbb9bfb9b6451b908f7c21e0a501"
+    },
+    "vnut12.lssw.202610030400.rreq10p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.rreq10p0.csv",
+      "created": "2026-10-03T04:02:52.241371Z",
+      "updated": "2026-10-03T04:02:52.880467Z",
+      "file:checksum": "1220c7458d97c3a8650522323567c47c07afad2048a4d920504079c8b51dea3e6bb8"
+    },
+    "vnut12.lssw.202610030400.rreq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.rreq90h0.csv",
+      "created": "2026-10-03T04:02:56.508645Z",
+      "updated": "2026-10-03T04:02:58.771794Z",
+      "file:checksum": "1220aa840e77d46e5afcdaf368aa10c2ae77f3ba1973e6c89699555aa8f84b5d58bc"
+    },
+    "vnut12.lssw.202610030400.rreq90p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.rreq90p0.csv",
+      "created": "2026-10-03T04:02:52.522934Z",
+      "updated": "2026-10-03T04:02:53.248038Z",
+      "file:checksum": "1220d6974137c6d5020049a769ec5d99578f6168d10f8dbe2f38658b7aceafc03144"
+    },
+    "vnut12.lssw.202610030400.sre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.sre000h0.csv",
+      "created": "2026-10-03T04:02:52.704903Z",
+      "updated": "2026-10-03T04:02:54.194984Z",
+      "file:checksum": "1220d0ddcd9bfdef4ed2dc2623ca0ddab0802e38013df4bc6c922ffc9ac82c7db59a"
+    },
+    "vnut12.lssw.202610030400.tre200dn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.tre200dn.csv",
+      "created": "2026-10-03T04:02:52.617896Z",
+      "updated": "2026-10-03T04:02:53.327718Z",
+      "file:checksum": "122095036b99f8333a68c6266c659eb8bcdb2407702e830c2e0f54f31ec504afc1cf"
+    },
+    "vnut12.lssw.202610030400.tre200dx.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.tre200dx.csv",
+      "created": "2026-10-03T04:02:54.918201Z",
+      "updated": "2026-10-03T04:02:55.507744Z",
+      "file:checksum": "1220c1cb59d4e4d7c662b4795c0a65e82832dff49e1d2ce9e24a1dbe32f75a5c5c06"
+    },
+    "vnut12.lssw.202610030400.tre200h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.tre200h0.csv",
+      "created": "2026-10-03T04:02:55.754774Z",
+      "updated": "2026-10-03T04:02:58.173049Z",
+      "file:checksum": "122039eb65513e4ba6653254de7423eb244dee74c84cab00bf13e3b437bb3daddc3b"
+    },
+    "vnut12.lssw.202610030400.tre200pn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.tre200pn.csv",
+      "created": "2026-10-03T04:02:55.425588Z",
+      "updated": "2026-10-03T04:02:56.049428Z",
+      "file:checksum": "1220da0a75ab7a4fd1963a216f08be29e3fcbf6d64508bfb18aa6f2f38426c3fd09e"
+    },
+    "vnut12.lssw.202610030400.tre200px.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.tre200px.csv",
+      "created": "2026-10-03T04:02:55.779479Z",
+      "updated": "2026-10-03T04:02:56.394656Z",
+      "file:checksum": "122059ae406e6724a5cffe1bcf6a8498188703dabe3a382c731aa81eb840820693ad"
+    },
+    "vnut12.lssw.202610030400.treq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.treq10h0.csv",
+      "created": "2026-10-03T04:02:56.791303Z",
+      "updated": "2026-10-03T04:02:58.779743Z",
+      "file:checksum": "12204e068736fbe132a4ff52fbecbac00ae995819b5a7b94a9a0ba1b3b6715f69048"
+    },
+    "vnut12.lssw.202610030400.treq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.treq90h0.csv",
+      "created": "2026-10-03T04:02:59.749627Z",
+      "updated": "2026-10-03T04:03:00.642127Z",
+      "file:checksum": "12207edc138753041809f9677db25e7c5033821c0ef9e60d0977c1519547007049b4"
+    },
+    "vnut12.lssw.202610030400.zprfr0hs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030400.zprfr0hs.csv",
+      "created": "2026-10-03T04:02:59.837533Z",
+      "updated": "2026-10-03T04:03:00.793482Z",
+      "file:checksum": "12205a751993aef13f9bc50a1bdeb48dae6fbef6e73e97c8bf33f5209f74e0c261b0"
+    },
+    "vnut12.lssw.202610030500.dkl010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.dkl010h0.csv",
+      "created": "2026-10-03T05:02:47.770726Z",
+      "updated": "2026-10-03T05:02:49.264780Z",
+      "file:checksum": "12208310d28f327ac26a8d7edc0cda8b335dba629a5a57bdfc07d4ba6f6f9640fc7e"
+    },
+    "vnut12.lssw.202610030500.fu3010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.fu3010h0.csv",
+      "created": "2026-10-03T05:02:48.647517Z",
+      "updated": "2026-10-03T05:02:49.739710Z",
+      "file:checksum": "12202eaaf8d8925b80febd6241692d147587c756c9b6d4a8e5bc9da8f8c643df6deb"
+    },
+    "vnut12.lssw.202610030500.fu3010h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.fu3010h1.csv",
+      "created": "2026-10-03T05:02:48.671859Z",
+      "updated": "2026-10-03T05:02:49.800613Z",
+      "file:checksum": "1220e065be284d48fc250d88427413c02ca538a6a57ffe98cf257648529ec9c7d6d3"
+    },
+    "vnut12.lssw.202610030500.fu3q10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.fu3q10h0.csv",
+      "created": "2026-10-03T05:02:47.835255Z",
+      "updated": "2026-10-03T05:02:49.283334Z",
+      "file:checksum": "1220b6a522704dabb7cdde491e2e5490aafdd6fc98af64dd3e5df8c2c85dfc3904ef"
+    },
+    "vnut12.lssw.202610030500.fu3q10h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.fu3q10h1.csv",
+      "created": "2026-10-03T05:02:50.200386Z",
+      "updated": "2026-10-03T05:02:52.876537Z",
+      "file:checksum": "12208a5092fef24444888b807882d6da66590643fea45ee47a325786ab381438727e"
+    },
+    "vnut12.lssw.202610030500.fu3q90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.fu3q90h0.csv",
+      "created": "2026-10-03T05:02:50.358230Z",
+      "updated": "2026-10-03T05:02:52.698703Z",
+      "file:checksum": "122024d5ef61c71e38cd350fb771a9ff4a8af92ae392e0768373baf6f1a56e3fc633"
+    },
+    "vnut12.lssw.202610030500.fu3q90h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.fu3q90h1.csv",
+      "created": "2026-10-03T05:02:50.400466Z",
+      "updated": "2026-10-03T05:02:52.883918Z",
+      "file:checksum": "1220cfa6d9b7bbfa99923d2b7fc7f884f14eac1e38a53cd9c88899aaede678f95556"
+    },
+    "vnut12.lssw.202610030500.gre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.gre000h0.csv",
+      "created": "2026-10-03T05:04:39.148395Z",
+      "updated": "2026-10-03T05:04:40.621172Z",
+      "file:checksum": "12205ebe38b827809c08aab30cff7bd903652bc04a420e9fd4851eff04b3427013f0"
+    },
+    "vnut12.lssw.202610030500.jp2000d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.jp2000d0.csv",
+      "created": "2026-10-03T05:04:37.488141Z",
+      "updated": "2026-10-03T05:04:38.271776Z",
+      "file:checksum": "1220357616e3f2b90bec5302b9387a12e59348bdbd3bb9099a93aeb6ad887e49a437"
+    },
+    "vnut12.lssw.202610030500.jww003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.jww003i0.csv",
+      "created": "2026-10-03T05:04:39.246446Z",
+      "updated": "2026-10-03T05:04:41.157537Z",
+      "file:checksum": "122099ac3f76281b1e78bd27f9a46b58b03f0691334318a39c13f5b9c5eaf24816d0"
+    },
+    "vnut12.lssw.202610030500.nprohihs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.nprohihs.csv",
+      "created": "2026-10-03T05:02:50.454361Z",
+      "updated": "2026-10-03T05:02:52.884611Z",
+      "file:checksum": "122044bbeb1bf236056c4d8126184468c875ae71e03ffe63db182e98b6be6d4cd9ff"
+    },
+    "vnut12.lssw.202610030500.nprolohs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.nprolohs.csv",
+      "created": "2026-10-03T05:02:50.432051Z",
+      "updated": "2026-10-03T05:02:52.773492Z",
+      "file:checksum": "12200dcf9a5984f6df6ce4060ffecab504d4a984b14968cb8f8649f185881c03150e"
+    },
+    "vnut12.lssw.202610030500.npromths.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.npromths.csv",
+      "created": "2026-10-03T05:02:50.340642Z",
+      "updated": "2026-10-03T05:02:52.878104Z",
+      "file:checksum": "122060d9aee214fecaf6bbbe1e808b66dcc5c25084c2909c0138607ec6ea2ca37673"
+    },
+    "vnut12.lssw.202610030500.ods000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.ods000h0.csv",
+      "created": "2026-10-03T05:04:39.231535Z",
+      "updated": "2026-10-03T05:04:41.042764Z",
+      "file:checksum": "1220ea69b84d8a0b3fe2956509db1659079e55bbac1043796e9409079790fa1ab0b9"
+    },
+    "vnut12.lssw.202610030500.rka150d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.rka150d0.csv",
+      "created": "2026-10-03T05:02:42.209915Z",
+      "updated": "2026-10-03T05:02:43.349313Z",
+      "file:checksum": "1220eb30e4345a632cb36577606685263bf2a0b21abf15e2109b711499a37c1a1a53"
+    },
+    "vnut12.lssw.202610030500.rka150p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.rka150p0.csv",
+      "created": "2026-10-03T05:02:42.568765Z",
+      "updated": "2026-10-03T05:02:43.618210Z",
+      "file:checksum": "1220ced345d02da94ab76cdc1b4e1a797990ed501b1a1d1c11ed8fcaf5b88de32ae3"
+    },
+    "vnut12.lssw.202610030500.rp0003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.rp0003i0.csv",
+      "created": "2026-10-03T05:02:43.708736Z",
+      "updated": "2026-10-03T05:02:45.238368Z",
+      "file:checksum": "1220d0f848281854b90cc990016a1fbaf5c3a5862397a4e0a684ebf4cc4a3025df0e"
+    },
+    "vnut12.lssw.202610030500.rre003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.rre003i0.csv",
+      "created": "2026-10-03T05:02:50.207244Z",
+      "updated": "2026-10-03T05:02:52.461853Z",
+      "file:checksum": "1220ed1be8fa573168abbfb422c237430b80c511c9083ff0b06b26f1f462a2b31465"
+    },
+    "vnut12.lssw.202610030500.rre150h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.rre150h0.csv",
+      "created": "2026-10-03T05:02:50.442426Z",
+      "updated": "2026-10-03T05:02:52.684534Z",
+      "file:checksum": "1220df42fe916f2ec8696090e75ba6bb7bc1edc89842b5a62da1f9fb8696a97bee25"
+    },
+    "vnut12.lssw.202610030500.rreq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.rreq10h0.csv",
+      "created": "2026-10-03T05:02:50.905177Z",
+      "updated": "2026-10-03T05:02:52.753377Z",
+      "file:checksum": "1220cfd0beee94852c4dfd7766f0835db3924e57b4f1cba3b9b02cf620db27e501f9"
+    },
+    "vnut12.lssw.202610030500.rreq10p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.rreq10p0.csv",
+      "created": "2026-10-03T05:02:45.058426Z",
+      "updated": "2026-10-03T05:02:45.672535Z",
+      "file:checksum": "122086c53b626378962baa0abd635a9c71b9841062c712719d93e3f899a81aa03e2b"
+    },
+    "vnut12.lssw.202610030500.rreq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.rreq90h0.csv",
+      "created": "2026-10-03T05:02:45.762950Z",
+      "updated": "2026-10-03T05:02:47.015897Z",
+      "file:checksum": "12200e0f07ea1aa5ffcb228fda701b76f6218ac69aeff1518405ca7015981940a1a1"
+    },
+    "vnut12.lssw.202610030500.rreq90p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.rreq90p0.csv",
+      "created": "2026-10-03T05:02:46.631477Z",
+      "updated": "2026-10-03T05:02:47.664524Z",
+      "file:checksum": "12203e143d5805471df01664ed0da6d74835e86133fa7a0be4cce29d04ac9d08edb4"
+    },
+    "vnut12.lssw.202610030500.sre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.sre000h0.csv",
+      "created": "2026-10-03T05:02:51.064041Z",
+      "updated": "2026-10-03T05:02:52.750835Z",
+      "file:checksum": "122010b82ba59f58dd12ea80d7a4a53790c6a4d9f9d13278b50d2f71e734fe6f240d"
+    },
+    "vnut12.lssw.202610030500.tre200dn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.tre200dn.csv",
+      "created": "2026-10-03T05:02:48.612192Z",
+      "updated": "2026-10-03T05:02:49.199720Z",
+      "file:checksum": "122075f709f2a642123d2d3b23178a6655e2f34cd6d3a77bfd5d5f040b25db328bb0"
+    },
+    "vnut12.lssw.202610030500.tre200dx.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.tre200dx.csv",
+      "created": "2026-10-03T05:02:49.111848Z",
+      "updated": "2026-10-03T05:02:49.725501Z",
+      "file:checksum": "12207e1f6ce9e1867e3c1e5febed4bd839c58a87add2a69fc0db9834931368bbf83e"
+    },
+    "vnut12.lssw.202610030500.tre200h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.tre200h0.csv",
+      "created": "2026-10-03T05:02:51.774999Z",
+      "updated": "2026-10-03T05:02:53.137901Z",
+      "file:checksum": "1220561057bc00469d765b969369bfe9fa9972b18515d00d4ec9ce57dd282c162788"
+    },
+    "vnut12.lssw.202610030500.tre200pn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.tre200pn.csv",
+      "created": "2026-10-03T05:02:50.659966Z",
+      "updated": "2026-10-03T05:02:51.315702Z",
+      "file:checksum": "1220a474de6a02f78cdb17c23565d65fcef36ca9d579f919d91d65022199e70e4ca4"
+    },
+    "vnut12.lssw.202610030500.tre200px.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.tre200px.csv",
+      "created": "2026-10-03T05:02:50.858430Z",
+      "updated": "2026-10-03T05:02:51.512894Z",
+      "file:checksum": "1220853c0356d7ca9b54ed4ff943bcb04d8bdcf7e7c7fb58e376383988447345e864"
+    },
+    "vnut12.lssw.202610030500.treq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.treq10h0.csv",
+      "created": "2026-10-03T05:02:52.857631Z",
+      "updated": "2026-10-03T05:02:53.830703Z",
+      "file:checksum": "1220970c64ee31c7f06776c9c6d991d799a7f5766adcd4ec8facfc03ace9ae7eb76b"
+    },
+    "vnut12.lssw.202610030500.treq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.treq90h0.csv",
+      "created": "2026-10-03T05:02:53.380982Z",
+      "updated": "2026-10-03T05:02:54.262877Z",
+      "file:checksum": "1220de546383e45bc960a5f9e9b80f22a4befd37817d96a6fbc9cc23737d43e323e9"
+    },
+    "vnut12.lssw.202610030500.zprfr0hs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030500.zprfr0hs.csv",
+      "created": "2026-10-03T05:02:53.356307Z",
+      "updated": "2026-10-03T05:02:54.284451Z",
+      "file:checksum": "1220d871d3ae5016300be9051625b644d119c0b7d994328ce5f04dd23cc340dbf097"
+    },
+    "vnut12.lssw.202610030600.dkl010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.dkl010h0.csv",
+      "created": "2026-10-03T06:02:30.052264Z",
+      "updated": "2026-10-03T06:02:32.108783Z",
+      "file:checksum": "12205a2703f29d4ab117b9c18ff1914d71ca291455786a208019d24cbbdea8911a78"
+    },
+    "vnut12.lssw.202610030600.fu3010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.fu3010h0.csv",
+      "created": "2026-10-03T06:02:31.186282Z",
+      "updated": "2026-10-03T06:02:32.671269Z",
+      "file:checksum": "1220fccc3a55f3c64b958a9e15b79e89b9a02a0e2b3a599adb37511f615c01f9fcb7"
+    },
+    "vnut12.lssw.202610030600.fu3010h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.fu3010h1.csv",
+      "created": "2026-10-03T06:02:31.694705Z",
+      "updated": "2026-10-03T06:02:40.551761Z",
+      "file:checksum": "1220ddad969817916509d5accf74f07cabe6e50d2622d6cb526ed4af46505487666f"
+    },
+    "vnut12.lssw.202610030600.fu3q10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.fu3q10h0.csv",
+      "created": "2026-10-03T06:02:31.631044Z",
+      "updated": "2026-10-03T06:02:40.134488Z",
+      "file:checksum": "122006d9e707a07e22ba420be295d3d128378a3311ab9b7338eb05c052f37240a343"
+    },
+    "vnut12.lssw.202610030600.fu3q10h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.fu3q10h1.csv",
+      "created": "2026-10-03T06:02:31.427042Z",
+      "updated": "2026-10-03T06:02:33.880453Z",
+      "file:checksum": "122057e242ecd3bbd03f5755aab29808abb690549ff9550e4ec5962da8ceaec5cd5c"
+    },
+    "vnut12.lssw.202610030600.fu3q90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.fu3q90h0.csv",
+      "created": "2026-10-03T06:02:31.195033Z",
+      "updated": "2026-10-03T06:02:33.855702Z",
+      "file:checksum": "1220b314545755fda440b7500f56b6e8a54aa7c58893a504506df3b0987a3be4b598"
+    },
+    "vnut12.lssw.202610030600.fu3q90h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.fu3q90h1.csv",
+      "created": "2026-10-03T06:02:31.545003Z",
+      "updated": "2026-10-03T06:02:40.527198Z",
+      "file:checksum": "1220634d390a3c126294a3e43739d15891654ebf60bd6eecaccf1e64454d6aa10247"
+    },
+    "vnut12.lssw.202610030600.gre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.gre000h0.csv",
+      "created": "2026-10-03T06:04:14.538151Z",
+      "updated": "2026-10-03T06:04:15.959903Z",
+      "file:checksum": "12208d21598aae378ca6a82b0bd8c9f61e1f4d728d96060f26ac4089622270b4825a"
+    },
+    "vnut12.lssw.202610030600.jp2000d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.jp2000d0.csv",
+      "created": "2026-10-03T06:04:12.962059Z",
+      "updated": "2026-10-03T06:04:13.642491Z",
+      "file:checksum": "1220e5135fcca5142eb7e072be4b74932ff79c68aa0ab1854631dd3040db2cbd80fb"
+    },
+    "vnut12.lssw.202610030600.jww003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.jww003i0.csv",
+      "created": "2026-10-03T06:04:14.802087Z",
+      "updated": "2026-10-03T06:04:15.917089Z",
+      "file:checksum": "1220cdc697d23b2afd71d47e62084660a2cb1067db101df12d4425b0417692effaa4"
+    },
+    "vnut12.lssw.202610030600.nprohihs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.nprohihs.csv",
+      "created": "2026-10-03T06:02:31.560447Z",
+      "updated": "2026-10-03T06:02:40.163017Z",
+      "file:checksum": "122091be02d11fd48dad2335c0e31e1055fd73132fe8e283a8ed96d40fb4497e9866"
+    },
+    "vnut12.lssw.202610030600.nprolohs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.nprolohs.csv",
+      "created": "2026-10-03T06:02:31.561822Z",
+      "updated": "2026-10-03T06:02:34.090295Z",
+      "file:checksum": "122016dcedd618c0ef118a6f79dc5405bea71340661d32cae747f143e0669a723f9e"
+    },
+    "vnut12.lssw.202610030600.npromths.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.npromths.csv",
+      "created": "2026-10-03T06:02:31.196105Z",
+      "updated": "2026-10-03T06:02:33.929059Z",
+      "file:checksum": "1220c40d87519e40b10746228294b9c4123366fcb36e13c790ba6be2f47669cae4bc"
+    },
+    "vnut12.lssw.202610030600.ods000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.ods000h0.csv",
+      "created": "2026-10-03T06:04:14.500894Z",
+      "updated": "2026-10-03T06:04:15.539705Z",
+      "file:checksum": "1220ad98915485a553bfb67439f2451d6ba30aec2195191c8c328f14b5a207675864"
+    },
+    "vnut12.lssw.202610030600.rka150d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.rka150d0.csv",
+      "created": "2026-10-03T06:02:20.719395Z",
+      "updated": "2026-10-03T06:02:21.991870Z",
+      "file:checksum": "1220b44ea3f23850365110a560857e69be297430448f9d37862c58fa93be3eecef6b"
+    },
+    "vnut12.lssw.202610030600.rka150p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.rka150p0.csv",
+      "created": "2026-10-03T06:02:21.414254Z",
+      "updated": "2026-10-03T06:02:23.035143Z",
+      "file:checksum": "12207b1944b9fa693876eb9066fe7a3ec33e8f0141523585689d53c7446a3b30a55e"
+    },
+    "vnut12.lssw.202610030600.rp0003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.rp0003i0.csv",
+      "created": "2026-10-03T06:02:30.793854Z",
+      "updated": "2026-10-03T06:02:32.234641Z",
+      "file:checksum": "12203e68304e9e53171ab369ae3322b69a60124f7c3caa4ff2ca4883b4f69afdec5b"
+    },
+    "vnut12.lssw.202610030600.rre003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.rre003i0.csv",
+      "created": "2026-10-03T06:02:29.723169Z",
+      "updated": "2026-10-03T06:02:30.943906Z",
+      "file:checksum": "12206f888d9daae5c88690c25900d07b350bf4e5671d72d9dc780bcc3a2efbbfbf20"
+    },
+    "vnut12.lssw.202610030600.rre150h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.rre150h0.csv",
+      "created": "2026-10-03T06:02:26.288807Z",
+      "updated": "2026-10-03T06:02:41.516864Z",
+      "file:checksum": "12201712764eaffd86100468870a8b010d4ebf043c7728a11651b77b958960c7b7be"
+    },
+    "vnut12.lssw.202610030600.rreq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.rreq10h0.csv",
+      "created": "2026-10-03T06:02:26.271609Z",
+      "updated": "2026-10-03T06:02:27.581087Z",
+      "file:checksum": "1220326e30d901c3cadcf80f5acffae137cd69307633b6e1e970118729b6c9705ae2"
+    },
+    "vnut12.lssw.202610030600.rreq10p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.rreq10p0.csv",
+      "created": "2026-10-03T06:02:27.372812Z",
+      "updated": "2026-10-03T06:02:28.139539Z",
+      "file:checksum": "12207602a64746cd437fcd42d38da1098128e7344c951b074cc19dd6a01f01cb0dd2"
+    },
+    "vnut12.lssw.202610030600.rreq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.rreq90h0.csv",
+      "created": "2026-10-03T06:02:31.720997Z",
+      "updated": "2026-10-03T06:02:39.270306Z",
+      "file:checksum": "1220e080975ad04645d15c13082ec671a5571b453dde662504e59f23ff2f41dc8625"
+    },
+    "vnut12.lssw.202610030600.rreq90p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.rreq90p0.csv",
+      "created": "2026-10-03T06:02:29.115726Z",
+      "updated": "2026-10-03T06:02:30.413660Z",
+      "file:checksum": "1220b3fd0ada99428720fb1e99a48898d3c049ae384e6650acc422035f0d8b48261c"
+    },
+    "vnut12.lssw.202610030600.sre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.sre000h0.csv",
+      "created": "2026-10-03T06:02:31.651520Z",
+      "updated": "2026-10-03T06:02:41.496638Z",
+      "file:checksum": "1220ffac24f3e1453dbe5af688e82d4890f0771c3ddbc0e48be31ef37ef67ad2184e"
+    },
+    "vnut12.lssw.202610030600.tre200dn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.tre200dn.csv",
+      "created": "2026-10-03T06:02:31.439535Z",
+      "updated": "2026-10-03T06:02:32.074254Z",
+      "file:checksum": "1220584e82ec04b350dbdfa1dbb128d08719f5074422fdb40e61514d0d8aba5e6b0a"
+    },
+    "vnut12.lssw.202610030600.tre200dx.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.tre200dx.csv",
+      "created": "2026-10-03T06:02:31.901842Z",
+      "updated": "2026-10-03T06:02:34.423624Z",
+      "file:checksum": "122074de8d71f51c96c94be09e4010d51abbd60b327db81787aadd90dde6cbc6aa81"
+    },
+    "vnut12.lssw.202610030600.tre200h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.tre200h0.csv",
+      "created": "2026-10-03T06:02:39.368955Z",
+      "updated": "2026-10-03T06:02:42.673040Z",
+      "file:checksum": "12201c6f721331ec122f81aa60a2935ca917fa2a340483562d77b14b06377bcb97c8"
+    },
+    "vnut12.lssw.202610030600.tre200pn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.tre200pn.csv",
+      "created": "2026-10-03T06:02:40.802664Z",
+      "updated": "2026-10-03T06:02:41.792289Z",
+      "file:checksum": "122094120922e9327a07bcd8357cb61e3be63ab7cb1bea9380cb26d1e9bf01ef08fd"
+    },
+    "vnut12.lssw.202610030600.tre200px.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.tre200px.csv",
+      "created": "2026-10-03T06:02:40.834789Z",
+      "updated": "2026-10-03T06:02:41.853453Z",
+      "file:checksum": "1220f2e598742a85a544e641984952edd4a1db7959f777ca35b9f53ac0dd7003b7b5"
+    },
+    "vnut12.lssw.202610030600.treq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.treq10h0.csv",
+      "created": "2026-10-03T06:02:42.582455Z",
+      "updated": "2026-10-03T06:02:44.888063Z",
+      "file:checksum": "1220be6c0069b1f9a7b6c92f3539b96291442f2c1bbb0f375dd5b965532c5509015d"
+    },
+    "vnut12.lssw.202610030600.treq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.treq90h0.csv",
+      "created": "2026-10-03T06:02:42.758952Z",
+      "updated": "2026-10-03T06:02:43.929018Z",
+      "file:checksum": "12203d68ecb368f4bb624592212b790d77f21a25ed52d75b0123483e6ec7ad503f02"
+    },
+    "vnut12.lssw.202610030600.zprfr0hs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030600.zprfr0hs.csv",
+      "created": "2026-10-03T06:02:42.819008Z",
+      "updated": "2026-10-03T06:02:44.149988Z",
+      "file:checksum": "12202afd171c812ba5fd56cf42a039cb217c49da7839ae0cc6007fcc93c1ee7628ed"
+    },
+    "vnut12.lssw.202610030700.dkl010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.dkl010h0.csv",
+      "created": "2026-10-03T07:02:54.998941Z",
+      "updated": "2026-10-03T07:03:01.314472Z",
+      "file:checksum": "12209d11077761bdbeb320e289a4ddc019daa3f873c12eaf08d34c2105aa83e20081"
+    },
+    "vnut12.lssw.202610030700.fu3010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.fu3010h0.csv",
+      "created": "2026-10-03T07:02:55.079070Z",
+      "updated": "2026-10-03T07:03:01.940331Z",
+      "file:checksum": "12208e7dabce421302a70eb94e4798a501308fe39f3f3e676efa6e1ceea37fc6090a"
+    },
+    "vnut12.lssw.202610030700.fu3010h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.fu3010h1.csv",
+      "created": "2026-10-03T07:02:59.831036Z",
+      "updated": "2026-10-03T07:03:06.187376Z",
+      "file:checksum": "1220f3c31825db1e345bee446d3b5f34f0ef4e74835ddd2631e777cc5559730177a7"
+    },
+    "vnut12.lssw.202610030700.fu3q10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.fu3q10h0.csv",
+      "created": "2026-10-03T07:02:59.568933Z",
+      "updated": "2026-10-03T07:03:06.289617Z",
+      "file:checksum": "122073c39ee5c81b1d9f030748059c4c5e1c73d245fb20ba014ea6a7ae91508cf95c"
+    },
+    "vnut12.lssw.202610030700.fu3q10h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.fu3q10h1.csv",
+      "created": "2026-10-03T07:03:02.386002Z",
+      "updated": "2026-10-03T07:03:07.502269Z",
+      "file:checksum": "1220d6dd74d7ff69a6a042cf85e3ab96eef5871119722aa52a92b743185edffab995"
+    },
+    "vnut12.lssw.202610030700.fu3q90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.fu3q90h0.csv",
+      "created": "2026-10-03T07:02:59.475739Z",
+      "updated": "2026-10-03T07:03:05.944699Z",
+      "file:checksum": "122073982f8e1801398f0d093302381991310ad4554bbb439898cf0037331ebb9dec"
+    },
+    "vnut12.lssw.202610030700.fu3q90h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.fu3q90h1.csv",
+      "created": "2026-10-03T07:03:03.771782Z",
+      "updated": "2026-10-03T07:03:08.921743Z",
+      "file:checksum": "122064e7c4c990b9c20f3d7e1c10a7aa774681cf806852bd4b3f882613201cd8c23e"
+    },
+    "vnut12.lssw.202610030700.gre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.gre000h0.csv",
+      "created": "2026-10-03T07:03:00.311034Z",
+      "updated": "2026-10-03T07:03:06.272301Z",
+      "file:checksum": "12208d21598aae378ca6a82b0bd8c9f61e1f4d728d96060f26ac4089622270b4825a"
+    },
+    "vnut12.lssw.202610030700.jp2000d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.jp2000d0.csv",
+      "created": "2026-10-03T07:04:39.200550Z",
+      "updated": "2026-10-03T07:04:39.966965Z",
+      "file:checksum": "1220707f57efa515e3f475e2d2c71f3c2d6c0c0a00779e1d03439018537d4b462f09"
+    },
+    "vnut12.lssw.202610030700.jww003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.jww003i0.csv",
+      "created": "2026-10-03T07:03:00.875784Z",
+      "updated": "2026-10-03T07:03:06.181873Z",
+      "file:checksum": "1220419b028ff08e889cb83bf710c93750bcca91127c1c14dcb9310d66265c4db2fb"
+    },
+    "vnut12.lssw.202610030700.nprohihs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.nprohihs.csv",
+      "created": "2026-10-03T07:03:01.294715Z",
+      "updated": "2026-10-03T07:03:07.335078Z",
+      "file:checksum": "12206f1347a958a07c5871dce8aec79a03cc58c0c56ee529a5e695cc2f8b32e2df95"
+    },
+    "vnut12.lssw.202610030700.nprolohs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.nprolohs.csv",
+      "created": "2026-10-03T07:03:01.207609Z",
+      "updated": "2026-10-03T07:03:07.056791Z",
+      "file:checksum": "12209d0abdf6015926c2f8897b9e1f1268fc3361873881a0a5d27edc7988de33e08b"
+    },
+    "vnut12.lssw.202610030700.npromths.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.npromths.csv",
+      "created": "2026-10-03T07:03:04.001182Z",
+      "updated": "2026-10-03T07:03:08.169963Z",
+      "file:checksum": "12204c8287c3157b5b1a92987f32a1a11dfd12417a38d9c0acee27b109b53571938c"
+    },
+    "vnut12.lssw.202610030700.ods000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.ods000h0.csv",
+      "created": "2026-10-03T07:03:03.188331Z",
+      "updated": "2026-10-03T07:03:07.836843Z",
+      "file:checksum": "1220ad98915485a553bfb67439f2451d6ba30aec2195191c8c328f14b5a207675864"
+    },
+    "vnut12.lssw.202610030700.rka150d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.rka150d0.csv",
+      "created": "2026-10-03T07:02:55.704461Z",
+      "updated": "2026-10-03T07:02:58.118598Z",
+      "file:checksum": "1220f3d11c77afca7dc062385740dcbabcfe7a1991e5c32b1635b7a7275832921e6a"
+    },
+    "vnut12.lssw.202610030700.rka150p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.rka150p0.csv",
+      "created": "2026-10-03T07:02:53.424568Z",
+      "updated": "2026-10-03T07:02:54.490703Z",
+      "file:checksum": "12207ed91416920c6d2a1c64d44243f6cb675e595db94d9478f1c008a389101ac288"
+    },
+    "vnut12.lssw.202610030700.rp0003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.rp0003i0.csv",
+      "created": "2026-10-03T07:03:03.500364Z",
+      "updated": "2026-10-03T07:03:07.483628Z",
+      "file:checksum": "1220a17c3ae87f42f84324a04ef67ed1218db4e622fcf590c388bbdf8a73788ff3eb"
+    },
+    "vnut12.lssw.202610030700.rre003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.rre003i0.csv",
+      "created": "2026-10-03T07:03:04.485775Z",
+      "updated": "2026-10-03T07:03:08.944463Z",
+      "file:checksum": "1220ad01334a6f463db9eddda39dc3301d36cbe010bae86651177e1c910ffa44936a"
+    },
+    "vnut12.lssw.202610030700.rre150h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.rre150h0.csv",
+      "created": "2026-10-03T07:03:05.635435Z",
+      "updated": "2026-10-03T07:03:09.540789Z",
+      "file:checksum": "1220d7560958d97cdf41188ac90407fb4714c97de82b4c46f5d2e10996b976feee1a"
+    },
+    "vnut12.lssw.202610030700.rreq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.rreq10h0.csv",
+      "created": "2026-10-03T07:03:09.212844Z",
+      "updated": "2026-10-03T07:03:12.241798Z",
+      "file:checksum": "1220bd518cf45add09a83f057e62034702348dc7aa8ee7c968f6d96571812c53e79f"
+    },
+    "vnut12.lssw.202610030700.rreq10p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.rreq10p0.csv",
+      "created": "2026-10-03T07:03:07.169917Z",
+      "updated": "2026-10-03T07:03:07.880259Z",
+      "file:checksum": "1220101b8daca078638eae7087a7fc462942cd4698a6afcbae2e5230f2d86d50b098"
+    },
+    "vnut12.lssw.202610030700.rreq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.rreq90h0.csv",
+      "created": "2026-10-03T07:03:11.880690Z",
+      "updated": "2026-10-03T07:03:13.054991Z",
+      "file:checksum": "122091577794aeb2a5fbf385cec9815e9770575697c049bc96dd7e4452589e1484b5"
+    },
+    "vnut12.lssw.202610030700.rreq90p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.rreq90p0.csv",
+      "created": "2026-10-03T07:03:10.029083Z",
+      "updated": "2026-10-03T07:03:12.171212Z",
+      "file:checksum": "1220367a93d8c0cbc7eff6d403ba4e409d6201ae7bc2532231d71d82c45fa563d2b6"
+    },
+    "vnut12.lssw.202610030700.sre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.sre000h0.csv",
+      "created": "2026-10-03T07:03:11.371716Z",
+      "updated": "2026-10-03T07:03:15.801537Z",
+      "file:checksum": "122002f75c3acd6965f821b5f1158edf91c20c4ac1d680117b7930591478ffcaccb9"
+    },
+    "vnut12.lssw.202610030700.tre200dn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.tre200dn.csv",
+      "created": "2026-10-03T07:03:10.568468Z",
+      "updated": "2026-10-03T07:03:11.480918Z",
+      "file:checksum": "122096588f818fadf7c33cee299ff7fe627160c9fb5e14ad7e076fe1e5897fc6bbde"
+    },
+    "vnut12.lssw.202610030700.tre200dx.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.tre200dx.csv",
+      "created": "2026-10-03T07:03:11.618734Z",
+      "updated": "2026-10-03T07:03:12.635339Z",
+      "file:checksum": "1220ca4f0525cee936cbb74f8a93a11566b1b57e66e832037fda36a6e7e5f312bf9c"
+    },
+    "vnut12.lssw.202610030700.tre200h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.tre200h0.csv",
+      "created": "2026-10-03T07:03:14.119052Z",
+      "updated": "2026-10-03T07:03:15.236890Z",
+      "file:checksum": "1220505eaf243c095edaa772a939c5c7f9ba107e5cbfe8fb84bcb898ac15e68e8fbf"
+    },
+    "vnut12.lssw.202610030700.tre200pn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.tre200pn.csv",
+      "created": "2026-10-03T07:03:11.493762Z",
+      "updated": "2026-10-03T07:03:12.200659Z",
+      "file:checksum": "1220729aa13c291132c69f0190bce3476d28a50ac97085ea50c4581d0f6989f520b1"
+    },
+    "vnut12.lssw.202610030700.tre200px.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.tre200px.csv",
+      "created": "2026-10-03T07:03:11.545915Z",
+      "updated": "2026-10-03T07:03:12.174110Z",
+      "file:checksum": "12207d8ca460cf53798395399e21fa287e3be034abf12d1ec8f2d33e56dce14de3d4"
+    },
+    "vnut12.lssw.202610030700.treq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.treq10h0.csv",
+      "created": "2026-10-03T07:03:14.023065Z",
+      "updated": "2026-10-03T07:03:15.266667Z",
+      "file:checksum": "12204cce3bdf2507b98ecad49e961d89341e2408e217f0f00895a5773b5de63842d1"
+    },
+    "vnut12.lssw.202610030700.treq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.treq90h0.csv",
+      "created": "2026-10-03T07:03:14.058254Z",
+      "updated": "2026-10-03T07:03:15.288489Z",
+      "file:checksum": "12205a05a34f5509d40aaec77f7c303e8fe01440525da7682a41862fc6d5d017e8ec"
+    },
+    "vnut12.lssw.202610030700.zprfr0hs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030700.zprfr0hs.csv",
+      "created": "2026-10-03T07:03:14.064664Z",
+      "updated": "2026-10-03T07:03:15.283382Z",
+      "file:checksum": "12207c197a6a5aaaefd8c595f9a029ab764dad0ecea767cc6e285c52b665517f887d"
+    },
+    "vnut12.lssw.202610030800.dkl010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.dkl010h0.csv",
+      "created": "2026-10-03T08:03:02.886050Z",
+      "updated": "2026-10-03T08:03:05.336519Z",
+      "file:checksum": "122064afac8c81b608d7e6b23dfa22a0287f5d517a3d34da31b06675d1049b414d3e"
+    },
+    "vnut12.lssw.202610030800.fu3010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.fu3010h0.csv",
+      "created": "2026-10-03T08:02:59.746463Z",
+      "updated": "2026-10-03T08:03:00.836834Z",
+      "file:checksum": "1220a99189b8c84a0dcaaacccfeba51c1bb741843588267022eff99c38faaeb5dc14"
+    },
+    "vnut12.lssw.202610030800.fu3010h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.fu3010h1.csv",
+      "created": "2026-10-03T08:02:59.748204Z",
+      "updated": "2026-10-03T08:03:00.862728Z",
+      "file:checksum": "122009221df6f25f8f954e4faf3f8dab2975c6bc65fd41af0ccfb85d9c7285b2424a"
+    },
+    "vnut12.lssw.202610030800.fu3q10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.fu3q10h0.csv",
+      "created": "2026-10-03T08:02:57.833562Z",
+      "updated": "2026-10-03T08:02:59.268319Z",
+      "file:checksum": "12203ef2d73ae5d2ce2fba09d9a4dc12ca65f094ba93d07d3d44a8ddb2c57b9458b8"
+    },
+    "vnut12.lssw.202610030800.fu3q10h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.fu3q10h1.csv",
+      "created": "2026-10-03T08:02:58.126276Z",
+      "updated": "2026-10-03T08:02:59.335783Z",
+      "file:checksum": "1220cd71ae0d6e0dcc77e1d53bf642d63eb9400ae4501467b3f21238ec960c82a24d"
+    },
+    "vnut12.lssw.202610030800.fu3q90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.fu3q90h0.csv",
+      "created": "2026-10-03T08:02:58.863303Z",
+      "updated": "2026-10-03T08:03:00.171925Z",
+      "file:checksum": "122077fec980a31c6ea507b075b0686e4aebde3975135d49062285d0d1a8e62b7878"
+    },
+    "vnut12.lssw.202610030800.fu3q90h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.fu3q90h1.csv",
+      "created": "2026-10-03T08:03:03.955636Z",
+      "updated": "2026-10-03T08:03:06.469332Z",
+      "file:checksum": "122028ed9080c82d2602f0bc31b337d86f5b1cb937e24b3a16e0b135fda59a155bf7"
+    },
+    "vnut12.lssw.202610030800.gre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.gre000h0.csv",
+      "created": "2026-10-03T08:04:48.700612Z",
+      "updated": "2026-10-03T08:04:49.827595Z",
+      "file:checksum": "12206483d07b63dea5da6bc45ca454d3464380bf0972044d03f2e4109316e92e48f0"
+    },
+    "vnut12.lssw.202610030800.jp2000d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.jp2000d0.csv",
+      "created": "2026-10-03T08:04:48.570737Z",
+      "updated": "2026-10-03T08:04:49.375338Z",
+      "file:checksum": "1220259da67beec2cbcb161a8cae608cc5ed26f6d12166176180c7fa0a2fed9f302c"
+    },
+    "vnut12.lssw.202610030800.jww003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.jww003i0.csv",
+      "created": "2026-10-03T08:04:49.958056Z",
+      "updated": "2026-10-03T08:04:51.777381Z",
+      "file:checksum": "122076eefac5ebcbf2a4ac5c858f2ff31c908b425b0237fa57e6ab86f8cf9e7cfe74"
+    },
+    "vnut12.lssw.202610030800.nprohihs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.nprohihs.csv",
+      "created": "2026-10-03T08:03:03.986263Z",
+      "updated": "2026-10-03T08:03:06.453637Z",
+      "file:checksum": "12206c1cf492b10aac412be3495f0b4ac6c138f7e74d51ba0392ae17624ec00545bd"
+    },
+    "vnut12.lssw.202610030800.nprolohs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.nprolohs.csv",
+      "created": "2026-10-03T08:03:04.710875Z",
+      "updated": "2026-10-03T08:03:06.431956Z",
+      "file:checksum": "1220057afddab3b23a4f99d1aa80f273591fdc1aa2a19e9182e3179ebb36cd00f389"
+    },
+    "vnut12.lssw.202610030800.npromths.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.npromths.csv",
+      "created": "2026-10-03T08:03:03.950273Z",
+      "updated": "2026-10-03T08:03:06.480921Z",
+      "file:checksum": "122031a035c2dbd39726ff21ace79369b31f263deb831bdf909d3654cec5fedc7d02"
+    },
+    "vnut12.lssw.202610030800.ods000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.ods000h0.csv",
+      "created": "2026-10-03T08:04:49.687849Z",
+      "updated": "2026-10-03T08:04:50.798716Z",
+      "file:checksum": "1220b1997ebf0fcdd913d03159253e28ff999d0a829f317d219c400db36253fc27f1"
+    },
+    "vnut12.lssw.202610030800.rka150d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.rka150d0.csv",
+      "created": "2026-10-03T08:02:57.430639Z",
+      "updated": "2026-10-03T08:02:58.184179Z",
+      "file:checksum": "1220d131352b64104844dec2cb8cec80a9c1ab56ee7099f24cc3db488bbe1e49268f"
+    },
+    "vnut12.lssw.202610030800.rka150p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.rka150p0.csv",
+      "created": "2026-10-03T08:02:57.276831Z",
+      "updated": "2026-10-03T08:02:58.143892Z",
+      "file:checksum": "1220baceb465db3752d87972b36426af2bd5eb3719fe5aff7638478c0e3217f0e488"
+    },
+    "vnut12.lssw.202610030800.rp0003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.rp0003i0.csv",
+      "created": "2026-10-03T08:03:03.578199Z",
+      "updated": "2026-10-03T08:03:05.764741Z",
+      "file:checksum": "12202c9c0bc867067d94d4bdd5b844d4fe459bcc214983cf57addb5f6593253fff7c"
+    },
+    "vnut12.lssw.202610030800.rre003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.rre003i0.csv",
+      "created": "2026-10-03T08:02:58.764596Z",
+      "updated": "2026-10-03T08:03:00.052624Z",
+      "file:checksum": "1220e5b3f1b4b4b59b67b294ece9aa664ac8d2fdf89a2497f2323c7cda22b6cda099"
+    },
+    "vnut12.lssw.202610030800.rre150h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.rre150h0.csv",
+      "created": "2026-10-03T08:02:58.774106Z",
+      "updated": "2026-10-03T08:03:00.076078Z",
+      "file:checksum": "12202894de6e894c85d4dc243382de81a075e0b932537b9c96b20d411d0d8237c531"
+    },
+    "vnut12.lssw.202610030800.rreq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.rreq10h0.csv",
+      "created": "2026-10-03T08:03:03.765261Z",
+      "updated": "2026-10-03T08:03:05.825103Z",
+      "file:checksum": "1220b974a3a7cf4ae7295d1f4a265fca9ae2b7730e5de657b0f3cb6e2fbee06368b5"
+    },
+    "vnut12.lssw.202610030800.rreq10p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.rreq10p0.csv",
+      "created": "2026-10-03T08:02:59.361842Z",
+      "updated": "2026-10-03T08:03:00.734412Z",
+      "file:checksum": "122081c318d544278d9f5ee5d1ce13b35946f000ac6552926dca495d1a2853ffd375"
+    },
+    "vnut12.lssw.202610030800.rreq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.rreq90h0.csv",
+      "created": "2026-10-03T08:03:04.312455Z",
+      "updated": "2026-10-03T08:03:06.348038Z",
+      "file:checksum": "12208dfb6fdfab20b2ba34992afbcc8e7afe36becd9837468c4a3a7dee7dfbfdcb72"
+    },
+    "vnut12.lssw.202610030800.rreq90p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.rreq90p0.csv",
+      "created": "2026-10-03T08:03:00.566197Z",
+      "updated": "2026-10-03T08:03:01.357694Z",
+      "file:checksum": "1220f90bb26a056fd145fa8e2d17911035a4002ba940d409c72b0caa48ec2a9c7931"
+    },
+    "vnut12.lssw.202610030800.sre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.sre000h0.csv",
+      "created": "2026-10-03T08:03:05.378435Z",
+      "updated": "2026-10-03T08:03:06.460698Z",
+      "file:checksum": "122053c360cae3666edf7d62a0fc159dd0179df651ee55bf2b4ceb1a9b67b2f23d3d"
+    },
+    "vnut12.lssw.202610030800.tre200dn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.tre200dn.csv",
+      "created": "2026-10-03T08:03:02.984957Z",
+      "updated": "2026-10-03T08:03:03.575850Z",
+      "file:checksum": "12203518ff8fbf5e8e127777bdfdfaf7ba0190417b9ad380c4da7aae9b38ae20fb9e"
+    },
+    "vnut12.lssw.202610030800.tre200dx.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.tre200dx.csv",
+      "created": "2026-10-03T08:03:03.104530Z",
+      "updated": "2026-10-03T08:03:03.730435Z",
+      "file:checksum": "12208f74650563a4e11ed04d0bb4fb611e82647a6f7638d1c66909b2d727d1645a4c"
+    },
+    "vnut12.lssw.202610030800.tre200h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.tre200h0.csv",
+      "created": "2026-10-03T08:03:07.077419Z",
+      "updated": "2026-10-03T08:03:08.222005Z",
+      "file:checksum": "1220cad94b09c7baa3b4aae832110ecc8d4c4e330c49d16b19f40c0db037aed37894"
+    },
+    "vnut12.lssw.202610030800.tre200pn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.tre200pn.csv",
+      "created": "2026-10-03T08:03:03.930965Z",
+      "updated": "2026-10-03T08:03:05.318155Z",
+      "file:checksum": "12206f04d05a71de3b13bdb5c9a41650a9af1a59cffe0f9fd371762535fe4655b576"
+    },
+    "vnut12.lssw.202610030800.tre200px.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.tre200px.csv",
+      "created": "2026-10-03T08:03:03.988484Z",
+      "updated": "2026-10-03T08:03:05.460551Z",
+      "file:checksum": "1220d2eed595d41c34e6ffd06a77bd3d50b4796dfe95cb30823f9ff41b631308cd2c"
+    },
+    "vnut12.lssw.202610030800.treq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.treq10h0.csv",
+      "created": "2026-10-03T08:03:07.072432Z",
+      "updated": "2026-10-03T08:03:08.241970Z",
+      "file:checksum": "12207fa1dcfbca79e87ad47bd6c17bd1f627039ce79a17eb69da9ca2d9622a587a62"
+    },
+    "vnut12.lssw.202610030800.treq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.treq90h0.csv",
+      "created": "2026-10-03T08:03:07.077847Z",
+      "updated": "2026-10-03T08:03:08.318064Z",
+      "file:checksum": "122014fabaeba7b046a734dec2582f5a082954ade3e69d6afe9cc77e35113cfa7b00"
+    },
+    "vnut12.lssw.202610030800.zprfr0hs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030800.zprfr0hs.csv",
+      "created": "2026-10-03T08:03:07.360399Z",
+      "updated": "2026-10-03T08:03:08.385533Z",
+      "file:checksum": "1220914a55f4092729506653852b8d67bd47defd6ecc30abb41d6b3eb3e542f0ee99"
+    },
+    "vnut12.lssw.202610030900.dkl010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.dkl010h0.csv",
+      "created": "2026-10-03T09:03:04.892816Z",
+      "updated": "2026-10-03T09:03:07.079496Z",
+      "file:checksum": "12203fd22289e6624a4c644c2a9b6b2cd90b6bf37e8d608512f58da19602ca0ccb6f"
+    },
+    "vnut12.lssw.202610030900.fu3010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.fu3010h0.csv",
+      "created": "2026-10-03T09:03:03.271519Z",
+      "updated": "2026-10-03T09:03:05.678584Z",
+      "file:checksum": "1220aafe56a1327de874ac7a9f0cdea799be0092df9769724dbb4749410d031eaace"
+    },
+    "vnut12.lssw.202610030900.fu3010h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.fu3010h1.csv",
+      "created": "2026-10-03T09:03:08.282184Z",
+      "updated": "2026-10-03T09:03:09.611389Z",
+      "file:checksum": "1220bd0955ff7ecd085f1e7b6d4ab07033abd4129436c369421a3d4d8f22e43c3cc9"
+    },
+    "vnut12.lssw.202610030900.fu3q10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.fu3q10h0.csv",
+      "created": "2026-10-03T09:03:09.376145Z",
+      "updated": "2026-10-03T09:03:11.565904Z",
+      "file:checksum": "12203275990a7688df14daddcab2509f8499621644626568e2b37e13a297b9abcddb"
+    },
+    "vnut12.lssw.202610030900.fu3q10h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.fu3q10h1.csv",
+      "created": "2026-10-03T09:03:08.633615Z",
+      "updated": "2026-10-03T09:03:10.945402Z",
+      "file:checksum": "1220a20b439d881cf48d46ad82fe895dfa5b14ba4e56c96f637bc30a1d1cb7d258f6"
+    },
+    "vnut12.lssw.202610030900.fu3q90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.fu3q90h0.csv",
+      "created": "2026-10-03T09:03:10.491139Z",
+      "updated": "2026-10-03T09:03:12.113264Z",
+      "file:checksum": "12206d3041899317274247bd3c45bc03ee12f190af03ed62b6d346010885a00a6e9f"
+    },
+    "vnut12.lssw.202610030900.fu3q90h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.fu3q90h1.csv",
+      "created": "2026-10-03T09:03:11.659866Z",
+      "updated": "2026-10-03T09:03:14.050966Z",
+      "file:checksum": "122041f5d5ce8840940a7e2f0abd23e5436f0c61f22accb8c2ac986ceac72e467d06"
+    },
+    "vnut12.lssw.202610030900.gre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.gre000h0.csv",
+      "created": "2026-10-03T09:03:11.078442Z",
+      "updated": "2026-10-03T09:03:13.093195Z",
+      "file:checksum": "122009cc9da369eba7a5d88b260a545ced27f5e21cf949ca379ed9b4f8e4e3c62e9b"
+    },
+    "vnut12.lssw.202610030900.jp2000d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.jp2000d0.csv",
+      "created": "2026-10-03T09:03:04.291847Z",
+      "updated": "2026-10-03T09:03:05.162776Z",
+      "file:checksum": "1220c9ed7d4f6956fe755587d6bd460108abe183079034a95426e2d0ab5a2f98cc1a"
+    },
+    "vnut12.lssw.202610030900.jww003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.jww003i0.csv",
+      "created": "2026-10-03T09:03:09.373490Z",
+      "updated": "2026-10-03T09:03:12.379903Z",
+      "file:checksum": "122033fd93235f836688254f3e4003d6ed8c9d4e33d6ca6064f1b7fcdb1fae42dc8d"
+    },
+    "vnut12.lssw.202610030900.nprohihs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.nprohihs.csv",
+      "created": "2026-10-03T09:03:11.729601Z",
+      "updated": "2026-10-03T09:03:14.364410Z",
+      "file:checksum": "12200bf410d3651e89f800bae85dd21ba3aae98ae4318ed64828477463678d4015ca"
+    },
+    "vnut12.lssw.202610030900.nprolohs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.nprolohs.csv",
+      "created": "2026-10-03T09:03:11.300387Z",
+      "updated": "2026-10-03T09:03:13.178551Z",
+      "file:checksum": "1220c76a469d52a956bfa86aebc1057bcbe8965aced50df1fd76707f58272fb4831f"
+    },
+    "vnut12.lssw.202610030900.npromths.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.npromths.csv",
+      "created": "2026-10-03T09:03:11.742994Z",
+      "updated": "2026-10-03T09:03:14.428314Z",
+      "file:checksum": "1220671184c840bda177a0281b8ff8d90b4017b4325ea31eb28d27154019613410f6"
+    },
+    "vnut12.lssw.202610030900.ods000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.ods000h0.csv",
+      "created": "2026-10-03T09:03:11.040911Z",
+      "updated": "2026-10-03T09:03:12.944167Z",
+      "file:checksum": "12205f42d671010d603c6a42a9eeff5ac058e2e8e27a15e3bea2a3d949a2044fc6f0"
+    },
+    "vnut12.lssw.202610030900.rka150d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.rka150d0.csv",
+      "created": "2026-10-03T09:03:04.637038Z",
+      "updated": "2026-10-03T09:03:05.285713Z",
+      "file:checksum": "12206bcdd7c3f2ccfd9bf01ac334b10e65ba4596b8484179d9ed2d6c1e051daaaf28"
+    },
+    "vnut12.lssw.202610030900.rka150p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.rka150p0.csv",
+      "created": "2026-10-03T09:03:05.009616Z",
+      "updated": "2026-10-03T09:03:06.916220Z",
+      "file:checksum": "1220f1682a5540531596bed10342bc1de857dde796b4276ead386887995f7d849e08"
+    },
+    "vnut12.lssw.202610030900.rp0003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.rp0003i0.csv",
+      "created": "2026-10-03T09:03:12.446286Z",
+      "updated": "2026-10-03T09:03:15.331871Z",
+      "file:checksum": "1220ddf7eb9b605ac89f11cdb5f4658b5465d093a3dca5aa172343b8b683858ad7e1"
+    },
+    "vnut12.lssw.202610030900.rre003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.rre003i0.csv",
+      "created": "2026-10-03T09:03:12.688369Z",
+      "updated": "2026-10-03T09:03:15.821973Z",
+      "file:checksum": "1220cb2266cd03a17ff0cd730837a6cfd0c7addf171e6c25a187cc8d44609072f68e"
+    },
+    "vnut12.lssw.202610030900.rre150h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.rre150h0.csv",
+      "created": "2026-10-03T09:03:12.834316Z",
+      "updated": "2026-10-03T09:03:16.548499Z",
+      "file:checksum": "12205e4e9a3a0b1b1afac17f53a72e1942f9a3b69d2c9737b039c800dfb02755e388"
+    },
+    "vnut12.lssw.202610030900.rreq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.rreq10h0.csv",
+      "created": "2026-10-03T09:03:08.673415Z",
+      "updated": "2026-10-03T09:03:09.733936Z",
+      "file:checksum": "12205f2fd6324c16f9793951a351131c9bb7e0e8c4a3933eb29f105900e4741ecba1"
+    },
+    "vnut12.lssw.202610030900.rreq10p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.rreq10p0.csv",
+      "created": "2026-10-03T09:03:08.962168Z",
+      "updated": "2026-10-03T09:03:09.567529Z",
+      "file:checksum": "12202d506247ca40f1eaa81610ce78283f77d50112ad3603cc8a40373a3af2304303"
+    },
+    "vnut12.lssw.202610030900.rreq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.rreq90h0.csv",
+      "created": "2026-10-03T09:03:13.910117Z",
+      "updated": "2026-10-03T09:03:16.761017Z",
+      "file:checksum": "12208e825d1bd534f33195e07412d81d7f561d7f567c3bb912c1d7aea6630a33d84c"
+    },
+    "vnut12.lssw.202610030900.rreq90p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.rreq90p0.csv",
+      "created": "2026-10-03T09:03:11.631054Z",
+      "updated": "2026-10-03T09:03:12.515751Z",
+      "file:checksum": "12209d165a3cdac2b39f0726073ffe6dd825b542e1503c9c2530e7a2aa85038d60c0"
+    },
+    "vnut12.lssw.202610030900.sre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.sre000h0.csv",
+      "created": "2026-10-03T09:03:13.866039Z",
+      "updated": "2026-10-03T09:03:16.728044Z",
+      "file:checksum": "1220590b1106260b49ef3bce5fbf35ab7af9b8f6aa09b0a7ca0561d0020796bee767"
+    },
+    "vnut12.lssw.202610030900.tre200dn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.tre200dn.csv",
+      "created": "2026-10-03T09:03:13.313959Z",
+      "updated": "2026-10-03T09:03:14.362857Z",
+      "file:checksum": "1220866cd7f646af4171201114406c7af25f323be117b20f8830035ea778d8ab82d3"
+    },
+    "vnut12.lssw.202610030900.tre200dx.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.tre200dx.csv",
+      "created": "2026-10-03T09:03:13.881647Z",
+      "updated": "2026-10-03T09:03:14.515731Z",
+      "file:checksum": "1220b86ef350d6eece0138b10af5c44d3c92cc926542b8d12980130f98b93703f4e6"
+    },
+    "vnut12.lssw.202610030900.tre200h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.tre200h0.csv",
+      "created": "2026-10-03T09:03:16.669647Z",
+      "updated": "2026-10-03T09:03:17.652783Z",
+      "file:checksum": "122093cb82ac56c91e499e5ea136ec0afb7416e096b405274a9c0f06af763ce1dc88"
+    },
+    "vnut12.lssw.202610030900.tre200pn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.tre200pn.csv",
+      "created": "2026-10-03T09:03:15.785835Z",
+      "updated": "2026-10-03T09:03:16.806816Z",
+      "file:checksum": "12201b747d1e4fa78dcabc475aa75cb1b2a6e375b93ca3ac6e0050f3043d055f7d9b"
+    },
+    "vnut12.lssw.202610030900.tre200px.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.tre200px.csv",
+      "created": "2026-10-03T09:03:15.852578Z",
+      "updated": "2026-10-03T09:03:17.239130Z",
+      "file:checksum": "1220f139fc8a0fc5629937780105d601c7443dc575ee200db6dda6d86f0c1b24c009"
+    },
+    "vnut12.lssw.202610030900.treq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.treq10h0.csv",
+      "created": "2026-10-03T09:03:18.627407Z",
+      "updated": "2026-10-03T09:03:20.347966Z",
+      "file:checksum": "122011c7aaa80bf43294c90d464a0fff52935369823a15639139fef6f1ff24aa93b4"
+    },
+    "vnut12.lssw.202610030900.treq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.treq90h0.csv",
+      "created": "2026-10-03T09:03:18.593053Z",
+      "updated": "2026-10-03T09:03:19.734697Z",
+      "file:checksum": "12204ee74574adedc78dbfbcf979cbab2a62ff608f1e0a228c61e47e6ebba1353a3d"
+    },
+    "vnut12.lssw.202610030900.zprfr0hs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610030900.zprfr0hs.csv",
+      "created": "2026-10-03T09:03:18.623130Z",
+      "updated": "2026-10-03T09:03:19.856975Z",
+      "file:checksum": "122069475e8a309d43b40c3c14823ea2bcb991b3faed5c1bb7b27e43289b5a9e1df6"
+    },
+    "vnut12.lssw.202610031000.dkl010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.dkl010h0.csv",
+      "created": "2026-10-03T10:02:47.286640Z",
+      "updated": "2026-10-03T10:02:49.305249Z",
+      "file:checksum": "12203b57f5d8e6b66edfd1366f9034e4097602cb9077222b956078cf38bc53c06edb"
+    },
+    "vnut12.lssw.202610031000.fu3010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.fu3010h0.csv",
+      "created": "2026-10-03T10:02:45.499594Z",
+      "updated": "2026-10-03T10:02:48.705006Z",
+      "file:checksum": "12200ab5154f10e7765d34d8522a9f8183910b81529a906cc39225c3cacf96f6d329"
+    },
+    "vnut12.lssw.202610031000.fu3010h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.fu3010h1.csv",
+      "created": "2026-10-03T10:02:49.416993Z",
+      "updated": "2026-10-03T10:02:59.170235Z",
+      "file:checksum": "12207f1f2413ed63ce9a2fd43bdee0913e1075f96b5d06658a62f2db9fbab5e37e1c"
+    },
+    "vnut12.lssw.202610031000.fu3q10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.fu3q10h0.csv",
+      "created": "2026-10-03T10:02:45.517817Z",
+      "updated": "2026-10-03T10:02:48.401167Z",
+      "file:checksum": "1220344a458fa32030cac46daef4d070c56c5c6d3c6da08ca1cd995ca0eb0e595d2d"
+    },
+    "vnut12.lssw.202610031000.fu3q10h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.fu3q10h1.csv",
+      "created": "2026-10-03T10:02:41.634584Z",
+      "updated": "2026-10-03T10:02:46.625601Z",
+      "file:checksum": "12209f15afd90c5539a99561c0994bacb415d4522b0c26ed4916099e2658111906ee"
+    },
+    "vnut12.lssw.202610031000.fu3q90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.fu3q90h0.csv",
+      "created": "2026-10-03T10:02:48.480389Z",
+      "updated": "2026-10-03T10:02:56.434000Z",
+      "file:checksum": "1220633d2a29977746467201fe3c56dbbfdebdf53d2fd61082adf0ffa0d1fa4a90b8"
+    },
+    "vnut12.lssw.202610031000.fu3q90h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.fu3q90h1.csv",
+      "created": "2026-10-03T10:02:49.395961Z",
+      "updated": "2026-10-03T10:02:58.896437Z",
+      "file:checksum": "1220457910ed655f557f013407be6ed2d4fbe8de36770a9087912bbb08e4c038a91c"
+    },
+    "vnut12.lssw.202610031000.gre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.gre000h0.csv",
+      "created": "2026-10-03T10:02:49.008426Z",
+      "updated": "2026-10-03T10:02:57.123182Z",
+      "file:checksum": "12205cda6a20b8653422caf21eee7f6f481ef20d398d5852e63cf079843c2500dbc5"
+    },
+    "vnut12.lssw.202610031000.jp2000d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.jp2000d0.csv",
+      "created": "2026-10-03T10:04:24.985915Z",
+      "updated": "2026-10-03T10:04:25.702048Z",
+      "file:checksum": "1220f994bc02054be7c8c55c2d3bcb7ffdfded2073cb813ed2121bfe7821f2127cc7"
+    },
+    "vnut12.lssw.202610031000.jww003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.jww003i0.csv",
+      "created": "2026-10-03T10:04:25.451670Z",
+      "updated": "2026-10-03T10:04:26.733703Z",
+      "file:checksum": "1220b0c96ab92ff0e3a35ead0dd660008f32cc4492708f672491a666be5a4a1b6b52"
+    },
+    "vnut12.lssw.202610031000.nprohihs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.nprohihs.csv",
+      "created": "2026-10-03T10:02:49.235010Z",
+      "updated": "2026-10-03T10:02:58.898005Z",
+      "file:checksum": "1220ddaf0ae91ec8baae2996c68b7b9655c687684b76e45b116b4cc0b66ed49544ac"
+    },
+    "vnut12.lssw.202610031000.nprolohs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.nprolohs.csv",
+      "created": "2026-10-03T10:02:45.372255Z",
+      "updated": "2026-10-03T10:02:48.708619Z",
+      "file:checksum": "122062ead21a04b09f616f20cf4e57304a8aa03a72840ee0bfdf91e9d60aaf98c7d9"
+    },
+    "vnut12.lssw.202610031000.npromths.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.npromths.csv",
+      "created": "2026-10-03T10:02:42.900559Z",
+      "updated": "2026-10-03T10:02:47.622304Z",
+      "file:checksum": "1220d726925d11a8ef5c3acd78ec37ea8f19f8f0534c438ae025518b1829bdcedfb1"
+    },
+    "vnut12.lssw.202610031000.ods000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.ods000h0.csv",
+      "created": "2026-10-03T10:02:49.188360Z",
+      "updated": "2026-10-03T10:02:58.024199Z",
+      "file:checksum": "1220cf9026b18e63fe8614ecf23f326cdf7ff837c5fb7636bd28c780b74f79dc16bb"
+    },
+    "vnut12.lssw.202610031000.rka150d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.rka150d0.csv",
+      "created": "2026-10-03T10:02:38.032999Z",
+      "updated": "2026-10-03T10:02:38.707378Z",
+      "file:checksum": "1220b904f6efb23511534947e476532c8c03cbde99eb6a9a416a2c46e03e4ec456cb"
+    },
+    "vnut12.lssw.202610031000.rka150p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.rka150p0.csv",
+      "created": "2026-10-03T10:02:38.997300Z",
+      "updated": "2026-10-03T10:02:40.561058Z",
+      "file:checksum": "1220a4fc2f49ae280990d2d4074c7d1aa3628cde646f816305d8e64204db0628fb3a"
+    },
+    "vnut12.lssw.202610031000.rp0003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.rp0003i0.csv",
+      "created": "2026-10-03T10:02:48.944810Z",
+      "updated": "2026-10-03T10:02:58.285184Z",
+      "file:checksum": "1220e9a06702135d9519f33d66972efcac52f0ca8d8e3dba9893f5e61500ec131fa8"
+    },
+    "vnut12.lssw.202610031000.rre003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.rre003i0.csv",
+      "created": "2026-10-03T10:02:45.514039Z",
+      "updated": "2026-10-03T10:02:48.090672Z",
+      "file:checksum": "1220a77a7961facfb01daba1ad6534d304365fca5e3651201bd967853dd8d35ff466"
+    },
+    "vnut12.lssw.202610031000.rre150h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.rre150h0.csv",
+      "created": "2026-10-03T10:02:49.553599Z",
+      "updated": "2026-10-03T10:02:59.111736Z",
+      "file:checksum": "12209fe5782ed6514cbe1577fdeeae3d8c47c64ce28cf741d5bd9338fee5febbf952"
+    },
+    "vnut12.lssw.202610031000.rreq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.rreq10h0.csv",
+      "created": "2026-10-03T10:02:47.421981Z",
+      "updated": "2026-10-03T10:02:53.314117Z",
+      "file:checksum": "1220153a58514bbaff3c07cf434aaa87ab78e2e32d0e7a1de0e79448e6f3538d761d"
+    },
+    "vnut12.lssw.202610031000.rreq10p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.rreq10p0.csv",
+      "created": "2026-10-03T10:02:48.739554Z",
+      "updated": "2026-10-03T10:02:49.606639Z",
+      "file:checksum": "1220e19c3b49c14fee0f2afaecb8108e65190598341c0123fbf971035fa6a233ae63"
+    },
+    "vnut12.lssw.202610031000.rreq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.rreq90h0.csv",
+      "created": "2026-10-03T10:02:52.944619Z",
+      "updated": "2026-10-03T10:02:59.239970Z",
+      "file:checksum": "1220de5bc6a736f58f881b36ea373ebe128a11bae4278ee45fa8c3e62614d302088d"
+    },
+    "vnut12.lssw.202610031000.rreq90p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.rreq90p0.csv",
+      "created": "2026-10-03T10:02:53.539017Z",
+      "updated": "2026-10-03T10:02:54.826109Z",
+      "file:checksum": "1220fc4d949063ae20682692ebf1d76e1b0b881706aa767765e5f74b72f931c7c9b5"
+    },
+    "vnut12.lssw.202610031000.sre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.sre000h0.csv",
+      "created": "2026-10-03T10:02:58.161266Z",
+      "updated": "2026-10-03T10:03:00.140065Z",
+      "file:checksum": "12204b9b172667532107c5b57ad544891621b3bfb95426b76c8ac705fe46cd0e87d9"
+    },
+    "vnut12.lssw.202610031000.tre200dn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.tre200dn.csv",
+      "created": "2026-10-03T10:02:58.217538Z",
+      "updated": "2026-10-03T10:02:59.275919Z",
+      "file:checksum": "122041011a8fbefc7122ed4e9107ddc26b0f0228cf5a1f2621a481f1454a17fca2bb"
+    },
+    "vnut12.lssw.202610031000.tre200dx.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.tre200dx.csv",
+      "created": "2026-10-03T10:02:55.945983Z",
+      "updated": "2026-10-03T10:02:56.786057Z",
+      "file:checksum": "1220429de86b30de4ad0910d680d08d9b9e91362bcc4864f33955b9f47d987f29dd0"
+    },
+    "vnut12.lssw.202610031000.tre200h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.tre200h0.csv",
+      "created": "2026-10-03T10:02:59.368583Z",
+      "updated": "2026-10-03T10:03:00.739022Z",
+      "file:checksum": "122050ec467a095c196db70b20857a1cc4778753540c2fa92c46bf66fd919f72d256"
+    },
+    "vnut12.lssw.202610031000.tre200pn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.tre200pn.csv",
+      "created": "2026-10-03T10:02:56.452808Z",
+      "updated": "2026-10-03T10:02:57.704459Z",
+      "file:checksum": "122064d6dca503c5b1863052463417a4a22a2600d584335e8c1dc810adb6474feef9"
+    },
+    "vnut12.lssw.202610031000.tre200px.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.tre200px.csv",
+      "created": "2026-10-03T10:02:59.018793Z",
+      "updated": "2026-10-03T10:02:59.845060Z",
+      "file:checksum": "1220558b41484921963b4a1a91e2ed6eded2d4a2290878090512c6337e612f42ccb4"
+    },
+    "vnut12.lssw.202610031000.treq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.treq10h0.csv",
+      "created": "2026-10-03T10:03:00.147229Z",
+      "updated": "2026-10-03T10:03:01.488199Z",
+      "file:checksum": "12204154c2802e8282e91ff65dce67c8a99df198d8fbfbc16f11357086c7d8369c48"
+    },
+    "vnut12.lssw.202610031000.treq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.treq90h0.csv",
+      "created": "2026-10-03T10:03:00.585316Z",
+      "updated": "2026-10-03T10:03:01.569027Z",
+      "file:checksum": "122048362d378ccb13cd53da4c253a99b8a3184ef20145a5f771c31eb4992331d1b5"
+    },
+    "vnut12.lssw.202610031000.zprfr0hs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031000.zprfr0hs.csv",
+      "created": "2026-10-03T10:03:00.113711Z",
+      "updated": "2026-10-03T10:03:01.053546Z",
+      "file:checksum": "1220dd402ec4f6f02f1c6e0c4e19dc3f71aa526a4d96012f8ff68b2eca813b7e8c16"
+    },
+    "vnut12.lssw.202610031100.dkl010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.dkl010h0.csv",
+      "created": "2026-10-03T11:03:04.489233Z",
+      "updated": "2026-10-03T11:03:05.899121Z",
+      "file:checksum": "122020884dd4ac5b7bef2a25d4e3c3cdec5a84b174dd20e70005508fa163786dfd83"
+    },
+    "vnut12.lssw.202610031100.fu3010h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.fu3010h0.csv",
+      "created": "2026-10-03T11:03:05.119856Z",
+      "updated": "2026-10-03T11:03:06.853586Z",
+      "file:checksum": "122054339e9c3d2a8e4d99a5fd2b22699f88f2b153758c5b6032a468b028c2968732"
+    },
+    "vnut12.lssw.202610031100.fu3010h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.fu3010h1.csv",
+      "created": "2026-10-03T11:03:11.568639Z",
+      "updated": "2026-10-03T11:03:12.765626Z",
+      "file:checksum": "1220e53827c9e9a5752b27658fe04476890db891d1ee04ebcbdef130747a11e2f2e0"
+    },
+    "vnut12.lssw.202610031100.fu3q10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.fu3q10h0.csv",
+      "created": "2026-10-03T11:03:12.352521Z",
+      "updated": "2026-10-03T11:03:13.538517Z",
+      "file:checksum": "122075f6001f9604e67e9da97759dd1e08167407cdb1eb0f9591e94b2b2f2333d2bf"
+    },
+    "vnut12.lssw.202610031100.fu3q10h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.fu3q10h1.csv",
+      "created": "2026-10-03T11:03:12.342957Z",
+      "updated": "2026-10-03T11:03:14.119534Z",
+      "file:checksum": "122076b5bfbd5d64814cc85abda7bebaf2fbe92b081ac4f0120cd3fe0667b7d3a27e"
+    },
+    "vnut12.lssw.202610031100.fu3q90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.fu3q90h0.csv",
+      "created": "2026-10-03T11:03:12.437606Z",
+      "updated": "2026-10-03T11:03:13.894242Z",
+      "file:checksum": "12203373886b8f4800dbf8834f56e44135e9cd35e5a237c15398f394e633b4bdee3b"
+    },
+    "vnut12.lssw.202610031100.fu3q90h1.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.fu3q90h1.csv",
+      "created": "2026-10-03T11:03:06.529173Z",
+      "updated": "2026-10-03T11:03:07.966682Z",
+      "file:checksum": "122076daf32ecb91da23f45cc479b5a00210d2096b74b3e9fb9d52fd469f9c1d2558"
+    },
+    "vnut12.lssw.202610031100.gre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.gre000h0.csv",
+      "created": "2026-10-03T11:05:03.792924Z",
+      "updated": "2026-10-03T11:05:04.737115Z",
+      "file:checksum": "12205cda6a20b8653422caf21eee7f6f481ef20d398d5852e63cf079843c2500dbc5"
+    },
+    "vnut12.lssw.202610031100.jp2000d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.jp2000d0.csv",
+      "created": "2026-10-03T11:05:02.426764Z",
+      "updated": "2026-10-03T11:05:03.270911Z",
+      "file:checksum": "12205b87b5eca32d388006ec1ef84aaacc864dc0f44211352ab356608b3ea3d36c73"
+    },
+    "vnut12.lssw.202610031100.jww003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.jww003i0.csv",
+      "created": "2026-10-03T11:05:03.191500Z",
+      "updated": "2026-10-03T11:05:04.935512Z",
+      "file:checksum": "12200ec1b267ee21c88ebc7f82f8d1fed83e7474b09fbf179aa14b00c887163111f4"
+    },
+    "vnut12.lssw.202610031100.nprohihs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.nprohihs.csv",
+      "created": "2026-10-03T11:03:12.539951Z",
+      "updated": "2026-10-03T11:03:14.286282Z",
+      "file:checksum": "1220f51f8a39d5ca3df375ccfd01d755261c69f565011c8e4c034e9370da73f45cda"
+    },
+    "vnut12.lssw.202610031100.nprolohs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.nprolohs.csv",
+      "created": "2026-10-03T11:03:12.607203Z",
+      "updated": "2026-10-03T11:03:14.464862Z",
+      "file:checksum": "1220f04ed7b657dab1e4153d29113e8b8d78e4cd78284d66f80e148101c9b87497e8"
+    },
+    "vnut12.lssw.202610031100.npromths.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.npromths.csv",
+      "created": "2026-10-03T11:03:12.772216Z",
+      "updated": "2026-10-03T11:03:14.691874Z",
+      "file:checksum": "122055424ce669a8db2df8ac1a5ae42e39a7e5416d7c8105960ba7e61c2bf289a0a1"
+    },
+    "vnut12.lssw.202610031100.ods000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.ods000h0.csv",
+      "created": "2026-10-03T11:03:12.076229Z",
+      "updated": "2026-10-03T11:03:13.200680Z",
+      "file:checksum": "1220cf9026b18e63fe8614ecf23f326cdf7ff837c5fb7636bd28c780b74f79dc16bb"
+    },
+    "vnut12.lssw.202610031100.rka150d0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.rka150d0.csv",
+      "created": "2026-10-03T11:03:04.907951Z",
+      "updated": "2026-10-03T11:03:07.519252Z",
+      "file:checksum": "122009d911f8b6cd3ebfbf185e71ae489ac8056f892aae4e008b551f689d89b0e197"
+    },
+    "vnut12.lssw.202610031100.rka150p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.rka150p0.csv",
+      "created": "2026-10-03T11:03:04.316929Z",
+      "updated": "2026-10-03T11:03:05.122463Z",
+      "file:checksum": "1220341abe67a807e7547331d7bf4e58277f6942b9e0d121f305e41df2be0c655029"
+    },
+    "vnut12.lssw.202610031100.rp0003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.rp0003i0.csv",
+      "created": "2026-10-03T11:03:11.945246Z",
+      "updated": "2026-10-03T11:03:13.185971Z",
+      "file:checksum": "1220001d4e834b579c865b2372aa9a8d2fc9667b1dfe75bfe4086a887d1c1f4dc8e1"
+    },
+    "vnut12.lssw.202610031100.rre003i0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.rre003i0.csv",
+      "created": "2026-10-03T11:03:12.311772Z",
+      "updated": "2026-10-03T11:03:14.104132Z",
+      "file:checksum": "12203bb876a15aa5ac2c4ce7dc0f0b0edbd0a9d576675aae2818837d04faa618f616"
+    },
+    "vnut12.lssw.202610031100.rre150h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.rre150h0.csv",
+      "created": "2026-10-03T11:03:12.450818Z",
+      "updated": "2026-10-03T11:03:14.659286Z",
+      "file:checksum": "122012bed75279f89b5764128bbf78012bf8fee489437070eba51d4f4a57a272a1dc"
+    },
+    "vnut12.lssw.202610031100.rreq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.rreq10h0.csv",
+      "created": "2026-10-03T11:03:12.773866Z",
+      "updated": "2026-10-03T11:03:14.676072Z",
+      "file:checksum": "122073b87cc42ee0e164e913aa5334e8920897477936f73aad3756027c6f234ae315"
+    },
+    "vnut12.lssw.202610031100.rreq10p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.rreq10p0.csv",
+      "created": "2026-10-03T11:03:07.301110Z",
+      "updated": "2026-10-03T11:03:08.252553Z",
+      "file:checksum": "122088c59f12c638c71cdb75a701e4f80b79de1e65d5a8434cc9723b3bd80ac2392d"
+    },
+    "vnut12.lssw.202610031100.rreq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.rreq90h0.csv",
+      "created": "2026-10-03T11:03:12.902848Z",
+      "updated": "2026-10-03T11:03:15.216903Z",
+      "file:checksum": "1220e45c4eb268ed60f6ab76de6306cd4f69d557dc5de96d414122cf9d1d00d93431"
+    },
+    "vnut12.lssw.202610031100.rreq90p0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.rreq90p0.csv",
+      "created": "2026-10-03T11:03:08.671438Z",
+      "updated": "2026-10-03T11:03:09.499095Z",
+      "file:checksum": "1220c749810b720f11c0d38817351637bef5a2dbf83d7245b48dfa9c8b403dd9e891"
+    },
+    "vnut12.lssw.202610031100.sre000h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.sre000h0.csv",
+      "created": "2026-10-03T11:03:12.972781Z",
+      "updated": "2026-10-03T11:03:16.659993Z",
+      "file:checksum": "122005c141739bde31b718741a62ed55cbcff40b50c534c25431c1ec5a77ad37e7de"
+    },
+    "vnut12.lssw.202610031100.tre200dn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.tre200dn.csv",
+      "created": "2026-10-03T11:03:09.807097Z",
+      "updated": "2026-10-03T11:03:10.399565Z",
+      "file:checksum": "12207b9a4bd0c3583aaf7f4e2ed316c3c174d0cb3940507cdfea559883f8657db3b2"
+    },
+    "vnut12.lssw.202610031100.tre200dx.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.tre200dx.csv",
+      "created": "2026-10-03T11:03:10.679116Z",
+      "updated": "2026-10-03T11:03:11.305604Z",
+      "file:checksum": "12207616b208037a0e07bcea4ee79b1193ee6b8b9004783526eca8636c7eb068e379"
+    },
+    "vnut12.lssw.202610031100.tre200h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.tre200h0.csv",
+      "created": "2026-10-03T11:03:11.862750Z",
+      "updated": "2026-10-03T11:03:12.806755Z",
+      "file:checksum": "122037513e545af41f038c4d3b95de5f5cd0d1e66f1883b4ad2e94d9c3eccb9b00be"
+    },
+    "vnut12.lssw.202610031100.tre200pn.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.tre200pn.csv",
+      "created": "2026-10-03T11:03:12.528125Z",
+      "updated": "2026-10-03T11:03:13.875993Z",
+      "file:checksum": "1220158ebc9cf8fc28875c7f5332f74674e1a7369c63079d8bbddb5606a6d355f1f9"
+    },
+    "vnut12.lssw.202610031100.tre200px.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.tre200px.csv",
+      "created": "2026-10-03T11:03:14.658204Z",
+      "updated": "2026-10-03T11:03:15.303308Z",
+      "file:checksum": "1220d05572ccabe84aed1651be28eba8d3707678ded9c090786bd4cac20cd04bad93"
+    },
+    "vnut12.lssw.202610031100.treq10h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.treq10h0.csv",
+      "created": "2026-10-03T11:03:14.973221Z",
+      "updated": "2026-10-03T11:03:16.166600Z",
+      "file:checksum": "1220a4c1462e3f508e5b4b2bf88f80ac7b09728908c31067f7ef40098621baf7c6d9"
+    },
+    "vnut12.lssw.202610031100.treq90h0.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.treq90h0.csv",
+      "created": "2026-10-03T11:03:15.155543Z",
+      "updated": "2026-10-03T11:03:16.089785Z",
+      "file:checksum": "1220f55e9940f5d84e3fc5661408d263c3407983e012c38ba0319d30b0fa686edc56"
+    },
+    "vnut12.lssw.202610031100.zprfr0hs.csv": {
+      "type": "text/csv",
+      "href": "https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/20261003-ch/vnut12.lssw.202610031100.zprfr0hs.csv",
+      "created": "2026-10-03T11:03:15.152630Z",
+      "updated": "2026-10-03T11:03:16.064987Z",
+      "file:checksum": "12208039d9ccea7b03b9567ce5d23e35b21e6088c86345f511f4509914b3a39d8228"
+    }
+  }
+}

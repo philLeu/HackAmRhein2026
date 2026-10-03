@@ -1,0 +1,15 @@
+{
+  "parameter": "jww003i0",
+  "source_url": "https://www.meteoschweiz.admin.ch/dam/jcr:7ef804b7-3ebf-4056-b743-44346da7ac75/2022-02-14-Wetter-Icons-inkl-beschreibung-v1.pdf",
+  "source_version": "14 February 2022 / 2024",
+  "verified_on": "2026-10-03",
+  "known_code_ranges": [[1, 42], [101, 142]],
+  "snowfall_codes": [8, 11, 16, 19, 22, 30, 34, 37, 39, 42, 108, 111, 116, 119, 122, 130, 134, 137, 139, 142],
+  "mixed_rain_snow_codes": [7, 10, 15, 18, 21, 31, 107, 110, 115, 118, 121, 131],
+  "rain_codes": [6, 9, 14, 17, 20, 29, 32, 33, 38, 106, 109, 114, 117, 120, 129, 132, 138],
+  "storm_codes": [12, 13, 23, 24, 25, 36, 40, 41, 112, 113, 123, 124, 125, 136, 140, 141],
+  "fog_codes": [27, 28, 127, 128],
+  "ambiguous_codes": [133],
+  "ambiguity_note": "Code 133 mentions rain in German, French and Italian, but snow in English. Keep unknown pending provider clarification.",
+  "status_meaning": "present means the forecast code indicates snow or mixed rain/snow within its aggregation interval. not_indicated does not establish actual route conditions."
+}

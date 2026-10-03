@@ -1,0 +1,107 @@
+{
+  "synthetic": true,
+  "provider": null,
+  "attribution": "Synthetic example",
+  "licence": null,
+  "terms_url": "https://opendatadocs.meteoswiss.ch/general/terms-of-use",
+  "location": {
+    "point_type_id": "2",
+    "point_id": "synthetic-4056",
+    "point_name": "Basel (SYNTHETIC POINT)",
+    "postal_code": "4056"
+  },
+  "forecast_issued_at_utc": "2026-10-03T06:00:00Z",
+  "retrieved_at_utc": null,
+  "generated_at_utc": "2026-10-03T11:15:21.292296Z",
+  "source_urls": {
+    "fixture": "example-input; synthetic, not MeteoSwiss data"
+  },
+  "downloaded_sha256": {
+    "jww003i0.csv": "e0bff52ba2a6b26466e6bf3a3cc50c4c3e0302291c3ff59f91d22cb9519debe6",
+    "parameters.csv": "78e300d5982e2671b3344ae2fe310b9323fce2d994354af6be310e305e4bab8e",
+    "points.csv": "a1b7320f9a97cc69465ff109ac720bbef630cc6bfba93930443f18fa4e4c8bfd",
+    "tre200h0.csv": "f7b1125707b865217b16ef636a10cdad4556f25174ba25c8b3be3d3c62b67036"
+  },
+  "saved_input_sha256": {
+    "jww003i0.csv": "e0bff52ba2a6b26466e6bf3a3cc50c4c3e0302291c3ff59f91d22cb9519debe6",
+    "parameters.csv": "78e300d5982e2671b3344ae2fe310b9323fce2d994354af6be310e305e4bab8e",
+    "points.csv": "a1b7320f9a97cc69465ff109ac720bbef630cc6bfba93930443f18fa4e4c8bfd",
+    "tre200h0.csv": "f7b1125707b865217b16ef636a10cdad4556f25174ba25c8b3be3d3c62b67036"
+  },
+  "coverage": {
+    "tre200h0": {
+      "available_records": 3,
+      "start_utc": "2026-10-03T07:00:00Z",
+      "end_utc": "2026-10-03T10:00:00Z",
+      "gaps": [],
+      "aggregation_seconds": 3600
+    },
+    "jww003i0": {
+      "available_records": 3,
+      "start_utc": "2026-10-03T05:00:00Z",
+      "end_utc": "2026-10-03T10:00:00Z",
+      "gaps": [],
+      "aggregation_seconds": 10800
+    }
+  },
+  "snow_code_mapping": {
+    "parameter": "jww003i0",
+    "source_url": "https://www.meteoschweiz.admin.ch/dam/jcr:7ef804b7-3ebf-4056-b743-44346da7ac75/2022-02-14-Wetter-Icons-inkl-beschreibung-v1.pdf",
+    "source_version": "14 February 2022 / 2024",
+    "verified_on": "2026-10-03",
+    "known_code_ranges": [
+      [
+        1,
+        42
+      ],
+      [
+        101,
+        142
+      ]
+    ],
+    "snowfall_codes": [
+      8,
+      11,
+      16,
+      19,
+      22,
+      30,
+      34,
+      37,
+      39,
+      42,
+      108,
+      111,
+      116,
+      119,
+      122,
+      130,
+      134,
+      137,
+      139,
+      142
+    ],
+    "mixed_rain_snow_codes": [
+      7,
+      10,
+      15,
+      18,
+      21,
+      31,
+      107,
+      110,
+      115,
+      118,
+      121,
+      131
+    ],
+    "ambiguous_codes": [
+      133
+    ],
+    "ambiguity_note": "Code 133 mentions rain in German, French and Italian, but snow in English. Keep unknown pending provider clarification.",
+    "status_meaning": "present means the forecast code indicates snow or mixed rain/snow within its aggregation interval. not_indicated does not establish actual route conditions."
+  },
+  "snow_code_mapping_sha256": "fcc3fffeac72ebb4ba2d28d01ce926ddc2924d09738e589489625f0f0941ca16",
+  "freshness_status": "not_assessed; team policy required",
+  "transformations": "Point-only input CSVs, UTC interval starts, local display time; raw numeric codes retained."
+}
