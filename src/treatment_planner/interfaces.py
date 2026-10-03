@@ -59,6 +59,30 @@ class TransportMode(StrEnum):
     CAR = "car"
 
 
+class PlanningGoal(StrEnum):
+    INJECTION_TIMING = "injection timing"
+    INGREDIENT_DELIVERY = "ingredient delivery timing"
+    LOWER_DISRUPTION_RISK = "lower disruption risk"
+
+
+class EvidenceMode(StrEnum):
+    LIVE = "live"
+    DEMO = "demo"
+
+
+class RouteId(StrEnum):
+    INGREDIENTS = "Rotterdam to production"
+    SAMPLE = "hospital to production"
+    TREATMENT = "production to hospital"
+
+
+class RouteStatus(StrEnum):
+    NORMAL = "normal"
+    AT_RISK = "at risk"
+    BLOCKED = "blocked"
+    UNKNOWN = "unknown"
+
+
 def _aware(value: datetime) -> None:
     if value.tzinfo is None or value.utcoffset() is None:
         raise ValueError("Use a timezone-aware timestamp.")
@@ -317,6 +341,120 @@ class CandidatePlan:
     events: tuple[TimelineEvent, ...]
     checks: tuple[ConstraintResult, ...]
     assumptions: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class IngredientRouteOverride:
+    """Simulated Basel gauge height, not observed route-wide navigability."""
+
+    gauge_height_cm: float | None
+    interval: TimeWindow
+    provenance: Provenance
+
+
+@dataclass(frozen=True)
+class LocalRouteOverride:
+    """One simulated journey; snowfall and existing snow remain distinct."""
+
+    leg: CourierLeg
+    interval: TimeWindow
+    maximum_temperature_c: float | None
+    forecast_snowfall: bool | None
+    route_snow: RouteSnow
+    car_availability: Availability
+    provenance: Provenance
+
+
+@dataclass(frozen=True)
+class DemoOverrides:
+    """Independent route edits; None retains that route's baseline fixture."""
+
+    ingredients: IngredientRouteOverride | None = None
+    sample: LocalRouteOverride | None = None
+    treatment: LocalRouteOverride | None = None
+
+    def __post_init__(self) -> None:
+        if self.sample is not None and self.sample.leg != CourierLeg.OUTBOUND:
+            raise ValueError("Sample override must describe the outbound courier leg.")
+        if self.treatment is not None and self.treatment.leg != CourierLeg.RETURN:
+            raise ValueError("Treatment override must describe the return courier leg.")
+
+
+@dataclass(frozen=True)
+class RouteSummary:
+    """One plan's route verdict and its evidence; None delay means unknown."""
+
+    plan_id: str
+    route: RouteId
+    interval: TimeWindow
+    transport: TransportMode
+    evidence_mode: EvidenceMode
+    status: RouteStatus
+    reason: str
+    evidence: tuple[Provenance, ...]
+    possible_delay: timedelta | None = None
+    issues: tuple[str, ...] = ()
+    carried_from: TimeWindow | None = None
+
+    def __post_init__(self) -> None:
+        if self.evidence_mode == EvidenceMode.LIVE and self.carried_from is not None:
+            raise ValueError("Only simulated conditions can carry over to a new journey.")
+
+
+@dataclass(frozen=True)
+class RecommendationScore:
+    """Goal-specific score for one confirmed plan; unused metrics stay None.
+
+    Injection penalty is weighted minutes, ingredient arrival is at production,
+    and risk margin excludes preparation while counting distinct At risk local
+    routes as a tie-break. This is not a failure probability.
+    """
+
+    plan_id: str
+    injection_penalty_minutes: float | None = None
+    ingredient_arrival: datetime | None = None
+    limiting_margin: timedelta | None = None
+    at_risk_routes: int | None = None
+
+    def __post_init__(self) -> None:
+        if self.ingredient_arrival is not None:
+            _aware(self.ingredient_arrival)
+        if self.injection_penalty_minutes is not None and self.injection_penalty_minutes < 0:
+            raise ValueError("Injection penalty cannot be negative.")
+        if self.at_risk_routes is not None and not 0 <= self.at_risk_routes <= 2:
+            raise ValueError("At-risk local route count must be between zero and two.")
+
+
+@dataclass(frozen=True)
+class RecommendationResult:
+    """Co-winners stay tied; an empty winner list disables preselection."""
+
+    goal: PlanningGoal
+    winner_plan_ids: tuple[str, ...]
+    scores: tuple[RecommendationScore, ...]
+    reason: str
+
+    def __post_init__(self) -> None:
+        scored_ids = [score.plan_id for score in self.scores]
+        if len(scored_ids) != len(set(scored_ids)):
+            raise ValueError("Score each plan only once.")
+        if len(self.winner_plan_ids) != len(set(self.winner_plan_ids)):
+            raise ValueError("Each winning plan must appear only once.")
+        if not set(self.winner_plan_ids) <= set(scored_ids):
+            raise ValueError("Winners must have scores.")
+
+
+@runtime_checkable
+class RecommendationEngine(Protocol):
+    def recommend(
+        self,
+        plans: tuple[CandidatePlan, ...],
+        goal: PlanningGoal,
+        target_injection: datetime | None,
+        route_summaries: tuple[RouteSummary, ...],
+    ) -> RecommendationResult:
+        """Rank all confirmed plans; preserve ties and return no winner if none qualify."""
+        ...
 
 
 @runtime_checkable
