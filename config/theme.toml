@@ -1,0 +1,4 @@
+# Neutral foundation defaults; T8 owns subsequent visual changes.
+[timeline]
+event_color = "#526D82"
+height_per_lane = 42
