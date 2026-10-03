@@ -17,16 +17,20 @@ the app fails.
 - Confirmed T9 is merged on `main`; its handoff reports 105 passing tests, nine
   end-to-end checks including blocked external network access, and a browser
   preview.
-- Ran a local Python smoke walkthrough with socket connections to external
-  hosts blocked. Baseline margins matched 96/11/6/6 h; low-water margins were
-  −5 h at the original collection and +6 h at +12 h; hot-return and snow
-  scenarios retained alternatives; saved-provider evidence stayed unknown and
-  reported stale weather coverage.
+- Installed Python 3.12.15 and the pinned project dependencies in the ignored
+  local `.venv`.
+- Ran the project checks on Python 3.12: Ruff format check and lint passed,
+  `pytest -q` passed all 105 tests, and `scripts/doc-check.sh` reported clean.
+- The end-to-end suite exercised baseline selection and timeline updates,
+  low-water delay recovery, hot-return and snow alternatives, missing evidence,
+  and saved-provider replay with external network connections blocked.
+- A separate local smoke walkthrough confirmed baseline margins of 96/11/6/6 h,
+  low-water margins of −5 h and +6 h after a 12 h shift, and the replay's
+  unknown/stale evidence labels.
 
 ## Still needed
 
-This environment has Python 3.14 but no supported Python 3.12 runtime, Streamlit,
-pytest or browser window. I could not run the T9 AppTest or capture actual app
-screenshots here. The static fallback is ready. Run the README setup and the
-checklist on a Python 3.12 workstation, then save the three actual app screenshots
-outside Git or in an ignored local directory before marking T10 complete.
+The app and offline replay are verified by the AppTest suite. The three actual
+app screenshots have not yet been captured. Capture them outside Git or in an
+ignored local directory before marking T10 complete; the static SVG fallback is
+ready if the app fails during the demo.
