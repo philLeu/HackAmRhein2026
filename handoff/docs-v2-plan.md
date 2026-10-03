@@ -14,7 +14,7 @@ Save the agreed V2 planning proposal on feat/v2-treatment-planner, leaving main 
 - Reproduced a shortlist with zero confirmed choices despite four confirmed engine alternatives (outbound snow, return car unavailable), and weather failures described as deadline failures in Hot return and Snow. V2-0 addresses these before adoption; V2-6 replaces the heuristic.
 
 ## Next
-- Confirm proposed owners and start V2-0, V2-1 and V2-2 in parallel with disjoint files.
+- Confirm proposed owners and start V2-0, V2-1 and V2-2 in parallel; coordinate shared decision entries through the integration owner.
 - Carry out V2-0 review and fixes before adoption; this update only changes planning documents. Any PR merge requires explicit approval for that PR.
 - Agree ranking definitions and screen behaviour before changing shared contracts.
 - Use per-task handoff files for implementation progress.
