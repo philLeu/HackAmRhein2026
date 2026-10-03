@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">Treatment material-flow demo fallback</title>
+  <desc id="desc">Static explanation of baseline, low-water, hot-return and saved-data outcomes. This is not a screenshot of the application.</desc>
+  <rect width="1200" height="900" fill="#0E1726"/>
+  <g font-family="Arial, sans-serif" fill="#EDF3FA">
+    <text x="54" y="62" font-size="15" fill="#56D6C4" letter-spacing="2">OFFLINE DEMO / FALLBACK STORY</text>
+    <text x="54" y="112" font-size="34" font-weight="700">One invented treatment, several transport choices</text>
+    <text x="54" y="146" font-size="17" fill="#B4C5D9">The coordinator compares deadlines and evidence, then selects a plan. Nothing is booked.</text>
+    <rect x="54" y="178" width="1092" height="196" rx="14" fill="#18263B" stroke="#34465E"/>
+    <text x="82" y="218" font-size="23" font-weight="700">BASELINE · confirmed under synthetic demo assumptions</text>
+    <text x="82" y="251" font-size="16" fill="#B4C5D9">Ingredients: Rhine ship · Sample outbound: bicycle · Return: bicycle</text>
+    <line x1="106" y1="293" x2="1080" y2="293" stroke="#56D6C4" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="106" cy="293" r="9" fill="#56D6C4"/><circle cx="1080" cy="293" r="9" fill="#56D6C4"/>
+    <text x="82" y="330" font-size="16">Order</text><text x="970" y="330" font-size="16">Injection complete</text>
+    <text x="82" y="358" font-size="16" fill="#B4C5D9">Deadline margins:</text>
+    <text x="252" y="358" font-size="16" fill="#56D6C4">Ingredients +96 h</text>
+    <text x="466" y="358" font-size="16" fill="#56D6C4">Sample +11 h</text>
+    <text x="642" y="358" font-size="16" fill="#56D6C4">Production +6 h</text>
+    <text x="824" y="358" font-size="16" fill="#56D6C4">Injection +6 h</text>
+
+    <rect x="54" y="396" width="529" height="228" rx="14" fill="#18263B" stroke="#34465E"/>
+    <text x="82" y="438" font-size="23" font-weight="700">LOW WATER · simulated +12 h</text>
+    <text x="82" y="482" font-size="17" fill="#FF8791">Keep collection: production margin −5 h · infeasible</text>
+    <text x="82" y="522" font-size="17" fill="#56D6C4">Move collection +12 h: margin +6 h · confirmed</text>
+    <text x="82" y="562" font-size="17" fill="#56D6C4">Switch to truck before departure · confirmed</text>
+    <text x="82" y="597" font-size="14" fill="#B4C5D9">Gauge readings do not calculate the delay.</text>
+
+    <rect x="617" y="396" width="529" height="228" rx="14" fill="#18263B" stroke="#34465E"/>
+    <text x="645" y="438" font-size="23" font-weight="700">HOT RETURN · 30.1°C</text>
+    <text x="645" y="482" font-size="17" fill="#FF8791">Return bicycle blocked: above 30°C</text>
+    <text x="645" y="522" font-size="17" fill="#56D6C4">Return car: 8 h preparation before dispatch</text>
+    <text x="645" y="562" font-size="17" fill="#56D6C4">Preparation overlaps production</text>
+    <text x="645" y="597" font-size="14" fill="#B4C5D9">Injection margin remains +6 h.</text>
+
+    <rect x="54" y="646" width="1092" height="170" rx="14" fill="#18263B" stroke="#34465E"/>
+    <text x="82" y="687" font-size="23" font-weight="700">Saved-provider replay · offline · uncertainty stays visible</text>
+    <text x="82" y="728" font-size="17">Rhine: FOEN/BAFU via Open Data Basel-Stadt · CC0 1.0 · five historical readings.</text>
+    <text x="82" y="759" font-size="17">Weather: Source: MeteoSwiss · CC BY 4.0 · historical capture; hourly maximum unavailable.</text>
+    <text x="82" y="790" font-size="17" fill="#FFCE78">Missing evidence means “unconfirmed”, not “safe”.</text>
+
+    <text x="54" y="856" font-size="13" fill="#B4C5D9">Static fallback explanation from docs/scenarios.md and T9 checks · not a live screen capture · no patient data</text>
+  </g>
+</svg>
