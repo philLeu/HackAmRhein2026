@@ -1,6 +1,6 @@
 # V2-3 shared contracts
 
-Status: implementation done; PR #18 open for teammate review
+Status: implementation done; PR #18 open for teammate review; GitHub history guard failing
 
 ## Done
 
@@ -10,6 +10,7 @@ Status: implementation done; PR #18 open for teammate review
 - Added score and recommendation result models that retain co-winners and support no-recommendation outcomes.
 - Added the recommendation engine protocol and contract checks; recorded the interface decision.
 - Opened PR #18 (https://github.com/philLeu/HackAmRhein2026/pull/18) from feat/v2-3-contracts into feat/v2-treatment-planner.
+- Local commit/push privacy guards passed. Both GitHub guard checks currently fail; earlier handoffs identify an inherited repository-history privacy issue. Review the failing check before merge; do not bypass it.
 
 ## Component boundaries
 
