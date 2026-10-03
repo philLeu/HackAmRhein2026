@@ -35,6 +35,7 @@ The shared page header displays the supplied PulseShift logo from
 `assets/branding/pulseshift.png`. Preserve its transparency and proportions.
 Use the light `branding.background` plate to keep the dark wordmark readable
 on the control-room theme; `branding.width` and `branding.padding` govern size.
+The compact header keeps the planning goal near the first screenful.
 The image has an accessible company-logo label. V2-8 should continue calling
 `apply_theme` at the page header to retain this branding. Nested components
 use `show_logo=False` when applying the theme again.

@@ -63,9 +63,9 @@ def main() -> None:
     st.set_page_config(page_title="PulseShift · Treatment planner", layout="wide")
     theme = apply_theme()
     st.caption("OPERATIONS PREVIEW / MATERIAL FLOW")
-    st.title("PulseShift · Treatment material-flow planner")
-    st.warning(
-        "Synthetic treatment demo — planning choices only; no transport or treatment booked."
+    st.title("Treatment planner")
+    st.markdown(
+        "**Synthetic treatment demo** · Planning choices only; no transport or treatment booked."
     )
     state = st.session_state
     chapter = render_navigation()

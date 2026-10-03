@@ -195,3 +195,5 @@ def test_application_opens_in_live_without_a_synthetic_fallback():
     assert not any(item.label == "Reset demo" for item in app.button)
     assert button(app, "Confirm plan").disabled
     assert any("Switch to Demo" in item.value for item in app.info)
+    assert not any("Excluded from ranking:" in item.value for item in app.markdown)
+    assert any("alternatives excluded" in item.value for item in app.caption)
