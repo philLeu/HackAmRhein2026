@@ -1,6 +1,6 @@
 # Treatment material-flow planner
 
-Team: @philLeu, @Fhuelin, @luapreta-cloud; one teammate pending setup · Track: Manufacturing · Updated: 2026-10-03
+Team: @philLeu, @Fhuelin, @luapreta-cloud, @janaaaaaaaa · Track: Manufacturing · Updated: 2026-10-03
 
 Status: Agreed demo flow and constraints; data sources, durations, implementation and ownership still to be agreed. All treatment timing rules below are team-defined demo assumptions.
 
@@ -55,9 +55,12 @@ Multiple treatments, production capacity optimisation, in-transit ingredient tra
 ## Who does what
 | GitHub username | Owns |
 |---|---|
-| @philLeu | To be agreed |
-| @Fhuelin | To be agreed |
-| @luapreta-cloud | To be agreed |
+| @philLeu | Proposed: foundation, planning engine, integration |
+| @Fhuelin | Proposed: scenarios and comparison screen |
+| @luapreta-cloud | Rhine investigation underway; proposed: Rhine adapter |
+| @janaaaaaaaa | Proposed: weather and fallback demo |
+
+See docs/plan.md for proposed task boundaries and dependencies. Assignments and the Python/Streamlit implementation proposal await team agreement.
 
 ## Risks and fallback
 MeteoSwiss local forecasts cover nine full days including the current day; the ingredient delivery plus treatment cycle can extend beyond that horizon. Transport assumptions may dominate the result. Display data coverage and uncertainty, and distinguish provisional plans from checked journey windows. Use a saved, timestamped environmental scenario for reliable replay, plus screenshots of the comparison if the live demo fails. Final scope and team review are pending.

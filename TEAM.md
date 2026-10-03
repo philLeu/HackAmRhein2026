@@ -1,6 +1,6 @@
 # Team
 
-Track: Manufacturing · Challenge: To be agreed · Repo: https://github.com/philLeu/HackAmRhein2026
+Track: Manufacturing · Challenge: Open-data-driven material-flow decisions · Repo: https://github.com/philLeu/HackAmRhein2026
 
 ## People
 
@@ -8,11 +8,12 @@ Track: Manufacturing · Challenge: To be agreed · Repo: https://github.com/phil
 
 | GitHub username | Working on (areas, files) |
 |---|---|
-| @philLeu | To be agreed |
-| @Fhuelin | To be agreed |
-| @luapreta-cloud | To be agreed |
+| @philLeu | Proposed: app foundation, planning engine and final integration |
+| @Fhuelin | Proposed: domain scenarios and timeline/comparison screen |
+| @luapreta-cloud | Rhine dataset investigation already started; proposed: Rhine adapter |
+| @janaaaaaaaa | Proposed: weather research, weather adapter and fallback demo |
 
-One additional teammate is completing setup; add their GitHub username when available.
+Assignments other than the ongoing Rhine investigation are proposals for team agreement. Task boundaries and files are in docs/plan.md.
 
 Special roles: demo owner: To be agreed · time keeper: Optional, to be agreed
 

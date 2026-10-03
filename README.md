@@ -24,4 +24,4 @@ Treatment timings, transport durations, availability and disruption effects are 
 
 ## Team
 
-@philLeu, @Fhuelin, @luapreta-cloud, with one additional teammate completing setup. See [TEAM.md](TEAM.md) for ownership and working rules.
+@philLeu, @Fhuelin, @luapreta-cloud, @janaaaaaaaa. See [TEAM.md](TEAM.md) for ownership and working rules, and [docs/plan.md](docs/plan.md) for the proposed task split.
