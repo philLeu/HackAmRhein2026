@@ -1,21 +1,24 @@
 # Sources
 
-Every dataset, API, notable library and AI tool used, with licence. Feeds the sources slide on Sunday.
+This index links provider-owned notes; field meanings, licences, retrieval methods and coverage belong in those notes.
 
-| What | Source / URL | Licence or permission | Used for |
-|---|---|---|---|
-| Codex (OpenAI) | chatgpt.com/codex | Tool, AI-assisted development | Coding assistant |
-| Streamlit | https://docs.streamlit.io/ | Apache-2.0 | Foundation screen and app interaction checks |
-| Altair | https://altair-viz.github.io/ | BSD-3-Clause | Timeline chart |
-| pytest | https://docs.pytest.org/ | MIT | Contract and app tests |
-| Ruff | https://docs.astral.sh/ruff/ | MIT | Formatting and lint checks |
-| setuptools / wheel | https://setuptools.pypa.io/ / https://wheel.readthedocs.io/ | MIT | Project packaging |
-| MeteoSwiss local forecasts (candidate; not integrated) | https://opendatadocs.meteoswiss.ch/e-forecast-data/e4-local-forecast-data | CC BY 4.0; acknowledge "Source: MeteoSwiss"; terms: https://opendatadocs.meteoswiss.ch/general/terms-of-use | Temperature and weather-type forecasts for courier journey checks; Basel point and snow-symbol mapping pending verification |
-| Rhine observations (candidate; not integrated) | https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2289 | Licence and programmatic retrieval still to verify | Basel Rheinhalle river-condition signal; does not establish navigability of the whole Rotterdam–Basel route |
+## Environmental evidence
 
-## Research notes (2026-10-03)
+- [Rhine source notes](sources/rhine.md): FOEN/BAFU hydrological observations via Open Data Basel-Stadt, CC0 1.0. The T6 adapter reads the permitted five-row replay at `data/replay/rhine/observations.csv`. The original retrieval time is unknown. A Basel gauge observation is not proof of future or whole-route navigability.
+- [Weather source notes](sources/weather.md): Source: MeteoSwiss, CC BY 4.0. The T7 adapter reads `data/replay/weather/capture-20261003T112609Z/forecast.csv` with its provenance. Temperature is hourly mean, not maximum; snowfall codes and coverage retain the documented limitations. Proprietary weather artwork is not used.
+- [Approved synthetic scenarios](scenarios.md): invented treatment, transport/process durations, Rhine delays and weather disruptions. The integrated walkthrough uses these inputs with the planning engine; it does not reuse authored feasibility results. Synthetic evidence and provider replay are separate screen modes.
 
-- MeteoSwiss documents local forecasts for nine full days including the current day, updated hourly. Parameter files include hourly temperature and weather types representing the preceding three hours. They do not provide direct confirmation that a particular courier route is free of snow. Check time intervals, point identifiers, units and missing values before integration.
-- MeteoSwiss forecast data may be reused with attribution under CC BY 4.0. Its weather-symbol graphics are proprietary; use numerical codes/descriptions with our own graphics.
-- No datasets have been downloaded or integrated yet. Confirm actual forecast coverage for each planned journey; the ingredient delivery plus treatment cycle can extend beyond the available horizon.
-- Synthetic scenarios must be labelled separately from environmental observations. Exact Rhine delay mapping and any route-snow flag are demo inputs until supported by verified evidence.
+## Integration limits
+
+Both screen modes work without network access. Saved-provider replay uses a historical evaluation clock at 2026-10-03 11:30 UTC; the captures are not current data. Positive freshness values are adjustable inspection controls, not approved operational policy. The provider mode does not enable synthetic future-route renewal. Missing maximum temperature, original retrieval time, stale forecasts and coverage issues remain visible. Weather is requested across each leg's candidate journey envelope; issues conservatively affect bicycle alternatives across that envelope. Source notes remain the authority for location suitability and data limitations.
+
+## Tools and libraries
+
+| What | Source | Licence / use |
+|---|---|---|
+| Codex (OpenAI) | https://chatgpt.com/codex | AI-assisted development tool |
+| Streamlit | https://docs.streamlit.io/ | Apache-2.0; screen and interaction checks |
+| Altair | https://altair-viz.github.io/ | BSD-3-Clause; timelines |
+| pytest | https://docs.pytest.org/ | MIT; tests |
+| Ruff | https://docs.astral.sh/ruff/ | MIT; formatting and lint |
+| setuptools / wheel | https://setuptools.pypa.io/ / https://wheel.readthedocs.io/ | MIT; packaging |

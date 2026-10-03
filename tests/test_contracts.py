@@ -3,10 +3,8 @@
 import inspect
 from dataclasses import replace
 from datetime import UTC, datetime, timedelta
-from pathlib import Path
 
 import pytest
-from streamlit.testing.v1 import AppTest
 
 from treatment_planner.demo import (
     ORDER,
@@ -121,20 +119,3 @@ def test_timestamp_and_route_boundaries_reject_ambiguous_inputs():
     request = fixture_request()
     with pytest.raises(ValueError, match="each courier leg"):
         replace(request, routes=(request.routes[0], request.routes[0]))
-
-
-def test_app_comparison_and_inspection_stay_in_sync():
-    app = AppTest.from_file(Path(__file__).resolve().parents[1] / "app.py").run(timeout=20)
-    assert not app.exception
-    assert "Synthetic foundation" in app.warning[0].value
-    app.selectbox[0].select("Low water").run()
-    assert not app.exception
-    assert len(app.dataframe[0].value) == 3
-    app.selectbox[1].select(2).run()
-    assert not app.exception
-    assert any(header.value == "Truck + original collection" for header in app.subheader)
-    assert "Truck approval / preparation" in app.dataframe[2].value["Event"].tolist()
-    app.selectbox[0].select("Hot return").run()
-    app.selectbox[1].select(1).run()
-    assert not app.exception
-    assert "Return car preparation" in app.dataframe[2].value["Event"].tolist()

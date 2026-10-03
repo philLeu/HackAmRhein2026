@@ -11,7 +11,6 @@ import pytest
 from treatment_planner.data.weather import WeatherReplayProvider
 from treatment_planner.interfaces import EvidenceKind, TimeWindow, WeatherProvider
 
-
 CAPTURE = Path(__file__).parents[1] / "data/replay/weather/capture-20261003T112609Z"
 SYNTHETIC = Path(__file__).parents[1] / "data/replay/weather/synthetic-example"
 UTC_NOW = datetime(2026, 10, 3, 11, tzinfo=UTC)

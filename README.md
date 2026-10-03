@@ -2,7 +2,7 @@
 
 > Built at [HackAmRhein 2026](https://hackamrhein.dev) with Codex. First time in this repository? The setup guide is [HACKAMRHEIN.md](HACKAMRHEIN.md).
 
-A manufacturing-control prototype for a production coordinator managing one individual treatment. The current foundation displays fixed, labelled synthetic examples of material-flow schedules; live environmental adapters and generated alternatives are later tasks.
+A manufacturing-control prototype for a production coordinator managing one individual treatment. The integrated demo generates alternative schedules with the planning engine, editable route inputs and explicit plan selection. It runs offline with synthetic walkthroughs or saved provider evidence.
 
 ## The problem
 
@@ -32,7 +32,9 @@ python3.12 -m venv .venv
 .venv/bin/python -m streamlit run app.py --server.address 127.0.0.1
 ```
 
-Open http://localhost:8501. Choose Baseline, Low water or Hot return, then inspect a plan. The full timeline and treatment-period detail show authored T4 events and expected margins. This preview uses no live data, books nothing and does not recalculate changed user inputs.
+Open http://localhost:8501. In **Synthetic walkthrough**, choose Baseline, Low water, Hot return, Snow or Missing weather. Inspect an alternative, check its reasons and margins, then select a confirmed plan. Full and treatment-period timelines include preparations and deadline markers. Route edits automatically recompute alternatives and clear selection.
+
+Choose **Saved provider replay** to inspect the archived Rhine and MeteoSwiss captures offline. The historical evaluation clock and adjustable freshness inspection controls are shown on screen. Provider issues remain visible; hourly mean temperature is never substituted for maximum temperature. Source attribution and synthetic assumptions appear in both modes.
 
 ### Checks
 
@@ -44,7 +46,7 @@ Windows:
 .venv\Scripts\python.exe -m pytest -q
 ```
 
-On macOS/Linux, use `.venv/bin/python` instead. The contract tests register the synthetic providers and comparator; adapter and engine owners add their implementations there when ready. To update dependencies, install through the project manifest and regenerate requirements.txt with `python -m pip freeze --exclude-editable` inside the project environment; never include editable-install paths or private local configuration.
+On macOS/Linux, use `.venv/bin/python` instead. Contract, adapter, planning and end-to-end screen tests cover shared models, deadlines, changed-input selection and offline evidence. To update dependencies, install through the project manifest and regenerate requirements.txt with `python -m pip freeze --exclude-editable` inside the project environment; never include editable-install paths or private local configuration.
 
 ## Data sources
 
@@ -52,7 +54,7 @@ See [docs/SOURCES.md](docs/SOURCES.md).
 
 ## Limits
 
-Treatment timings, transport durations, availability and disruption effects are demo assumptions. The T1 comparator rejects changed inputs rather than presenting fixture results as fresh calculations. Environmental sources are candidates awaiting integration. Fixed outcomes assume renewed route checks at dispatch; a clear entry at order time does not prove a future route is clear. Full route inputs, generated alternatives, no-feasible-plan scenarios and live data arrive in T5–T9. The prototype does not make clinical decisions, book transport or process patient records.
+Treatment timings, transport durations, availability and disruption effects are demo assumptions. The synthetic walkthrough explicitly assumes renewed route checks at dispatch for unedited synthetic entries. Edited manual entries retain their evidence limits. Saved-provider replay uses a historical clock, requires renewed future route checks and preserves missing/stale/outside-horizon data. Freshness controls are for inspection; no operational policy is claimed. Weather issues across candidate journey envelopes conservatively affect bicycle alternatives. The finite alternative set is unranked and is not exhaustive optimisation. There is no live weather integration or automatic network fallback. The prototype does not make clinical decisions, book transport or process patient records.
 
 ## Team
 

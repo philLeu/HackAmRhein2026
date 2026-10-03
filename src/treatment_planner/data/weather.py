@@ -126,9 +126,7 @@ def _read_records(rows: list[dict[str, str | None]]) -> list[dict[str, object]]:
         snow_start = _parse_time(row["weather_valid_start_utc"] or "")
         try:
             temperature = (
-                float(row["temperature_c"])
-                if row["temperature_status"] == "available"
-                else None
+                float(row["temperature_c"]) if row["temperature_status"] == "available" else None
             )
         except (TypeError, ValueError):
             temperature = None
@@ -153,11 +151,7 @@ def _read_records(rows: list[dict[str, str | None]]) -> list[dict[str, object]]:
 
 def _covering(records, start_key: str, end_key: str, start: datetime, end: datetime):
     return next(
-        (
-            record
-            for record in records
-            if record[start_key] <= start and record[end_key] >= end
-        ),
+        (record for record in records if record[start_key] <= start and record[end_key] >= end),
         None,
     )
 
@@ -165,9 +159,7 @@ def _covering(records, start_key: str, end_key: str, start: datetime, end: datet
 def _snowfall_for(records, start: datetime, end: datetime) -> bool | None:
     """Treat any overlapping documented snow signal as present."""
     covering = [
-        record
-        for record in records
-        if record["snow_start"] <= start and record["snow_end"] >= end
+        record for record in records if record["snow_start"] <= start and record["snow_end"] >= end
     ]
     if any(record["snowfall"] is True for record in covering):
         return True
@@ -176,9 +168,7 @@ def _snowfall_for(records, start: datetime, end: datetime) -> bool | None:
     return None
 
 
-def _coverage_issue(
-    parameter: str, start: datetime, records, start_key: str, end_key: str
-) -> str:
+def _coverage_issue(parameter: str, start: datetime, records, start_key: str, end_key: str) -> str:
     starts = [record[start_key] for record in records]
     ends = [record[end_key] for record in records]
     within_horizon = bool(records) and min(starts) <= start < max(ends)
