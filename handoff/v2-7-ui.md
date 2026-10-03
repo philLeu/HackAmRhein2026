@@ -1,12 +1,13 @@
 # V2-7 guided UI handoff
 
-Status: ready for review · Owner: @fhuelin · Updated: 2026-10-03
+Status: approved by @fhuelin; awaiting teammate PR review · Owner: @fhuelin · Updated: 2026-10-03
 
 ## State
 Local branch feat/v2-7-guided-ui starts at shared V2 commit 428abbb.
 V2-0 and V2-3 are integrated; use the approved V2-1/V2-2 rules and sketch.
 UI implementation is saved at bcae014. Shared V2 weather update 65a2a19
 was merged without conflicts; the integration adjustments are saved locally.
+Latest shared V2 Rhine update d0bd1bd is also merged without conflicts.
 
 ## Scope
 Navigation, goal/recommendation display, route summaries and independent typed
@@ -14,8 +15,10 @@ demo controls. Preserve V1 callers; no app.py, adapter, ranking or shared
 contract edits. V2-8 owns wiring and whole-application mode/reset state.
 
 ## Next
-Review the verified local branch, then integrate after explicit approval.
-Only the shared V2 release branch may be pushed. V2-8 performs app wiring.
+Open a task PR targeting feat/v2-treatment-planner under the updated V2
+workflow. @fhuelin approved integration; one other teammate's review remains
+required before merging. V2-8 performs app wiring. Append the queued decision
+below when integrating this task.
 
 ## Implemented
 - navigation.py supplies chapters and explicit Live/Demo mode selection.
@@ -60,7 +63,7 @@ Only the shared V2 release branch may be pushed. V2-8 performs app wiring.
   and labels readable. Demo buttons use native wrapping rather than fixed columns.
 
 ## Verification
-- Final full suite after the shared weather update: 182 passed.
+- Final full suite after the shared weather and Rhine updates: 189 passed.
 - Ruff lint and format checks pass for the changed UI modules and V2 tests.
 - V1 comparison, contract and end-to-end tests remain green.
 - Browser verified explicit confirmation with optional details, desktop route
