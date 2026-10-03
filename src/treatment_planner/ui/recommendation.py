@@ -122,7 +122,13 @@ def render_recommendation(
             st.info("Planning inputs or evidence changed. Confirm the updated plan again.")
     st.subheader("Recommended plan" if current else "Previous recommendation (inputs changed)")
     st.caption(f"Goal: {result.goal.value.title()}")
-    st.write(result.reason)
+    summary, excluded, _ = result.reason.partition(" Excluded from ranking: ")
+    st.write(summary)
+    if excluded:
+        count = len(plans) - len(result.scores)
+        st.caption(
+            f"{count} generated alternatives excluded from ranking; inspect their checks below."
+        )
     if not current:
         st.warning("Inputs changed. Recompute the recommendation before confirming.")
     if not valid_result:
