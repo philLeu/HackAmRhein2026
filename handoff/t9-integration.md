@@ -18,7 +18,7 @@ T5, T6, T7 and T8 are merged into main. The engine, saved providers, route input
 - Fixed pre-existing weather.py formatting and test_weather.py import spacing mechanically so whole-project checks pass.
 
 ## Next
-[PR #12](https://github.com/philLeu/HackAmRhein2026/pull/12) is open and the branch is pushed. Teammate review and explicit approval are required before merging. T10 and T11 wait for T9 to merge.
+[PR #12](https://github.com/philLeu/HackAmRhein2026/pull/12) is open and the branch is pushed. Teammate review and explicit approval are required before merging. T10 and T11 wait for T9 to merge. GitHub whole-history privacy CI fails on a personal email in a pre-existing main commit. T9 staged/push checks pass; do not merge, weaken the guard or rewrite shared history. Team agreement is required for history repair.
 
 ## Limits
 Synthetic walkthrough explicitly assumes renewed clear-route checks at dispatch for unedited synthetic entries. Manual edits retain manual evidence and may remain unknown. Provider mode never enables replay renewal, never substitutes mean temperature for maximum, and never derives Rhine delay from measurements. Freshness controls are inspection values, not operational policy. Candidate journey envelopes conservatively propagate weather issues. Search is finite and unranked. No live weather feed or automatic network fallback.
