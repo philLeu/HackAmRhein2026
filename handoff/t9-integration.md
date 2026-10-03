@@ -14,11 +14,11 @@ T5, T6, T7 and T8 are merged into main. The engine, saved providers, route input
 - Nine integration checks pass, including expected margins, selection/timelines, disruption recovery and blocked external network connections.
 - Replaced the obsolete T1 app fixture smoke check with T9 end-to-end tests; retained all model/fixture contract checks.
 - Updated README and source index linking provider-owned notes.
-- Full suite: 105 tests passed; formatting, lint, strict doc paths and whitespace checks passed. Browser baseline and selected timeline preview passed.
+- Full suite: 105 tests passed; formatting, lint, strict doc paths and whitespace checks passed. Browser baseline and selected timeline preview passed. Local staged/push privacy checks passed.
 - Fixed pre-existing weather.py formatting and test_weather.py import spacing mechanically so whole-project checks pass.
 
 ## Next
-Publish the checked branch and open a PR. Teammate review and explicit approval are required before merging. T10 and T11 wait for T9 to merge.
+[PR #12](https://github.com/philLeu/HackAmRhein2026/pull/12) is open and the branch is pushed. Teammate review and explicit approval are required before merging. T10 and T11 wait for T9 to merge.
 
 ## Limits
 Synthetic walkthrough explicitly assumes renewed clear-route checks at dispatch for unedited synthetic entries. Manual edits retain manual evidence and may remain unknown. Provider mode never enables replay renewal, never substitutes mean temperature for maximum, and never derives Rhine delay from measurements. Freshness controls are inspection values, not operational policy. Candidate journey envelopes conservatively propagate weather issues. Search is finite and unranked. No live weather feed or automatic network fallback.
