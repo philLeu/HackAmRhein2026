@@ -115,6 +115,7 @@ class WeatherWindow:
     maximum_temperature_c: float | None
     snowfall: bool | None
     provenance: Provenance
+    hourly_mean_temperature_c: float | None = None
 
 
 @dataclass(frozen=True)

@@ -119,6 +119,17 @@ does not become fresh merely because it is opened again. Freshness is explicitly
 Journey times outside available intervals, or across uncovered intervals, must
 remain unconfirmed in T7. Unknown snowfall cannot establish bicycle eligibility.
 
+`WeatherReplayProvider` reads one capture directory offline. Its constructor
+requires a positive maximum forecast age; compare issue time to each requested
+journey interval and treat older evidence as stale. This parameter is deliberately
+required because the team has not approved a shared age limit. The adapter emits
+separate journey windows, and reports missing intervals, unknown values, stale
+forecasts and requests outside the capture horizon as issues. For the source's
+`tre200h0` hourly mean it fills `hourly_mean_temperature_c`; it leaves
+`maximum_temperature_c` unknown because the provider does not supply an hourly
+maximum. Therefore this source alone cannot confirm the maximum-temperature
+eligibility check until the team changes the rule or uses a source with maxima.
+
 Existing snow on the actual route remains the separate coordinator input defined
 in [the team's decisions](../decisions.md). This helper does not choose transport,
 change preparation times, define harbour storage or resolve the shipment clock.
