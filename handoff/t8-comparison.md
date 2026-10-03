@@ -6,7 +6,7 @@ Status: done · Updated: 2026-10-03 · Branch: feat/t8-comparison-screen · Last
 Render shared sample candidate plans, preparation/travel/production/handling, reasons, margins, manual route inputs and explicit selection.
 
 ## State
-T1 and T4 are merged into main. Reusable Streamlit components are implemented and checked against their contracts. Implementation is done; PR review and merge remain. app.py and shared contracts remain owned by T9/T1; the foundation app remains read-only until T9 integrates this component.
+T1 and T4 are merged into main. Reusable Streamlit components are implemented and checked against their contracts. [PR #5](https://github.com/philLeu/HackAmRhein2026/pull/5) is open; implementation is done, teammate review and explicit merge approval remain. app.py and shared contracts remain owned by T9/T1; the foundation app remains read-only until T9 integrates this component.
 
 ## Done
 - Confirmed prerequisites and created a separate branch from origin/main.
@@ -16,7 +16,7 @@ T1 and T4 are merged into main. Reusable Streamlit components are implemented an
 - Browser preview verified authored baseline and hot-return alternatives, explicit selection and return-car preparation overlapping production. Local preview is at http://127.0.0.1:8502 while its server runs.
 
 ## Next
-1. Open the checked branch's PR and obtain teammate review; merge only after explicit approval for that PR.
+1. Obtain teammate review on PR #5; merge only after explicit approval for that PR and passing GitHub checks.
 2. T9 integrates the component using the instructions below, after its dependencies merge.
 
 ## Integration for T9
