@@ -1,6 +1,6 @@
 # T4 comparison screen sketch
 
-Status: layout and interaction approved by @fhuelin on 2026-10-03; awaiting teammate PR review. Timing fixtures and expected outcomes live in [scenarios.md](scenarios.md). This sketch guides T8 after T1 and T4 are merged; T9 owns app wiring. A fuller visual style remains for T8.
+Status: layout and interaction approved by @fhuelin on 2026-10-03 and merged with T4. Timing fixtures and expected outcomes live in [scenarios.md](scenarios.md). T8 implements this sketch as reusable components in src/treatment_planner/ui/comparison.py, with the existing neutral theme in config/theme.toml; T9 owns app wiring. Integration instructions live in handoff/t8-comparison.md.
 
 ## Coordinator flow
 
@@ -62,4 +62,4 @@ The comparison rows illustrate S2; the generic timeline includes optional events
 
 ## Review check
 
-Walk through baseline, low water, hot return, snow and no feasible plan. Confirm that the coordinator can find the changed transport, separate preparations, 1h handling, deadline failure and missing evidence without reading code. @fhuelin approved this layout; another teammate's review remains before T4 is marked done.
+Walk through baseline, low water, hot return, snow and no feasible plan. Confirm that the coordinator can find the changed transport, separate preparations, 1h handling, deadline failure and missing evidence without reading code. @fhuelin approved this layout; subsequent component changes are reviewed through T8's PR.

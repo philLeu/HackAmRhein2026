@@ -1,4 +1,5 @@
-# Neutral foundation defaults; T8 owns subsequent visual changes.
+# Neutral comparison theme; visual values stay here.
 [timeline]
 event_color = "#526D82"
+deadline_color = "#A64444"
 height_per_lane = 42
