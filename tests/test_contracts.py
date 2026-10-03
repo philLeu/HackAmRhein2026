@@ -17,11 +17,26 @@ from treatment_planner.demo import (
     fixture_settings,
 )
 from treatment_planner.interfaces import (
+    Availability,
     CheckStatus,
+    CourierLeg,
+    DemoOverrides,
+    EvidenceKind,
+    EvidenceMode,
+    LocalRouteOverride,
     PlanComparator,
+    PlanningGoal,
+    Provenance,
+    RecommendationResult,
+    RecommendationScore,
     ResultStatus,
     RiverProvider,
+    RouteId,
+    RouteSnow,
+    RouteStatus,
+    RouteSummary,
     TimeWindow,
+    TransportMode,
     WeatherProvider,
     WeatherWindow,
 )
@@ -119,3 +134,67 @@ def test_timestamp_and_route_boundaries_reject_ambiguous_inputs():
     request = fixture_request()
     with pytest.raises(ValueError, match="each courier leg"):
         replace(request, routes=(request.routes[0], request.routes[0]))
+
+
+def test_demo_overrides_keep_local_routes_independent():
+    interval = TimeWindow(ORDER, ORDER + timedelta(hours=1))
+    provenance = Provenance("V2 fixture", EvidenceKind.SYNTHETIC, ORDER, ORDER)
+    outbound = LocalRouteOverride(
+        CourierLeg.OUTBOUND,
+        interval,
+        30.1,
+        None,
+        RouteSnow.UNKNOWN,
+        Availability.AVAILABLE,
+        provenance,
+    )
+    overrides = DemoOverrides(sample=outbound)
+    assert overrides.sample == outbound
+    assert overrides.treatment is None and overrides.ingredients is None
+    assert overrides.sample.forecast_snowfall is None
+    assert overrides.sample.route_snow == RouteSnow.UNKNOWN
+    with pytest.raises(ValueError, match="return courier leg"):
+        replace(overrides, treatment=outbound)
+
+
+def test_route_summary_distinguishes_unknown_delay_and_demo_carry_over():
+    original = TimeWindow(ORDER, ORDER + timedelta(hours=1))
+    shifted = TimeWindow(ORDER + timedelta(hours=2), ORDER + timedelta(hours=3))
+    summary = RouteSummary(
+        "car-outbound",
+        RouteId.SAMPLE,
+        shifted,
+        TransportMode.CAR,
+        EvidenceMode.DEMO,
+        RouteStatus.UNKNOWN,
+        "Route snow status unknown",
+        (),
+        carried_from=original,
+    )
+    assert summary.possible_delay is None
+    assert summary.carried_from == original and summary.interval == shifted
+    with pytest.raises(ValueError, match="Only simulated"):
+        replace(summary, evidence_mode=EvidenceMode.LIVE)
+
+
+def test_recommendation_contract_preserves_ties_and_empty_result():
+    scores = (
+        RecommendationScore("ship", limiting_margin=timedelta(hours=6), at_risk_routes=0),
+        RecommendationScore("truck", limiting_margin=timedelta(hours=6), at_risk_routes=0),
+    )
+    tied = RecommendationResult(
+        PlanningGoal.LOWER_DISRUPTION_RISK,
+        ("ship", "truck"),
+        scores,
+        "Both confirmed plans have the same limiting deadline margin.",
+    )
+    assert len(tied.winner_plan_ids) == 2
+    empty = RecommendationResult(
+        PlanningGoal.LOWER_DISRUPTION_RISK,
+        (),
+        (),
+        "No confirmed plan.",
+    )
+    assert not empty.winner_plan_ids
+    with pytest.raises(ValueError, match="Winners must have scores"):
+        replace(empty, winner_plan_ids=("unconfirmed",))
