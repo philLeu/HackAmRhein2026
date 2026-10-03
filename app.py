@@ -1,9 +1,5 @@
 """T1 read-only synthetic examples; T8/T9 replace this foundation screen."""
 
-import tomllib
-from pathlib import Path
-
-import altair as alt
 import streamlit as st
 
 from treatment_planner.demo import (
@@ -14,6 +10,9 @@ from treatment_planner.demo import (
     fixture_settings,
 )
 from treatment_planner.interfaces import CandidatePlan
+from treatment_planner.ui.formatting import format_timestamp
+from treatment_planner.ui.presentation import apply_theme
+from treatment_planner.ui.timeline import timeline_chart
 
 
 def comparison_rows(plans: tuple[CandidatePlan, ...]) -> list[dict]:
@@ -31,37 +30,30 @@ def comparison_rows(plans: tuple[CandidatePlan, ...]) -> list[dict]:
 
 
 def render_timeline(plan: CandidatePlan, detail: bool = False) -> None:
-    theme_path = Path(__file__).parent / "config" / "theme.toml"
-    theme = tomllib.loads(theme_path.read_text(encoding="utf-8"))["timeline"]
+    theme = apply_theme()["timeline"]
     events = tuple(event for event in plan.events if not detail or event.lane != "Ingredients")
     rows = [
         {
             "Lane": event.lane,
             "Event": event.label,
-            "Start": event.interval.start.isoformat(),
-            "End": event.interval.end.isoformat(),
+            "Start": format_timestamp(event.interval.start),
+            "End": format_timestamp(event.interval.end),
         }
         for event in events
     ]
-    chart = (
-        alt.Chart(alt.Data(values=rows))
-        .mark_bar(color=theme["event_color"])
-        .encode(
-            x=alt.X("Start:T", title="UTC", scale=alt.Scale(type="utc")),
-            x2="End:T",
-            y=alt.Y("Lane:N", sort=None, title=None),
-            tooltip=["Event:N", "Start:N", "End:N"],
-        )
-        .properties(height=theme["height_per_lane"] * len({event.lane for event in events}))
-    )
-    st.altair_chart(chart, width="stretch")
+    st.altair_chart(timeline_chart(plan, theme, detail=detail), width="stretch")
     if not detail:
         st.dataframe(rows, hide_index=True, width="stretch")
 
 
 def main() -> None:
     st.set_page_config(page_title="Treatment material-flow planner", layout="wide")
+    apply_theme()
+    st.caption("OPERATIONS PREVIEW / MATERIAL FLOW")
     st.title("Treatment material-flow planner")
+    st.write(
+        "Compare transport options, inspect constraints and follow every stage of the journey."
+    )
     st.warning(
         "Synthetic foundation demo — these are fixed, authored T4 examples. "
         "No live data or generated recommendations yet."
@@ -71,9 +63,14 @@ def main() -> None:
     environment = fixture_environment(scenario)
     plans = FixtureComparator(scenario).compare(request, environment, fixture_settings(scenario))
     st.caption(
-        f"Invented treatment · order {request.order_time:%d %b %Y %H:%M} UTC · "
-        f"original collection {request.original_collection:%d %b %Y %H:%M} UTC"
+        f"Invented treatment · order {format_timestamp(request.order_time)} · "
+        f"original collection {format_timestamp(request.original_collection)}"
     )
+    overview = st.columns(3)
+    overview[0].metric("Example plans", len(plans))
+    overview[1].metric("Scenario", scenario.replace("-", " ").title())
+    overview[2].metric("Time reference", "UTC")
+    st.divider()
     st.subheader("Compare example plans")
     st.dataframe(comparison_rows(plans), hide_index=True, width="stretch")
     selected = st.selectbox(
@@ -84,7 +81,13 @@ def main() -> None:
     )
     plan = plans[selected]
     st.subheader(plan.title)
-    st.write(f"**Authored fixture result: {plan.status.value}**")
+    status_message = f"Authored fixture result: {plan.status.value}"
+    if plan.status.value == "confirmed":
+        st.success(status_message)
+    elif plan.status.value == "infeasible":
+        st.error(status_message)
+    else:
+        st.info(status_message)
     st.dataframe(
         [
             {
