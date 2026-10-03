@@ -4,6 +4,7 @@ Status: done; awaiting teammate review and PR merge approval
 Owner: @philLeu
 Branch: feat/v2-6-recommendations
 Base: 65a2a19 on feat/v2-treatment-planner
+Updated through: d0bd1bd (V2-4), merged without conflicts
 
 ## Done
 
@@ -16,16 +17,16 @@ Base: 65a2a19 on feat/v2-treatment-planner
 
 ## Verification
 
-- Full application suite: 197 passed.
+- Full application suite after incorporating V2-4: 204 passed.
 - Ruff lint and format checks passed for both added Python files.
 - Strict documentation check passed; whitespace check passed.
+- Staged privacy guard and commit hooks passed.
 - Initial full-suite weather failure was Windows checkout CRLF conversion: the
   existing fixture mutation uses LF byte strings. Restoring the CSV fixture bytes
   exactly as stored in Git resolved it, with no tracked weather change.
 
 ## Next
 
-- Commit after the staged privacy guard, push and open the PR into feat/v2-treatment-planner.
 - Have a teammate review, then obtain explicit approval for that PR before merging.
 - V2-7/V2-8 can consume the recommendation contract when this task is integrated.
 
