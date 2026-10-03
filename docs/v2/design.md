@@ -1,6 +1,6 @@
 # V2: guided treatment material-flow planning
 
-Status: Release direction and V2-1 recommendation rules agreed; screen sketch needs domain review before implementation.
+Status: Release direction, V2-1 recommendation rules and V2-2 screen sketch agreed; shared contracts are next.
 
 ## Outcome
 
@@ -16,7 +16,7 @@ Extend the existing Python/Streamlit application, planning engine and independen
 4. Inspect three graphical route summaries with transport icons, direction arrows, status text and possible delay. Expand a route for detailed evidence, assumptions and constraint results.
 5. Confirm the selected plan. Changes to the goal, inputs or material evidence invalidate previous confirmation and recompute the recommendation.
 
-Sidebar chapters: Plan, Routes & conditions, Sources & assumptions. Keep the goal and recommendation together on Plan. Preserve the existing theme and UTC display convention unless the team approves a change.
+Sidebar chapters: Plan, Routes & conditions, Sources & assumptions. Keep the goal and recommendation together on Plan. The approved screen behavior lives in [ui-sketch.md](ui-sketch.md), with visual guidance in [style-guide.md](style-guide.md). Preserve the existing theme and UTC display convention unless the team approves a change.
 
 Show ingredient movement separately from sample/treatment movement:
 

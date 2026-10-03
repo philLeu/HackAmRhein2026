@@ -1,6 +1,6 @@
 # V2 screen style addendum
 
-Status: draft. Inherit the [existing style guide](../style-guide.md) and values
+Status: approved. Inherit the [existing style guide](../style-guide.md) and values
 from `config/theme.toml`; retain the agreed dark control-room direction.
 
 - Make the goal and recommendation the strongest visual group. One primary

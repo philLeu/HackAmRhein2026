@@ -1,6 +1,6 @@
 # V2 guided screen sketch
 
-Status: draft for @fhuelin review. This describes the proposed screen, not
+Status: approved by @fhuelin. This describes the proposed screen, not
 implemented application behavior. Recommendation rules live in
 [recommendation-rules.md](recommendation-rules.md).
 
