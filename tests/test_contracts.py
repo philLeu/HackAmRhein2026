@@ -49,7 +49,7 @@ def test_component_signature(implementation, contract, method):
 @pytest.mark.parametrize("scenario", SCENARIOS)
 def test_comparison_returns_shared_models_with_aware_events(scenario):
     plans = FixtureComparator(scenario).compare(
-        fixture_request(), fixture_environment(scenario), fixture_settings()
+        fixture_request(), fixture_environment(scenario), fixture_settings(scenario)
     )
     assert plans
     assert len({plan.plan_id for plan in plans}) == len(plans)
@@ -63,7 +63,7 @@ def test_comparison_returns_shared_models_with_aware_events(scenario):
 
 def test_low_water_expected_margins_and_waiting():
     keep, postpone, truck = FixtureComparator("Low water").compare(
-        fixture_request(), fixture_environment("Low water"), fixture_settings()
+        fixture_request(), fixture_environment("Low water"), fixture_settings("Low water")
     )
     assert keep.status == ResultStatus.INFEASIBLE
     production = next(check for check in keep.checks if check.constraint == "Production completion")
@@ -82,7 +82,7 @@ def test_low_water_expected_margins_and_waiting():
 
 def test_hot_return_has_advance_preparation_and_handling():
     bicycle, car = FixtureComparator("Hot return").compare(
-        fixture_request(), fixture_environment("Hot return"), fixture_settings()
+        fixture_request(), fixture_environment("Hot return"), fixture_settings("Hot return")
     )
     assert bicycle.status == ResultStatus.INFEASIBLE
     assert car.status == ResultStatus.CONFIRMED

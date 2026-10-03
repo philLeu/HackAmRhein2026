@@ -69,7 +69,7 @@ def main() -> None:
     scenario = st.selectbox("Authored scenario", SCENARIOS)
     request = fixture_request()
     environment = fixture_environment(scenario)
-    plans = FixtureComparator(scenario).compare(request, environment, fixture_settings())
+    plans = FixtureComparator(scenario).compare(request, environment, fixture_settings(scenario))
     st.caption(
         f"Invented treatment · order {request.order_time:%d %b %Y %H:%M} UTC · "
         f"original collection {request.original_collection:%d %b %Y %H:%M} UTC"

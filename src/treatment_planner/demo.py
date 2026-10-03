@@ -49,7 +49,7 @@ def _event(event_id: str, lane: str, label: str, start: float, end: float) -> Ti
     return TimelineEvent(event_id, lane, label, TimeWindow(_time(start), _time(end)), EVIDENCE)
 
 
-def fixture_settings() -> PlanningSettings:
+def fixture_settings(scenario: str = "Baseline") -> PlanningSettings:
     """Accepted synthetic conventions from T4, not operational configuration."""
     return PlanningSettings(
         ingredient_limit=timedelta(hours=240),
@@ -58,7 +58,7 @@ def fixture_settings() -> PlanningSettings:
         production_limit=timedelta(hours=24),
         injection_limit=timedelta(hours=8),
         river_order_to_arrival=timedelta(hours=144),
-        river_delay=timedelta(hours=12),
+        river_delay=timedelta(hours=12 if scenario == "Low water" else 0),
         truck_travel=timedelta(hours=48),
         truck_preparation=timedelta(hours=6),
         bicycle_travel=timedelta(hours=1),
@@ -209,7 +209,7 @@ class FixtureComparator:
         expected = fixture_environment(self.scenario)
         if (
             request != fixture_request()
-            or settings != fixture_settings()
+            or settings != fixture_settings(self.scenario)
             or environment != expected
         ):
             raise ValueError(
