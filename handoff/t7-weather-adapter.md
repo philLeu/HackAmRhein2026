@@ -1,6 +1,6 @@
 # Handoff: T7 Weather adapter and courier eligibility inputs
 
-Status: done · Updated: 2026-10-03 · Branch: feat/t7-weather-adapter · Last owner: @janaaaaaaaa
+Status: done · Updated: 2026-10-03 · Branch: fix/t7-weather-coverage · Last owner: @janaaaaaaaa
 
 ## Goal
 Adapt the investigated Basel forecast or labelled replay to the shared weather contract, preserving journey intervals and uncertainty.
@@ -12,9 +12,10 @@ Adapt the investigated Basel forecast or labelled replay to the shared weather c
 - Added optional hourly-mean temperature evidence to the shared `WeatherWindow` contract, with the required decision line.
 - Added an offline provider for saved forecast and synthetic capture directories.
 - Added adapter checks for provenance, journey windows, snowfall aggregation, unknown/outside-horizon coverage, stale evidence and temperature semantics.
+- Fixed post-merge review findings: the freshness cutoff now splits a journey interval, and an internal data gap is distinguished from time outside the forecast horizon. Added regression tests for both.
 - `compileall`, real-capture and synthetic-replay smoke checks passed; `doc-check`, `hack-guard --staged` and `git diff --check` passed. Pytest and Ruff could not run because this checkout has no `.venv` and those tools are not installed system-wide.
 
 ## Next
 - T9 must pass the team's chosen positive maximum forecast age when constructing the provider.
 - The planning team must decide whether hourly mean is sufficient for the 30°C rule or provide a source with hourly maxima; until then MeteoSwiss evidence cannot confirm maximum-temperature eligibility.
-- Request teammate review and prepare a PR; do not merge without explicit approval.
+- This follow-up needs teammate review; merge only after explicit approval for its PR.

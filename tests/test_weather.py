@@ -2,6 +2,7 @@
 
 import csv
 import json
+import shutil
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
@@ -58,6 +59,36 @@ def test_old_forecast_is_explicitly_stale():
         TimeWindow(datetime(2026, 10, 5, 8, tzinfo=UTC), datetime(2026, 10, 5, 9, tzinfo=UTC)),
     )
     assert any("Stale weather forecast" in issue for issue in report.issues)
+
+
+def test_freshness_expiry_inside_a_journey_interval_is_not_missed():
+    provider = WeatherReplayProvider(SYNTHETIC, timedelta(minutes=90))
+    report = provider.load(
+        "return",
+        TimeWindow(datetime(2026, 10, 3, 7, tzinfo=UTC), datetime(2026, 10, 3, 8, tzinfo=UTC)),
+    )
+    assert any("Stale weather forecast" in issue for issue in report.issues)
+
+
+def test_internal_coverage_gap_is_not_reported_as_outside_horizon(tmp_path):
+    capture = tmp_path / "capture"
+    shutil.copytree(SYNTHETIC, capture)
+    forecast = capture / "forecast.csv"
+    with forecast.open(encoding="utf-8", newline="") as stream:
+        reader = csv.DictReader(stream)
+        fieldnames = reader.fieldnames
+        rows = [row for row in reader if row["valid_end_utc"] != "2026-10-03T09:00:00Z"]
+    with forecast.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+
+    report = WeatherReplayProvider(capture, timedelta(days=30)).load(
+        "return",
+        TimeWindow(datetime(2026, 10, 3, 8, tzinfo=UTC), datetime(2026, 10, 3, 9, tzinfo=UTC)),
+    )
+    assert any("temperature unknown within forecast coverage" in issue for issue in report.issues)
+    assert not any("temperature outside forecast horizon" in issue for issue in report.issues)
 
 
 def test_freshness_policy_must_be_positive():
