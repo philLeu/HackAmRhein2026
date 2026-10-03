@@ -1,6 +1,6 @@
 # V2-8 integration handoff
 
-Status: implementation pushed; PR still needed · Branch: `feat/v2-8-integration` · Base: shared V2 commit `3458688`
+Status: implementation pushed through `369041b`; PR still needed · Branch: `feat/v2-8-integration` · Base: shared V2 commit `3458688`
 
 ## Done
 
@@ -13,8 +13,7 @@ Status: implementation pushed; PR still needed · Branch: `feat/v2-8-integration
 
 ## Next
 
-1. Push the final presentation check.
-2. Open a PR targeting `feat/v2-treatment-planner`. The Codex in-app GitHub browser still shows Sign in, so the PR has not been created there.
-3. Have one teammate check navigation, icons and narrow-screen layout in the running app. Merge only after explicit approval for that PR.
+1. Open a PR targeting `feat/v2-treatment-planner`. The Codex in-app GitHub browser still shows Sign in, so the PR has not been created there.
+2. Have one teammate check navigation, icons and narrow-screen layout in the running app. Merge only after explicit approval for that PR.
 
 Resume: Continue V2-8 from `handoff/v2-8-integration.md` on `feat/v2-8-integration`; finish checks and prepare the V2 task PR.
