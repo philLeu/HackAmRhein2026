@@ -1,0 +1,2 @@
+point_id;point_type_id;station_abbr;postal_code;point_name;point_type_de;point_type_fr;point_type_it;point_type_en;point_height_masl;point_coordinates_lv95_east;point_coordinates_lv95_north;point_coordinates_wgs84_lat;point_coordinates_wgs84_lon
+405600;2;;4056;Basel;Zentrum Postleitzahl;Centre code postal;Centro codice postale;Postal code center;260.0;2610255.0;1268651.0;47.568486;7.574914

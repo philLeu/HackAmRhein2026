@@ -1,0 +1,5 @@
+sample_kind,valid_end_utc,valid_end_local,temperature_c,temperature_status,temperature_valid_start_utc,weather_code,weather_code_status,weather_valid_start_utc,snow_forecast_status
+synthetic,2026-10-03T08:00:00Z,2026-10-03T10:00:00+02:00,18.5,available,2026-10-03T07:00:00Z,1,available,2026-10-03T05:00:00Z,not_indicated
+synthetic,2026-10-03T09:00:00Z,2026-10-03T11:00:00+02:00,30.0,available,2026-10-03T08:00:00Z,16,available,2026-10-03T06:00:00Z,present
+synthetic,2026-10-03T10:00:00Z,2026-10-03T12:00:00+02:00,30.1,available,2026-10-03T09:00:00Z,107,available,2026-10-03T07:00:00Z,present
+synthetic,2026-10-03T11:00:00Z,2026-10-03T13:00:00+02:00,,missing,2026-10-03T10:00:00Z,,missing,2026-10-03T08:00:00Z,unknown
