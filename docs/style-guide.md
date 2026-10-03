@@ -1,12 +1,14 @@
 # Demo style guide
 
-The demo uses a control-room direction chosen by @fhuelin: dark surfaces, clear
-hierarchy and readable status accents. Values live only in `config/theme.toml`;
-`src/treatment_planner/ui/presentation.py` applies them to page surfaces.
-`.streamlit/config.toml` inherits that file for native widgets.
+The demo uses dark surfaces, clear hierarchy and readable status accents. The
+comparison gives every option an expandable route sketch so the material
+journey is visible beside its timing detail. Values live only in
+`config/theme.toml`; `src/treatment_planner/ui/presentation.py` applies them to
+page surfaces. `.streamlit/config.toml` inherits that file for native widgets.
 
 ## Principles
 
+- Show the material routes and production steps before deadline detail.
 - Put the scenario, plan choice and result before supporting detail.
 - Make uncertainty explicit. Every status has a word as well as a colour.
 - Keep transport events and constraints easy to inspect during a presentation.
@@ -19,14 +21,21 @@ hierarchy and readable status accents. Values live only in `config/theme.toml`;
 separates panels. Native headings and body text use `theme.font`, with the
 shared `surface.padding` and `surface.radius` for summary cards.
 
-Timelines use `timeline.event_color` for journeys and
+Route sketches use `theme.primaryColor` for arrows and the center transport or
+production node, `theme.secondaryBackgroundColor` for route nodes and
+`surface.border` for their outlines. Each sketch has text labels as well as
+arrows, so colour is not needed to understand a route. Timelines use
+`timeline.event_color` for journeys and
 `timeline.deadline_color` for dashed deadline markers. Each lane has
 `timeline.height_per_lane` of vertical space. Tooltips name every event and deadline.
 
 ## Components and language
 
 Use a title and short introductory sentence, followed by a visible synthetic-data
-notice, scenario selection, three summary cards and the comparison table.
+notice, scenario selection, a four-step material-flow sketch for every
+option and the comparison table. Explain sample pickup timing in words: “Original
+scheduled pickup time (0 h later)” means there is no shift from the hospital's
+original collection time.
 Show the inspected plan's status as a native success, error or information alert.
 Retain native keyboard-operable inputs, tables and expanders. Use concise domain
 labels; distinguish authored fixture results from computed planning results.
