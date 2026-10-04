@@ -1,6 +1,7 @@
 # V2-7 guided UI handoff
 
-Status: approved by @fhuelin; awaiting teammate PR review · Owner: @fhuelin · Updated: 2026-10-03
+Status: integrated into `feat/v2-treatment-planner`. The PR and next-step notes below record the task handoff; current release status is in [the V2 release checklist](../docs/v2/release-checklist.md).
+Owner: @fhuelin · Updated: 2026-10-03
 PR: https://github.com/philLeu/HackAmRhein2026/pull/22
 
 ## State

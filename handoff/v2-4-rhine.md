@@ -1,7 +1,7 @@
 # Handoff: V2-4 live Rhine and ingredient override
 
-Status: implementation ready for review · Branch: `feat/v2-4-rhine` · Base:
-`feat/v2-treatment-planner` at `65a2a19`
+Status: integrated into `feat/v2-treatment-planner`. The integration notes below record the task handoff; current release status is in [the V2 release checklist](../docs/v2/release-checklist.md).
+Branch: `feat/v2-4-rhine` · Base: `feat/v2-treatment-planner` at `65a2a19`
 
 ## Delivered
 
