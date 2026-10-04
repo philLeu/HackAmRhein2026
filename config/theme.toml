@@ -1,8 +1,24 @@
 # Control-room demo theme; all visual values live here.
 [branding]
-width = 120
+width = 250
 background = "#F5EFFA"
-padding = "0.75rem"
+padding = "0.5rem 4vw"
+gap = "0.9rem"
+mobile_width = 155
+mobile_gap = "0.65rem"
+mobile_breakpoint = 480
+max_width_vw = 52
+margin_bottom = "1.25rem"
+motto = "Smart routes. Vital timing."
+motto_color = "#321746"
+motto_size = "1.5rem"
+motto_mobile_size = "1.05rem"
+motto_weight = 700
+motto_tracking = "0.01em"
+motto_line_height = 1.25
+logo_relief = "0 4px 2px #32174666"
+logo_relief_clip = "inset(0 0 26% 0)"
+inner_max_width = "1600px"
 
 [route]
 card_width = 360

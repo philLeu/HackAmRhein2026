@@ -222,7 +222,7 @@ def render_recommendation(
     valid_result = winners == result.winner_plan_ids
     if changed:
         state[f"{key}-confirmed"] = None
-        state[f"{key}-picked"] = winners[0] if len(winners) == 1 and valid_result else None
+        state[f"{key}-picked"] = winners[0] if winners and valid_result else None
         for suffix in ("choice", "inspect"):
             state.pop(f"{key}-{suffix}", None)
         state[f"{key}-signature"] = signature
@@ -250,7 +250,7 @@ def render_recommendation(
     if not winners:
         st.warning("No recommendation available. Inspect the failed or missing checks below.")
     elif len(winners) > 1:
-        st.info("Equal best scores: choose a tied plan explicitly. None is preselected.")
+        st.info("Equal best scores: showing one tied recommendation first. You can switch plans.")
     else:
         st.caption(f"Recommended: {_plan_label(eligible[winners[0]])}")
 

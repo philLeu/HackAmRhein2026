@@ -12,7 +12,10 @@ Extend the existing Python/Streamlit application, planning engine and independen
 
 1. Open in Live mode with source timestamps, freshness and coverage available.
 2. Choose an optimisation goal: injection timing, ingredient delivery timing or lower disruption risk.
-3. See the recommended alternative, its main reason and timing. Preselect only a unique confirmed winner; equal winners remain tied without automatic selection. Preselection is distinct from confirmation. Other alternatives remain available on demand.
+3. See the recommended alternative, its main reason and timing. Preselect the
+   first confirmed winner for inspection; when winners tie, keep the tie visible
+   and show the first co-winner initially. Other alternatives remain available
+   on demand. Confirmation remains explicit.
 4. Inspect three graphical route summaries with transport icons, direction arrows, status text and possible delay. Expand a route for detailed evidence, assumptions and constraint results.
 5. Confirm the selected plan. Changes to the goal, inputs or material evidence invalidate previous confirmation and recompute the recommendation.
 

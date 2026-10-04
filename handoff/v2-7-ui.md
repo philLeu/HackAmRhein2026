@@ -28,7 +28,8 @@ V2-8 performs app wiring. Append the queued decision below when integrating.
 ## Implemented
 - navigation.py supplies chapters and explicit Live/Demo mode selection.
 - recommendation.py collects goal/target inputs and displays supplied winners;
-  ties require a choice and explicit confirmation. Input/evidence context changes
+  the first winner, including among ties, is preselected for review; confirmation
+  remains explicit. Input/evidence context changes
   clear confirmation; navigation preserves the picked plan.
 - route_summary.py presents supplied statuses/delays/provenance and demo
   carry-over notes. It extracts the adopted route drawing for V1/V2 reuse.
