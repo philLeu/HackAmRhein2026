@@ -26,8 +26,9 @@ tie on the selected goal score (including the existing risk-warning tie-break),
 apply the route-mode preferences lexicographically: first prefer Rhine ship
 over truck; when ingredient modes tie, prefer the plan with more bicycle legs
 than car legs. If both shipment mode and bicycle count tie, keep the plans tied.
-The overview preselects only a unique winner after both ranking stages;
-confirmation still requires the coordinator.
+The overview displays the first winner for inspection after both ranking stages,
+including when several plans remain tied. The tie stays visible and other
+co-winners remain selectable; confirmation still requires the coordinator.
 
 ## Route summaries
 

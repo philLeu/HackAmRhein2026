@@ -1,6 +1,6 @@
 # V2 integration release checklist
 
-Status: Jana's follow-up was merged into `feat/v2-treatment-planner` through PR #26. The shared V2 branch has not been merged into `main`.
+Status: V2 was merged into `main` through PR #28. Use this checklist for subsequent demo changes and release checks.
 
 ## Integrated behavior
 
@@ -14,7 +14,7 @@ Status: Jana's follow-up was merged into `feat/v2-treatment-planner` through PR 
 - The coordinator enters road status per leg. Forecast snowfall blocks bicycles; cars are always available with one hour of preparation.
 - The Live overview shows endpoint forecast temperatures/weather symbols and a Basel gauge bar from 0 to 10 m. The ship delay applies the explicitly simplified uniform-Basel-level assumption and illustrative 0/12-hour rule.
 - Daily maximum forecasts at or above 28°C prompt a trip-day recheck and do not block bicycle eligibility.
-- Recommendation score ties prefer Rhine ship, then more bicycle legs; any remaining tie stays visible for explicit choice.
+- Recommendation score ties prefer Rhine ship, then more bicycle legs; any remaining tie stays visible, with the first tied plan shown for inspection and explicit confirmation required.
 - The PulseShift header logo and theme from the shared V2 branch remain in the integrated app.
 
 ## Verification
@@ -25,7 +25,7 @@ Status: Jana's follow-up was merged into `feat/v2-treatment-planner` through PR 
 - `bash scripts/doc-check.sh --strict`
 - Automated AppTest covers the Live cards and road controls plus all three offline Demo chapters. The full application suite, standalone weather tests, Ruff and strict documentation checks passed on the shared V2 branch after PR #26 merged.
 - One other teammate must inspect Plan, Routes & conditions and Sources & assumptions on desktop and a narrow screen, including keyboard access and written status beside icons. Record the reviewer and findings before release.
-- Open a separate PR from `feat/v2-treatment-planner` into `main` after the release checks. Follow the team rule for another teammate's review and explicit approval for that PR before merging.
+- Review and merge any final demo changes through a separate PR into `main`, with another teammate's review and explicit approval for that PR.
 
 ## Manual screen review
 
