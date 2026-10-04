@@ -31,10 +31,13 @@ arrows, so colour is not needed to understand a route. Timelines use
 
 ## Components and language
 
-The shared page header displays the supplied PulseShift logo from
-`assets/branding/pulseshift.png`. Preserve its transparency and proportions.
-Use the light `branding.background` plate to keep the dark wordmark readable
-on the control-room theme; `branding.width` and `branding.padding` govern size.
+The shared page header is a full-width light brand strip. It displays the
+supplied PulseShift logo from `assets/branding/pulseshift.png` beside the motto
+“Smart routes. Vital timing.”
+Preserve the logo's transparency and proportions. A subtle shadow applies only
+to the route and vehicle illustration above the wordmark. `branding.width`,
+`branding.padding` and `branding.gap` govern the lockup; keep it readable at
+narrow widths.
 The compact header keeps the planning goal near the first screenful.
 The image has an accessible company-logo label. V2-8 should continue calling
 `apply_theme` at the page header to retain this branding. Nested components

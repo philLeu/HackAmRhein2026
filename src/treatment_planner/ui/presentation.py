@@ -27,18 +27,39 @@ def apply_theme(theme_path: Path = THEME_PATH, *, show_logo: bool = True) -> dic
             padding: {surface["padding"]};}}
         [data-testid="stMetricValue"] {{color: {palette["primaryColor"]};}}
         [data-testid="stVerticalBlockBorderWrapper"] {{border-color: {surface["border"]};}}
-        .pulseshift-brand {{width: {branding["width"]}px; max-width: 100%;
+        .pulseshift-brand {{display: flex; justify-content: center; width: 100%;
+            max-width: 100%;
             box-sizing: border-box; background: {branding["background"]};
-            border-radius: {surface["radius"]}; padding: {branding["padding"]};}}
-        .pulseshift-brand img {{display: block; width: 100%; height: auto;}}
+            padding: {branding["padding"]}; margin-bottom: {branding["margin_bottom"]};}}
+        .pulseshift-brand-inner {{display: flex; align-items: center; gap: {branding["gap"]};
+            width: 100%; max-width: {branding["inner_max_width"]};}}
+        .pulseshift-logo {{position: relative; flex: 0 0 auto; width: {branding["width"]}px;
+            max-width: {branding["max_width_vw"]}vw;}}
+        .pulseshift-logo img {{display: block; width: 100%; height: auto;}}
+        .pulseshift-logo-relief {{position: absolute; inset: 0;
+            filter: drop-shadow({branding["logo_relief"]});
+            clip-path: {branding["logo_relief_clip"]};}}
+        .pulseshift-brand-copy {{min-width: 0;}}
+        .pulseshift-motto {{color: {branding["motto_color"]};
+            font-size: {branding["motto_size"]}; font-weight: {branding["motto_weight"]};
+            letter-spacing: {branding["motto_tracking"]};
+            line-height: {branding["motto_line_height"]};}}
+        @media (max-width: {branding["mobile_breakpoint"]}px)
+            {{.pulseshift-brand-inner {{gap: {branding["mobile_gap"]};}}
+            .pulseshift-logo {{width: {branding["mobile_width"]}px;}}
+            .pulseshift-motto {{font-size: {branding["motto_mobile_size"]};}}}}
         </style>""",
         unsafe_allow_html=True,
     )
     if show_logo:
         logo = base64.b64encode(LOGO_PATH.read_bytes()).decode("ascii")
         st.markdown(
-            f'<div class="pulseshift-brand"><img src="data:image/png;base64,{logo}" '
-            'alt="PulseShift company logo"></div>',
+            f'<div class="pulseshift-brand"><div class="pulseshift-brand-inner">'
+            f'<div class="pulseshift-logo"><img src="data:image/png;base64,{logo}" '
+            f'alt="PulseShift company logo"><img class="pulseshift-logo-relief" '
+            f'src="data:image/png;base64,{logo}" alt="" aria-hidden="true"></div>'
+            f'<div class="pulseshift-brand-copy"><div class="pulseshift-motto">'
+            f"{branding['motto']}</div></div></div></div>",
             unsafe_allow_html=True,
         )
     return theme

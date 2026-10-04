@@ -31,8 +31,9 @@ implemented application behavior. Recommendation rules live in
    (sample), Production → Hospital (finished treatment). Use the adopted route
    arrows and transport labels. Place production completion between sample
    arrival and treatment return in expanded timelines.
-4. Confirm plan: enabled only for a selected confirmed candidate. A unique
-   winner is preselected; co-winners require an explicit selection.
+4. Confirm plan: enabled only for a selected confirmed candidate. The first
+   winner is preselected for inspection, including when several plans tie.
+   Tied co-winners remain marked as recommended and can be selected instead.
 
 Keep **Original baseline**, **Recommended plan** and **Your confirmed plan**
 distinct. Confirmation shows a persistent acknowledgement with the selected
@@ -41,8 +42,9 @@ confirmation and recompute the recommendation, with a visible explanation.
 
 ## Exceptional states
 
-- Tied leaders: show the tied group and its common score; prompt the coordinator
-  to select before enabling confirmation. Preserve all alternatives on demand.
+- Tied leaders: show the tied group and its common score with the first co-winner
+  selected for inspection. Preserve all alternatives on demand; require an
+  explicit confirmation action.
 - No confirmed plan: show why and disable confirmation. Expand provisional
   alternatives separately without presenting them as recommended.
 - Live unavailable: identify failed/missing coverage and offer an explicit
@@ -118,7 +120,7 @@ documents only and does not change comparison.py, app.py or shared contracts.
 | Change only outbound snow | Return and ingredient inputs retain their values; recommendation recomputes and confirmation clears. |
 | Move a journey beyond its old demo interval | Simulated conditions carry over with a small note; details show old/new intervals. |
 | Change a Live journey beyond source coverage | Unknown evidence remains visible; the demo carry-over rule is not applied. |
-| Equal top goal scores | Co-winners are displayed; none is preselected; confirmation needs an explicit plan choice. |
+| Equal top goal scores | First co-winner is displayed with tied alternatives available; confirmation still requires the explicit confirm action. |
 | Confirm then open Sources | Confirmation persists through navigation and supporting details remain optional. |
 | Reset Demo from Routes | Full baseline restored, confirmation and carry-over notes cleared; Routes chapter stays open. |
 | Switch Demo to Live | Demo overrides removed, confirmation cleared, live evidence/coverage shown. |

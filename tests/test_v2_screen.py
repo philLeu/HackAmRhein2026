@@ -128,12 +128,13 @@ def test_unique_winner_is_preselected_but_needs_confirmation_and_optional_detail
     assert screen.session_state["confirmed_id"] == "postpone"
 
 
-def test_tied_leaders_require_a_choice_and_empty_or_invalid_result_cannot_confirm():
+def test_tied_leaders_show_first_plan_but_require_confirmation():
     screen = app()
     screen.session_state["tie"] = True
     screen.run()
-    assert selectbox(screen, "Plan to confirm").value is None
-    assert button(screen, "Confirm plan").disabled
+    assert selectbox(screen, "Plan to confirm").value == "postpone"
+    assert screen.session_state["confirmed_id"] is None
+    assert not button(screen, "Confirm plan").disabled
     selectbox(screen, "Plan to confirm").select("truck").run()
     button(screen, "Confirm plan").click().run()
     assert screen.session_state["confirmed_id"] == "truck"
