@@ -177,7 +177,7 @@ def _render_live_conditions(environment: EnvironmentInputs, settings) -> None:
                 if current.snowfall is False
                 else "Snowfall status unknown"
             )
-            st.caption(f"Source: {current.provenance.source}")
+            st.caption(current.provenance.source)
 
     st.markdown("**Basel Rhine gauge · route-wide model proxy**")
     if environment.river.observations:
