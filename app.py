@@ -28,6 +28,7 @@ from treatment_planner.ui.navigation import render_evidence_mode, render_navigat
 from treatment_planner.ui.presentation import apply_theme
 from treatment_planner.ui.recommendation import render_goal
 from treatment_planner.ui.rhine import render_rhine_conditions
+from treatment_planner.ui.rhine_gauge import rhine_gauge_chart
 from treatment_planner.ui.route_inputs import render_route_inputs
 from treatment_planner.ui.route_summary import render_route_summaries
 from treatment_planner.v2_flow import (
@@ -143,7 +144,7 @@ def _weather_icon(code: int | None, snowfall: bool | None) -> str:
     return "🌤️" if code % 100 < 20 else "☁️"
 
 
-def _render_live_conditions(environment: EnvironmentInputs, settings) -> None:
+def _render_live_conditions(environment: EnvironmentInputs, settings, theme: dict) -> None:
     st.subheader("Live conditions at both Basel sites")
     weather_columns = st.columns(2)
     for column, location in zip(
@@ -180,25 +181,39 @@ def _render_live_conditions(environment: EnvironmentInputs, settings) -> None:
             st.caption(f"Source: {current.provenance.source}")
 
     st.markdown("**Basel Rhine gauge · route-wide model proxy**")
-    if environment.river.observations:
-        observation = max(environment.river.observations, key=lambda item: item.observed_at)
-        level_m = observation.water_level_m
-        if level_m is None:
-            st.info("Current gauge height is unavailable.")
-        else:
-            st.progress(min(max(level_m / 10, 0.0), 1.0), text=f"{level_m:.2f} / 10 m")
-            st.caption(
-                f"Gauge height {level_m:.3f} m · "
-                f"observed {observation.observed_at:%Y-%m-%d %H:%M UTC}. "
-                "Model assumption: Basel level applies along the whole ship route."
-            )
-            st.caption(
-                f"Simplified shipping delay model: "
-                f"{settings.river_delay.total_seconds() / 3600:g} h. "
-                "This is a model output, not a measured delivery time."
-            )
-            if environment.river.issues:
-                st.warning("; ".join(environment.river.issues))
+    observation = (
+        max(environment.river.observations, key=lambda item: item.observed_at)
+        if environment.river.observations
+        else None
+    )
+    level_m = observation.water_level_m if observation else None
+    level_cm = level_m * 100 if level_m is not None else None
+    st.altair_chart(
+        rhine_gauge_chart(
+            level_cm,
+            observation.observed_at if observation and level_cm is not None else None,
+            theme,
+        ),
+        width="stretch",
+    )
+    st.caption(
+        "The colored bands follow the notebook thresholds. Hover over a band for its range "
+        "and meaning. "
+        "The current level is marked on the scale."
+    )
+    if level_m is not None:
+        st.caption(
+            f"Gauge height {level_m:.3f} m · "
+            f"observed {observation.observed_at:%Y-%m-%d %H:%M UTC}. "
+            "Model assumption: Basel level applies along the whole ship route."
+        )
+        st.caption(
+            f"Simplified shipping delay model: "
+            f"{settings.river_delay.total_seconds() / 3600:g} h. "
+            "This is a model output, not a measured delivery time."
+        )
+        if environment.river.issues:
+            st.warning("; ".join(environment.river.issues))
     else:
         st.info("Current Rhine gauge reading unavailable; ship timing remains unconfirmed.")
 
@@ -293,7 +308,7 @@ def main() -> None:
             environment, settings_for_run, plans, rhine = _live_environment(
                 request, settings, now, providers, _cached_live_rhine
             )
-        _render_live_conditions(environment, settings_for_run)
+        _render_live_conditions(environment, settings_for_run, theme)
     else:
         state.pop("v2-live-request", None)
         request = fixture_request()

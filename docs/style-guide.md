@@ -38,6 +38,9 @@ Preserve the logo's transparency and proportions. A subtle shadow applies only
 to the route and vehicle illustration above the wordmark. `branding.width`,
 `branding.padding` and `branding.gap` govern the lockup; keep it readable at
 narrow widths.
+The Live Basel Rhine gauge uses a horizontal scale whose colored regions match
+the configured notebook thresholds. Keep the current-level marker visible and
+show each region's range and meaning on hover.
 The compact header keeps the planning goal near the first screenful.
 The image has an accessible company-logo label. V2-8 should continue calling
 `apply_theme` at the page header to retain this branding. Nested components
