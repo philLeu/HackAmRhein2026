@@ -146,12 +146,12 @@ def rhine_gauge_chart(
         }
         marker_data = alt.Chart(alt.Data(values=[marker]))
         layers.append(
-            marker_data.mark_rule(color=style["gauge_marker_halo"], strokeWidth=7).encode(
+            marker_data.mark_rule(color=style["gauge_marker_halo"], strokeWidth=10).encode(
                 x=alt.X("Level:Q", scale=scale)
             )
         )
         layers.append(
-            marker_data.mark_rule(color=style["gauge_marker_color"], strokeWidth=3).encode(
+            marker_data.mark_rule(color=style["gauge_marker_color"], strokeWidth=4).encode(
                 x=alt.X("Level:Q", scale=scale),
                 tooltip=[
                     alt.Tooltip("Level:Q", title="Current level", format=".1f"),

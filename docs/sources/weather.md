@@ -47,11 +47,12 @@ the capture as suitable for both courier routes.
 Retrieval follows the
 [official MeteoSwiss notebook](https://github.com/MeteoSwiss/opendata-localforecast-demos/blob/main/notebooks/Meteogram.ipynb):
 read today's Swiss-date STAC item (`YYYYMMDD-ch`), then select the newest run
-containing both required parameters. Assets use
+containing both required parameters. A cycle whose UTC issue timestamp is still
+in the future is not used; the provider checks yesterday's item for its latest
+complete, already-issued cycle instead. The actual issue time remains visible,
+so the usual freshness limit still applies. Assets use
 `vnut12.lssw.YYYYMMDDHHmm.<parameter>.csv`; the run timestamp is retained separately
-from retrieval time. Only a missing item (HTTP 404) permits looking at yesterday's
-item; the resulting issue time remains visible. Parameters from different runs
-are never mixed.
+from retrieval time. Parameters from different runs are never mixed.
 
 ## Run and inspect
 
@@ -177,10 +178,12 @@ not at the future journey time. Validity coverage is assessed separately for
 each requested journey. Replay retains its existing journey-relative age check.
 
 Live network/metadata failures produce an empty report with an explicit issue.
-Only a daily-item HTTP 404 permits yesterday's item; no saved or synthetic data
-is substituted. Unknown snowfall, internal gaps and time outside the forecast
-horizon remain unknown. The live provider always explicitly reports that hourly
-mean temperature cannot establish the maximum-temperature check.
+A daily-item HTTP 404 or a future-dated latest cycle permits checking yesterday's
+item; no saved or synthetic data is substituted. Unknown snowfall, internal gaps
+and time outside the forecast horizon remain unknown for each candidate journey.
+Coverage notes for a broad comparison window do not invalidate earlier candidate
+journeys that are fully covered. The live provider always explicitly reports that
+hourly mean temperature cannot establish the maximum-temperature check.
 
 Live access was verified on 2026-10-03 at 18:45 UTC: postcode 4056 resolved to
 point type 2, ID 405600; cycle 18:00 UTC covered the sample interval at 19:00–20:00

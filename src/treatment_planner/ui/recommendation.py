@@ -223,8 +223,11 @@ def render_recommendation(
     if changed:
         state[f"{key}-confirmed"] = None
         state[f"{key}-picked"] = winners[0] if winners and valid_result else None
-        for suffix in ("choice", "inspect"):
-            state.pop(f"{key}-{suffix}", None)
+        if winners and valid_result:
+            state[f"{key}-choice"] = winners[0]
+        else:
+            state.pop(f"{key}-choice", None)
+        state.pop(f"{key}-inspect", None)
         state[f"{key}-signature"] = signature
         if had_confirmation:
             st.info("Planning inputs or evidence changed. Confirm the updated plan again.")
@@ -257,12 +260,9 @@ def render_recommendation(
     chosen = None
     if winners:
         ids = tuple(eligible)
-        previous = state.get(f"{key}-picked")
-        default = ids.index(previous) if previous in ids else None
         picked = st.selectbox(
             "Plan to confirm",
             ids,
-            index=default,
             format_func=lambda pid: (
                 ("Recommended · " if pid in winners else "Alternative · ")
                 + _plan_label(eligible[pid])

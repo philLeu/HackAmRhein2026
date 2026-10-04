@@ -116,7 +116,12 @@ def _weather_check(report, location, journey, limit, *, check_temperature=True):
         if window.interval.start <= covered_until:
             covered_until = max(covered_until, window.interval.end)
     issues = tuple(
-        issue for issue in report.issues if check_temperature or "temperature" not in issue.lower()
+        issue
+        for issue in report.issues
+        if (check_temperature or "temperature" not in issue.lower())
+        # Coverage notes describe the full provider query envelope. The
+        # candidate's own windows above determine whether this journey is covered.
+        and not issue.startswith(("Weather snowfall ", "Weather temperature "))
     )
     if issues or unknown_values or covered_until < journey.end:
         return _check(
