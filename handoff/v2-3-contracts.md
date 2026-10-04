@@ -1,6 +1,6 @@
 # V2-3 shared contracts
 
-Status: implementation done; PR #18 open for teammate review; GitHub history guard failing
+Status: integrated into `feat/v2-treatment-planner`. The PR and next-step notes below record the task handoff; current release status is in [the V2 release checklist](../docs/v2/release-checklist.md).
 
 ## Done
 

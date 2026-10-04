@@ -31,10 +31,9 @@ from weather_csv import (
 class ForecastParsingTests(unittest.TestCase):
     def test_provider_capitalized_date_header(self):
         for parameter, value in (("tre200h0", "18.5"), ("jww003i0", "16")):
-            raw = (
-                f"point_type_id;point_id;Date;{parameter}\n"
-                f"2;123;202610030800;{value}\n"
-            ).encode("latin-1")
+            raw = (f"point_type_id;point_id;Date;{parameter}\n2;123;202610030800;{value}\n").encode(
+                "latin-1"
+            )
             values = measurements(
                 read_csv(raw), {"point_type_id": "2", "point_id": "123"}, parameter
             )
@@ -42,9 +41,7 @@ class ForecastParsingTests(unittest.TestCase):
 
     def test_header_normalization_handles_spacing_and_rejects_collisions(self):
         raw = b"point_type_id;point_id; TIME ;tre200h0\n2;123; 202610030800 ;18.5\n"
-        values = measurements(
-            read_csv(raw), {"point_type_id": "2", "point_id": "123"}, "tre200h0"
-        )
+        values = measurements(read_csv(raw), {"point_type_id": "2", "point_id": "123"}, "tre200h0")
         self.assertEqual(values[parse_time("202610030800")], (18.5, "available"))
         with self.assertRaisesRegex(ValueError, "duplicate column names"):
             read_csv(b"Date;date\n202610030800;202610030900\n")
@@ -54,9 +51,7 @@ class ForecastParsingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "no Date/time column"):
             measurements([{**location, "tre200h0": "18.5"}], location, "tre200h0")
         with self.assertRaisesRegex(ValueError, "empty timestamp"):
-            measurements(
-                [{**location, "date": "", "tre200h0": "18.5"}], location, "tre200h0"
-            )
+            measurements([{**location, "date": "", "tre200h0": "18.5"}], location, "tre200h0")
 
     def test_metadata_requires_unique_postcode_point(self):
         rows = [
@@ -81,13 +76,9 @@ class ForecastParsingTests(unittest.TestCase):
 
     def test_same_point_id_different_type_is_excluded(self):
         raw = (
-            "point_type_id;point_id;time;tre200h0\n"
-            "1;123;202610030800;99\n"
-            "2;123;202610030800;18.5\n"
+            "point_type_id;point_id;time;tre200h0\n1;123;202610030800;99\n2;123;202610030800;18.5\n"
         ).encode("latin-1")
-        values = measurements(
-            read_csv(raw), {"point_type_id": "2", "point_id": "123"}, "tre200h0"
-        )
+        values = measurements(read_csv(raw), {"point_type_id": "2", "point_id": "123"}, "tre200h0")
         self.assertEqual(values[parse_time("202610030800")], (18.5, "available"))
         saved = read_csv(selected_point_csv(raw, {"point_type_id": "2", "point_id": "123"}))
         self.assertEqual(len(saved), 1)
@@ -144,16 +135,23 @@ class ForecastParsingTests(unittest.TestCase):
             self.assertEqual(snow_forecast_status(16, status), "unknown")
 
     def test_coverage_reports_missing_temperature_gap(self):
-        values = {"tre200h0": {
-            parse_time("202610030800"): (18.5, "available"),
-            parse_time("202610030900"): ("", "missing"),
-            parse_time("202610031000"): (30.1, "available"),
-        }}
+        values = {
+            "tre200h0": {
+                parse_time("202610030800"): (18.5, "available"),
+                parse_time("202610030900"): ("", "missing"),
+                parse_time("202610031000"): (30.1, "available"),
+            }
+        }
         summary = coverage(values)["tre200h0"]
-        self.assertEqual(summary["gaps"], [{
-            "start_utc": "2026-10-03T08:00:00Z",
-            "end_utc": "2026-10-03T09:00:00Z",
-        }])
+        self.assertEqual(
+            summary["gaps"],
+            [
+                {
+                    "start_utc": "2026-10-03T08:00:00Z",
+                    "end_utc": "2026-10-03T09:00:00Z",
+                }
+            ],
+        )
         self.assertEqual(summary["available_records"], 2)
 
     def test_duplicate_and_malformed_timestamps_are_rejected(self):

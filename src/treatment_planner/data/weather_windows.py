@@ -36,24 +36,37 @@ def journey_weather(
     if evaluated_at is None and window.start < fresh_until < window.end:
         boundaries.add(fresh_until)
     for record in records:
-        for parameter in ("temperature", "snow"):
+        for parameter in ("temperature", "snow", "maximum_temperature"):
             start, end = record[f"{parameter}_start"], record[f"{parameter}_end"]
-            if end > window.start and start < window.end:
+            if start is not None and end is not None and end > window.start and start < window.end:
                 boundaries.update((max(start, window.start), min(end, window.end)))
     points = sorted(boundaries)
     result, issues = [], set()
     for start, end in zip(points, points[1:]):
         temperature = _covering(records, "temperature_start", "temperature_end", start, end)
         mean = temperature["temperature"] if temperature else None
+        maximum = _covering(
+            records, "maximum_temperature_start", "maximum_temperature_end", start, end
+        )
+        maximum_c = maximum["maximum_temperature"] if maximum else None
         snowfall = _snowfall_for(records, start, end)
-        if mean is None:
+        condition = _covering(records, "snow_start", "snow_end", start, end)
+        if mean is None and maximum_c is None:
             issues.add(_coverage_issue("temperature", start, records))
         if snowfall is None:
             issues.add(_coverage_issue("snowfall", start, records))
         if (evaluated_at or end) > fresh_until:
             issues.add(f"Stale weather forecast for journey interval starting {start.isoformat()}.")
         result.append(
-            WeatherWindow(location, TimeWindow(start, end), None, snowfall, provenance, mean)
+            WeatherWindow(
+                location,
+                TimeWindow(start, end),
+                maximum_c,
+                snowfall,
+                provenance,
+                mean,
+                condition["weather_code"] if condition else None,
+            )
         )
     return WeatherReport(tuple(result), tuple(sorted(issues)))
 
@@ -74,14 +87,46 @@ def _read_records(rows):
             temperature = None
         if temperature is not None and not (-float("inf") < temperature < float("inf")):
             temperature = None
+        try:
+            maximum_temperature = (
+                float(row["maximum_temperature_c"])
+                if row.get("maximum_temperature_status") == "available"
+                else None
+            )
+        except (TypeError, ValueError):
+            maximum_temperature = None
+        if maximum_temperature is not None and not (
+            -float("inf") < maximum_temperature < float("inf")
+        ):
+            maximum_temperature = None
+        maximum_start = (
+            parse_iso_time(row["maximum_temperature_valid_start_utc"])
+            if row.get("maximum_temperature_valid_start_utc")
+            else None
+        )
+        maximum_end = (
+            parse_iso_time(row["maximum_temperature_valid_end_utc"])
+            if row.get("maximum_temperature_valid_end_utc")
+            else None
+        )
+        if (maximum_start is None) != (maximum_end is None) or (
+            maximum_start is not None and maximum_start >= maximum_end
+        ):
+            raise ValueError("Daily maximum validity interval must have positive duration.")
         status = row["snow_forecast_status"]
         records.append(
             {
                 "temperature_start": temperature_start,
                 "temperature_end": end,
                 "temperature": temperature,
+                "maximum_temperature_start": maximum_start,
+                "maximum_temperature_end": maximum_end,
+                "maximum_temperature": maximum_temperature,
                 "snow_start": snow_start,
                 "snow_end": end,
+                "weather_code": (
+                    int(row["weather_code"]) if row.get("weather_code") not in (None, "") else None
+                ),
                 "snowfall": True
                 if status == "present"
                 else False
@@ -94,7 +139,14 @@ def _read_records(rows):
 
 def _covering(records, start_key, end_key, start, end):
     return next(
-        (record for record in records if record[start_key] <= start and record[end_key] >= end),
+        (
+            record
+            for record in records
+            if record[start_key] is not None
+            and record[end_key] is not None
+            and record[start_key] <= start
+            and record[end_key] >= end
+        ),
         None,
     )
 
@@ -111,9 +163,12 @@ def _snowfall_for(records, start, end):
 
 
 def _coverage_issue(parameter, start, records):
-    prefix = "snow" if parameter == "snowfall" else "temperature"
-    starts = [record[f"{prefix}_start"] for record in records]
-    ends = [record[f"{prefix}_end"] for record in records]
-    within_horizon = bool(records) and min(starts) <= start < max(ends)
+    prefix = {
+        "snowfall": "snow",
+        "maximum temperature": "maximum_temperature",
+    }.get(parameter, "temperature")
+    starts = [record[f"{prefix}_start"] for record in records if record[f"{prefix}_start"]]
+    ends = [record[f"{prefix}_end"] for record in records if record[f"{prefix}_end"]]
+    within_horizon = bool(starts) and min(starts) <= start < max(ends)
     label = "unknown within forecast coverage" if within_horizon else "outside forecast horizon"
     return f"Weather {parameter} {label} at {start.isoformat()}."

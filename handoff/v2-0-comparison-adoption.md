@@ -1,6 +1,6 @@
 # V2-0 comparison adoption handoff
 
-Status: fixes applied; ready for re-review
+Status: integrated into `feat/v2-treatment-planner`. The notes below record the task handoff; current release status is in [the V2 release checklist](../docs/v2/release-checklist.md).
 
 ## Scope
 

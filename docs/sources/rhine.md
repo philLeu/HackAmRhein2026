@@ -133,3 +133,40 @@ Classification thresholds and the independent 5 cm margin are sourced from the
 notebook and stored in `config/rhine.json`. Chart bands and written findings use
 the same assessment function. The chart preserves measured/forecast line styles,
 ensemble bands, near-limit texture and a full-scale restriction reference.
+
+## V2 live ingredient evidence and demo override
+
+V2 Live planning uses the latest nonfuture Rheinhalle gauge observation from
+the Basel-Stadt dataset. It must be no older than six hours; this is a demo
+freshness limit, not an operational recommendation. The BAFU forecast remains
+available in the station chart but does not determine the ingredient shipping
+delay in the Live planner.
+
+The observations are normally reported at five-minute intervals. FOEN says
+current hydrological values are unverified raw data and forecast values are
+model output; source attribution is recommended and use is free. The Basel
+dataset identifies station 2289 at Rheinhalle, near the Birs inflow. A fresh
+station report still does not establish navigability for the Rotterdam–Basel
+route. The team's Live simplification assumes that the Basel water level is the
+same along the entire ship route. The planner converts the gauge height above
+its datum to centimetres, applies the existing notebook low-water threshold,
+and uses the illustrative zero- or 12-hour delay rule. This is a model output,
+not a provider ETA or route-wide measurement. [FOEN data FAQ](https://www.hydrodaten.admin.ch/en/questions),
+[Basel dataset](https://data.bs.ch/explore/dataset/100089/).
+
+The Demo control creates a typed `IngredientRouteOverride` with synthetic
+provenance, a displayed gauge height in centimetres, and an explicit validity
+interval. Its level is a simulated station value. For the demo only, crossing
+the notebook's critical low-water draft threshold applies the approved T4
+**simulated 12-hour** shipping delay; the baseline delay is zero. This is an
+illustrative level-to-delay mapping, not an observed or calibrated delivery
+prediction. Missing gauge input produces unknown delay, not zero. The adapter
+exposes missing, stale and outside-horizon live evidence as states for the
+integration/UI layers. Live provider failure never falls back to saved or
+synthetic evidence automatically.
+
+The V2 live smoke check on 2026-10-03 retrieved 573 observations and 118 hourly
+forecast points. That run was issued at 15:00 UTC and covered through
+2026-10-08 12:00 UTC. A five-day journey evaluated during that check extended
+beyond the returned forecast and was labelled **outside forecast horizon**;
+the adapter did not extrapolate it.

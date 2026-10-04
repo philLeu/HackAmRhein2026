@@ -31,6 +31,15 @@ arrows, so colour is not needed to understand a route. Timelines use
 
 ## Components and language
 
+The shared page header displays the supplied PulseShift logo from
+`assets/branding/pulseshift.png`. Preserve its transparency and proportions.
+Use the light `branding.background` plate to keep the dark wordmark readable
+on the control-room theme; `branding.width` and `branding.padding` govern size.
+The compact header keeps the planning goal near the first screenful.
+The image has an accessible company-logo label. V2-8 should continue calling
+`apply_theme` at the page header to retain this branding. Nested components
+use `show_logo=False` when applying the theme again.
+
 Use a title and short introductory sentence, followed by a visible synthetic-data
 notice, scenario selection, a four-step material-flow sketch for every
 option and the comparison table. Explain sample pickup timing in words: “Original
@@ -44,6 +53,22 @@ All displayed instants use `DD.MM.YYYY · HH:mm UTC`, including tables, evidence
 captions, timeline axes and tooltips. Date inputs use `DD.MM.YYYY` and time inputs
 use 24-hour time with UTC in the label. Missing timestamps say `Unknown`.
 Machine timestamps remain timezone-aware ISO values for chart positioning.
+
+## V2 guided components
+
+The V2 components follow [the approved screen sketch](v2/ui-sketch.md) and
+[its style addendum](v2/style-guide.md). Goal and recommendation lead the Plan
+chapter, followed by three concise route cards. Full material-flow diagrams,
+evidence, alternatives and timelines remain expandable even after confirmation.
+Each route uses a transport icon, the shared route drawing and a written status;
+unknown delay remains “Delay unknown”. Demo carry-over is a small visible note
+with old/new intervals in details. The original baseline is a separate reference,
+while the coordinator's confirmed plan has an explicit acknowledgement.
+
+The V2 entry point wires these components to the planning engine. `route.card_width` controls
+native wrapping of V2 route cards; `route.label_font_size` keeps the shared SVG
+labels readable. Both values live in the existing theme file. Demo buttons use
+native wrapping containers so full route names remain visible on narrow screens.
 
 ## Readability
 

@@ -7,7 +7,7 @@ that each goal explains its winner or preserves equal winners.
 
 | Case | Input | Expected result |
 |---|---|---|
-| Original baseline | Complete synthetic evidence; target injection is 08.11.2026 · 05:00 UTC, the original baseline injection time. | The original timetable reaches score 0 for injection timing. Any other confirmed plan with the same goal score remains an equal winner; no automatic pick. |
+| Original baseline | Complete synthetic evidence; target injection is 08.11.2026 · 05:00 UTC, the original baseline injection time. | The original timetable reaches score 0 for injection timing. Among plans with that same score, prefer Rhine ship over truck, then more bicycle legs over car legs. Plans still tied after both preferences remain co-winners; no automatic pick. |
 | Low-water delay | Synthetic 12-hour Rhine delay; decision is before the permitted truck switch deadline; target injection is 08.11.2026 · 17:00 UTC. | The 12-hour postponed ship schedule reaches the injection target if every check passes. Earliest-delivery favours the confirmed plan with earliest ingredient arrival. Lower-risk compares only the four named delivery/sample/production/injection margins; equal leaders remain tied. |
 | Hot return | Return maximum 30.1°C; required evidence and car availability supplied. | A return bicycle fails the heat rule. Only confirmed car-return plans can be recommended. Each car has its own preparation interval; preparation must pass but does not count as a zero-margin risk penalty. |
 | Outbound snow | Forecast snowfall overlaps the outbound leg; the return leg is clear. | Outbound bicycle is blocked. Keep a feasible return bicycle available; a mixed-mode plan is eligible if its checks pass. |
@@ -25,7 +25,7 @@ hard check with adequate evidence. They do not replace the fixture evidence.
 | Ingredient delivery | Arrival 08.11.2026 · 10:00 UTC | Arrival 08.11.2026 · 11:00 UTC | A |
 | Risk margin first | Minimum scored margin 6 hours; 1 At risk route | Minimum scored margin 5 hours; 0 At risk routes | A |
 | Risk tie-break | Minimum scored margin 6 hours; 1 At risk route | Minimum scored margin 6 hours; 0 At risk routes | B |
-| Exact risk tie | Minimum scored margin 6 hours; 0 At risk routes | Minimum scored margin 6 hours; 0 At risk routes | A and B, tied; no preselection |
+| Exact risk tie | Same risk score, ship ingredients, 1 bicycle leg | Same risk score, ship ingredients, 1 bicycle leg | A and B, tied; no preselection |
 
 - Injection score uses the target timestamp entered for that run. For example,
   30 minutes early scores 30; 30 minutes late scores 60. Lower scores rank
@@ -36,8 +36,9 @@ hard check with adequate evidence. They do not replace the fixture evidence.
   margins rank first. The zero margin on a just-in-time preparation check and
   the collection-shift cap do not enter this score; they still must pass.
 - If risk margins tie, fewer distinct At risk local routes rank first.
-- Two plans identical on every goal score stay co-winners. Show them as tied;
-  do not imply one is better or preselect one until asked.
+- After goal scores tie, prefer ship to truck, then prefer more bicycle legs
+  over car legs. Plans with the same shipment mode and bicycle count stay
+  co-winners. Show them as tied and do not preselect one.
 - Infeasible and unconfirmed plans are not scoreable candidates. Report their
   reasons separately. When the confirmed set is empty, leave the
   recommendation empty.

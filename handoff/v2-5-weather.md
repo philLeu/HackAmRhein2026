@@ -1,6 +1,6 @@
 # V2-5 live weather and independent local-route overrides
 
-Status: implementation ready for review and integration
+Status: integrated into `feat/v2-treatment-planner`. The next-step notes below record the task handoff; current release status is in [the V2 release checklist](../docs/v2/release-checklist.md).
 Owner: @janaaaaaaaa
 Branch: feat/v2-5-weather
 Base: 428abbb on feat/v2-treatment-planner (integrated V2-3)
