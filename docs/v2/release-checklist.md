@@ -1,5 +1,7 @@
 # V2 integration release checklist
 
+Status: Jana's follow-up was merged into `feat/v2-treatment-planner` through PR #26. The shared V2 branch has not been merged into `main`.
+
 ## Integrated behavior
 
 - Live evidence is the initial mode; refresh happens only after an explicit action.
@@ -21,9 +23,18 @@
 - `ruff check app.py src tests`
 - `pytest -q`
 - `bash scripts/doc-check.sh --strict`
-- Automated AppTest covers the Live cards and road controls plus all three offline Demo chapters. Interactive visual review of the running app remains pending.
-- Have a teammate inspect Plan, Routes & conditions and Sources & assumptions on desktop and a narrow screen, including keyboard access and written status beside icons.
-- Review the integration PR into `feat/v2-treatment-planner`; merge it only after explicit approval. Then run the full checks on the shared V2 branch before preparing the later PR into `main`.
+- Automated AppTest covers the Live cards and road controls plus all three offline Demo chapters. The full application suite, standalone weather tests, Ruff and strict documentation checks passed on the shared V2 branch after PR #26 merged.
+- One other teammate must inspect Plan, Routes & conditions and Sources & assumptions on desktop and a narrow screen, including keyboard access and written status beside icons. Record the reviewer and findings before release.
+- Open a separate PR from `feat/v2-treatment-planner` into `main` after the release checks. Follow the team rule for another teammate's review and explicit approval for that PR before merging.
+
+## Manual screen review
+
+1. On desktop, open Live mode and inspect Plan, Routes & conditions and Sources & assumptions. Check that source freshness, unsupported coverage and route status are stated in words as well as icons or colour.
+2. Switch to Demo mode and try each of the three disruption controls. Change the goal, select a route, confirm a plan, then change an input; confirmation should clear and the recommendation should update.
+3. At a narrow browser width (about 390 px), repeat the chapter and control checks. Look for clipped text, sideways scrolling, hidden buttons or overlapping route details.
+4. Use Tab and Shift+Tab to reach the mode switch, chapters, controls, route details and confirmation. Use Enter or Space to activate them; check focus remains visible and each control has a usable label.
+
+The inherited GitHub history privacy guard failure is tracked separately and is not part of this cleanup.
 
 ## Known limits
 

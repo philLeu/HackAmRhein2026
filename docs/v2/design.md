@@ -1,6 +1,6 @@
 # V2: guided treatment material-flow planning
 
-Status: Release direction, V2-1 recommendation rules and V2-2 screen sketch agreed; shared contracts are next.
+Status: V2 implementation, including Jana's follow-up, is integrated on `feat/v2-treatment-planner`. Release review and the later PR into `main` remain; see [the release checklist](release-checklist.md).
 
 ## Outcome
 

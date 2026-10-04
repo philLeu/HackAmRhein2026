@@ -1,6 +1,6 @@
 # V2-6 alternative ranking and recommendation
 
-Status: done; awaiting teammate review and PR merge approval
+Status: integrated into `feat/v2-treatment-planner`. The next-step notes below record the task handoff; current release status is in [the V2 release checklist](../docs/v2/release-checklist.md).
 Owner: @philLeu
 Branch: feat/v2-6-recommendations
 Base: 65a2a19 on feat/v2-treatment-planner
