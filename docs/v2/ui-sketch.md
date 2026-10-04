@@ -39,6 +39,8 @@ Keep **Original baseline**, **Recommended plan** and **Your confirmed plan**
 distinct. Confirmation shows a persistent acknowledgement with the selected
 plan and timestamp. Material input/evidence changes and goal changes clear
 confirmation and recompute the recommendation, with a visible explanation.
+When a new recommendation is available, reset “Plan to confirm” to its first
+winner; do not keep the previous widget value after settings change.
 
 ## Exceptional states
 

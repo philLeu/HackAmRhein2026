@@ -131,12 +131,32 @@ class WeatherLiveProvider:
                 if error.code != 404 or offset == 1:
                     raise
 
+    def _previous_item(self, now):
+        previous_day = now.astimezone(LOCAL_TIMEZONE).date() - timedelta(days=1)
+        return json.loads(self._read(f"{COLLECTION_URL}/items/{previous_day:%Y%m%d}-ch"))
+
     def _retrieve(self):
         now = parse_iso_time(self.clock().isoformat())
         location = select_location(read_csv(self._read(POINTS_URL)), self.postal_code)
         parameter_metadata = read_csv(self._read(PARAMETERS_URL))
         item = self._latest_item(now)
         issued_at, urls = select_run(item["assets"])
+        if issued_at > now:
+            future_issue = issued_at
+            try:
+                previous = self._previous_item(now)
+                previous_issued_at, previous_urls = select_run(previous["assets"])
+            except (OSError, KeyError, TypeError, ValueError, AttributeError, json.JSONDecodeError):
+                raise ValueError(
+                    f"Forecast issue time {future_issue.isoformat()} is in the future "
+                    "and no previous daily forecast is available."
+                ) from None
+            if previous_issued_at > now:
+                raise ValueError(
+                    f"Forecast issue time {future_issue.isoformat()} is in the future "
+                    "and the previous daily forecast is also from the future."
+                )
+            issued_at, urls = previous_issued_at, previous_urls
         check_temperature_unit(
             parameter_metadata,
             optional_parameters=OPTIONAL_PARAMETERS & urls.keys(),
