@@ -4,6 +4,8 @@
 
 A manufacturing-control prototype for a production coordinator managing one individual treatment. The integrated demo opens with live public evidence, compares alternatives with the planning engine, and requires an explicit plan confirmation. A separate offline demo mode provides three independent, clearly labelled synthetic disruption controls.
 
+![PulseShift treatment-planning demo walkthrough](assets/demo-walkthrough.gif)
+
 ## The problem
 
 Environmental disruptions can delay ingredients from Rotterdam or block courier journeys between a Basel hospital and production site. The coordinator needs to compare revised plans before these delays affect the treatment timeline. The demo uses an invented planning workflow and synthetic treatment inputs.
